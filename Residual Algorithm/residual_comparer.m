@@ -30,5 +30,5 @@ for i = 0:4
     end
 end
 %identify which rest length did the best
-saveas(figure(i+1),strcat(pt_name(1:end-7),'_bestRest.jpeg'))
+saveas(figure(i+1),strcat('Figures/',pt_name(1:end-7),'_bestRest.jpeg'))
 
