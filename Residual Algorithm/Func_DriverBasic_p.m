@@ -40,7 +40,7 @@ function Func_DriverBasic_p(pt_file_name,restTime)
     %Cut all the data out
     startTime = find(Tdata > Tdata(1) + timeCutS);
     endTime = find(Tdata >= Tdata(end) - timeCutE);
-    endTime(1)
+    
     Tdata = Tdata(startTime:endTime);
     Hdata = Hdata(startTime:endTime);
     Pdata = Pdata(startTime:endTime);
