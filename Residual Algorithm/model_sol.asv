@@ -106,14 +106,14 @@ if round(time(end-1),2) == round(tspan(end),2) && length(time)>length(tspan)
     HR = HR(1:end-1); 
 end 
 %% Interdpolate solution and calculate outputs
-[~,startm] = max(find(time <= data.val_start)); %add valstart and valend to the parameters
-[~,slutm] = max(find(time <= data.val_end));
-[~,startd] = max(find(tspan <= data.val_start)); 
-[~,slutd] = max(find(tspan <= data.val_end));
+[~,startm] = max(find(time <= val_start)); %add valstart and valend to the parameters
+[~,slutm] = max(find(time <= val_end));
+[~,startd] = max(find(Tdata <= val_start)); 
+[~,slutd] = max(find(Tdata <= val_end));
 
 HRmodelM = max(HR(startm:slutm));
 HRdataM = max(Hdata(startd:slutd));
-rout = [(HR(startm:slutm) - Hdata(startm:slutm))./Hdata(startm:slutm)/sqrt(length(Hdata(startm:slutm))); 
+rout = [(HR - Hdata)./Hdata/sqrt(length(Hdata)); 
     (HRmodelM - HRdataM)/HRdataM]; 
 
 J = rout'*rout;
