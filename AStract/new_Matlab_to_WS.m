@@ -1,14 +1,14 @@
 clear all
 T = readtable('../Summary_Data_800_Gals/PatientInfo06162021.xlsx-Sheet1.csv','Headerlines',2);
-Td = readtable('../HPV_demographic_info_2_9_21.csv'); %THIS WILL PRODUCE WARNINGS BUT IT'S FINE d = demographics
-HPV_numbers = Td.HPV_nummer;
-Ages = Td.Alder;
-Sexes = zeros(length(Ages),1); 
-for i = 1:length(Ages)
-    if ~isempty(Td.Male_(i))
-        Sexes(i) = 1;
-    end
-end
+% Td = readtable('../HPV_demographic_info_2_9_21.csv'); %THIS WILL PRODUCE WARNINGS BUT IT'S FINE d = demographics
+% HPV_numbers = Td.HPV_nummer;
+% Ages = Td.Alder;
+% Sexes = zeros(length(Ages),1); 
+% for i = 1:length(Ages)
+%     if ~isempty(Td.Male_(i))
+%         Sexes(i) = 1;
+%     end
+% end
 
 %% Column Numbers
 pts = 1;
@@ -40,7 +40,7 @@ rtas = 180; %desired rest time for AS
 rthut = 270; %desired rest time for HUT
 
 %% Load In Matlab Files
-
+pt=98;
 pt_id = T{pt,1}{1}
 if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
     load(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
@@ -72,7 +72,8 @@ if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49v
     %Assemble data
     %ttt=T{pt,Starttimeofdatas}
     %tstart = str2double(T{pt,Starttimeofdatas}{1});
-    tstart=celltime_to_seconds(T{pt,Starttimeofdatas});
+    %tstart=celltime_to_seconds(T{pt,Starttimeofdatas});
+    tstart=0;
     if isnumeric(tstart) %If tstart is a number don't do anything
     elseif isnan(str2double(T{pt,Starttimeofdatas}{1})) && isempty(str2double(T{pt,Starttimeofdatas}{1}))
         tstart = 0; %Assume if nothing is written then start time is 0
@@ -99,27 +100,65 @@ if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49v
     t = dat(:,1);
     
     
+    Age = T{pt,ages};
+    Sex = T{pt,genders};
+    
+    
     %% ---- AS ----
 
     if ~isempty(T{pt,ASrests}{1})
         AS_rest = celltime_to_seconds(T{pt,ASrests});
+        AS_start = celltime_to_seconds(T{pt,ASstarts});
         AS_end = celltime_to_seconds(T{pt,ASends});
         AS_times = [AS_rest,AS_end];
         AS_inds = zeros(1,length(AS_times));
         for j = 1:length(AS_inds)
             AS_inds(j) = find(abs(t-AS_times(j)) == min(abs(t-AS_times(j))));
         end
+        
         AS_s = AS_inds(1):AS_inds(2);
         AS_dat = dat(AS_s,:);
+        
+        s = (1:100:length(AS_dat(:,1)))'; %Sampling vector 2.5 Hz
+        %Calculate needed quantities before you subsample down
+        pkprom = 25.*ones(max_HPV_num,1);
+        SPdata_not_sampled = SBPcalc_HRpks(AS_dat(:,1),AS_dat(:,4),AS_dat(:,3),pkprom(pt),0,pt,1,1);
+        SPdata = SPdata_not_sampled(s);
+        sdat = AS_dat(s,:);
+        Tdata = sdat(:,1);
+        ECG = sdat(:,2);
+        Hdata = sdat(:,3);
+        Pdata = sdat(:,4);
+        ASrestind = find(abs(Tdata-AS_rest) == min(abs(Tdata-AS_rest)));
+        ASendind = find(abs(Tdata-AS_end) == min(abs(Tdata-AS_end)));
+        ASstartind = find(abs(Tdata-AS_start) == min(abs(Tdata-AS_start)));
+        
+        flag = 0;
+        if Tdata(ASstartind)-Tdata(ASrestind)<rtas
+            flag = 1;
+        end
+        
     end
+    
+    notes = T{pt,ASnotes};
+    if ~isempty(notes)
+        disp(strcat('There are notes for i=',num2str(pt)))
+    end
+    if flag>0
+        disp(strcat('There are flags for i=',num2str(pt)))
+    end
+    
+    cell_row_for_pt=T(pt,:);
+    save_workspace = 1;
+
     
     if save_workspace == 1
-        save(strcat(cell_of_file_names{i,1}(1:end-5),num2str(val_num),'_WS.mat'),... %Name of file
-             'Age','ECG','Hdata','Pdata','Pth','Rdata','Sex','SPdata','Tdata','flag',...
-             'ASrest_start','AS_start','AS_end','notes','cell_row_for_pt') %Variables to save
+        save(strcat(T{pt,1}{1}(1:end-9),'_AS_WS.mat'),... %Name of file
+             'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
+             'AS_rest','AS_start','AS_end','notes','cell_row_for_pt') %Variables to save
     end
     
-
+    return
        %% ---- HUT ----
 
     if ~isempty(T{pt,HUTrests}{1})
@@ -133,13 +172,20 @@ if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49v
         end
         HUT_s = HUT_inds(1):HUT_inds(2);
         HUT_dat = dat(HUT_s,:);
+        ECG = HUT_dat(:,2);
+        Hdata = HUT_dat(:,3);
+        Pdata = HUT_dat(:,4);
+%         Pth = zeros(length(Tdata),1);
+%         start_ind = find(abs(Tdata-val_start) == min(abs(Tdata-val_start)));
+%         end_ind = find(abs(Tdata-val_end) == min(abs(Tdata-val_end)));
+%         Pth(start_ind:end_ind) = 40.*ones(length(start_ind:end_ind),1);
     end
     
-    if save_workspace == 1
-        save(strcat(cell_of_file_names{i,1}(1:end-5),num2str(val_num),'_WS.mat'),... %Name of file
-             'Age','ECG','Hdata','Pdata','Pth','Rdata','Sex','SPdata','Tdata','flag',...
-             'HUTrest_start','HUT_start','HUT_end','notes','cell_row_for_pt') %Variables to save
-    end
+%     if save_workspace == 1
+%         save(strcat(cell_of_file_names{i,1}(1:end-5),num2str(val_num),'_WS.mat'),... %Name of file
+%              'Age','ECG','Hdata','Pdata','Pth','Rdata','Sex','SPdata','Tdata','flag',...
+%              'HUTrest_start','HUT_start','HUT_end','notes','cell_row_for_pt') %Variables to save
+%     end
 
 end
 
