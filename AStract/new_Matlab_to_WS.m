@@ -158,11 +158,12 @@ if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49v
              'AS_rest','AS_start','AS_end','notes','cell_row_for_pt') %Variables to save
     end
     
-    return
+
        %% ---- HUT ----
 
     if ~isempty(T{pt,HUTrests}{1})
         HUT_rest = celltime_to_seconds(T{pt,HUTrests});
+        HUT_start = celltime_to_seconds(T{pt,HUTstarts});
         HUT_end = celltime_to_seconds(T{pt,HUTends});
         HUT_times = [HUT_rest,HUT_end];
         HUT_inds = zeros(1,length(HUT_times));
@@ -170,22 +171,49 @@ if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49v
                 find(abs(t-HUT_times(j)) == min(abs(t-HUT_times(j))));
                 HUT_inds(j) = find(abs(t-HUT_times(j)) == min(abs(t-HUT_times(j))));
         end
+        
         HUT_s = HUT_inds(1):HUT_inds(2);
         HUT_dat = dat(HUT_s,:);
-        ECG = HUT_dat(:,2);
-        Hdata = HUT_dat(:,3);
-        Pdata = HUT_dat(:,4);
-%         Pth = zeros(length(Tdata),1);
-%         start_ind = find(abs(Tdata-val_start) == min(abs(Tdata-val_start)));
-%         end_ind = find(abs(Tdata-val_end) == min(abs(Tdata-val_end)));
-%         Pth(start_ind:end_ind) = 40.*ones(length(start_ind:end_ind),1);
+        
+        s = (1:100:length(HUT_dat(:,1)))'; %Sampling vector 2.5 Hz
+        %Calculate needed quantities before you subsample down
+        pkprom = 25.*ones(max_HPV_num,1);
+        SPdata_not_sampled = SBPcalc_HRpks(HUT_dat(:,1),HUT_dat(:,4),HUT_dat(:,3),pkprom(pt),0,pt,1,1);
+        SPdata = SPdata_not_sampled(s);
+        sdat = HUT_dat(s,:);
+        Tdata = sdat(:,1);
+        ECG = sdat(:,2);
+        Hdata = sdat(:,3);
+        Pdata = sdat(:,4);
+        HUTrestind = find(abs(Tdata-HUT_rest) == min(abs(Tdata-HUT_rest)));
+        HUTendind = find(abs(Tdata-HUT_end) == min(abs(Tdata-HUT_end)));
+        HUTstartind = find(abs(Tdata-HUT_start) == min(abs(Tdata-HUT_start)));
+        
+        flag = 0;
+        if Tdata(HUTstartind)-Tdata(HUTrestind)<rthut
+            flag = 1;
+        end
+        
     end
     
-%     if save_workspace == 1
-%         save(strcat(cell_of_file_names{i,1}(1:end-5),num2str(val_num),'_WS.mat'),... %Name of file
-%              'Age','ECG','Hdata','Pdata','Pth','Rdata','Sex','SPdata','Tdata','flag',...
-%              'HUTrest_start','HUT_start','HUT_end','notes','cell_row_for_pt') %Variables to save
-%     end
+    notes = T{pt,HUTnotes};
+    if ~isempty(notes)
+        disp(strcat('There are notes for i=',num2str(pt)))
+    end
+    if flag>0
+        disp(strcat('There are flags for i=',num2str(pt)))
+    end
+    
+    cell_row_for_pt=T(pt,:);
+    save_workspace = 1;
+
+    
+    if save_workspace == 1
+        save(strcat(T{pt,1}{1}(1:end-9),'_HUT_WS.mat'),... %Name of file
+             'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
+             'HUT_rest','HUT_start','HUT_end','notes','cell_row_for_pt') %Variables to save
+    end
+
 
 end
 
