@@ -3,12 +3,12 @@ T = readtable('PatientInfo06162021.xlsx-Sheet1.csv','Headerlines',2);
 
 %% New Variables
 num_rows_in_T = 872;
-counts = zeros(11,num_rows_in_T);%HUT rest, AS rest, DB rest, Val1 restb, Val1 reste, Val2 restb, Val2 reste, Val3 restb, Val3 reste, Val4 restb, Val4 reste
+counts = zeros(12,num_rows_in_T);% HUT rest, AS rest, DB rest, Val1 restb, Val1 reste, Val2 restb, Val2 reste, Val3 restb, Val3 reste, Val4 restb, Val4 reste, patient age
 betweenTimes = zeros(7,num_rows_in_T); %before HUT, AS, DB, Val1-4
 patientTotals = zeros(8,1); %patient total, hut, as, db, val1-4
 
 uniqueTimes = zeros(7,num_rows_in_T); %betweenTimes omitting non-unique patients
-uniqueCounts = zeros(11,num_rows_in_T); %counts omitting non-unique patients
+uniqueCounts = zeros(12,num_rows_in_T); %,counts omitting non-unique patients
 uniqueTotals = zeros(8,1); %unique totals
 
 missingManeuvers = zeros(7,num_rows_in_T); %which patients who have data are missing each maneuver
@@ -203,13 +203,13 @@ for pt = 3:num_rows_in_T%500:500 %Done through 500
     if any(counts(:,pt-2),'all') %Tests if patient has data
         patientTotals(1)=patientTotals(1)+1;
         timesBefore(1,pt-2) = timesOrdered(find(timesOrdered(:,1) > 0,1),1);
+        counts(12,pt-2) = T{pt,ages};
         if ~strcmp(newpat,oldpat) %tests if patient is unique
             %record patient data as unique
             uniqueCounts(:,pt-2) = counts(:,pt-2);
             uniqueTimes(:,pt-2) = betweenTimes(:,pt-2);
             uniqueTotals = uniqueTotals + switches;
             uniqueTotals(1) = uniqueTotals(1)+1;
-            
             for i = 2:8 %since we have a new patient, we update last patient's missing maneuvers
                 if oldswitches(i) == 0
                     missingManeuvers(i-1,pt-3) = 1;
