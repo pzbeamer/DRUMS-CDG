@@ -2,7 +2,7 @@ clear all
 close all
 %patient to read
 pt_name = 'HPV22_20130903_Val1_WS.mat';
-
+addpath '/Users/pbeamer/Downloads/LSA'
 %parameters to optimize
 INDMAP = [1 6 7 8 9 10 12 20 21];
 %residual error vector
@@ -24,12 +24,11 @@ for i = 0:4
     error(i+1,2) = (max(Hdata(start:slut)) - max(HR_LM(start:slut)))/max(Hdata(start:slut));
     figure(i+1)
     plot(Tdata,Hdata,Tdata,HR_LM)
-    saveas(figure(i+1),strcat('Figures/',pt_name(1:5),'_',num2str(i+1),'_bestRest.jpeg'))
-
+    saveas(figure(i+1),strcat('Figures/',pt_name(1:end-7),'_bestRest.jpeg'))
     if error(i+1,1) < .8 || error(i+1,2) < 5/max(Hdata(start:slut))
         break
     end
 end
 %identify which rest length did the best
-%saveas(figure(i+1),strcat('Figures/',pt_name(1:end-7),'_bestRest.jpeg'))
+saveas(figure(i+1),strcat('Figures/',pt_name(1:end-7),'_bestRest.jpeg'))
 

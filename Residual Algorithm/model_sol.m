@@ -113,7 +113,7 @@ end
 
 HRmodelM = max(HR(startm:slutm));
 HRdataM = max(Hdata(startd:slutd));
-rout = [(HR(startm:slutm) - Hdata(startm:slutm))./Hdata(startm:slutm)/sqrt(length(Hdata(startm:slutm))); 
+rout = [(HR - Hdata)./Hdata/sqrt(length(Hdata)); 
     (HRmodelM - HRdataM)/HRdataM]; 
 
 J = rout'*rout;
