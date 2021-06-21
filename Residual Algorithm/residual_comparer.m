@@ -20,13 +20,14 @@ for i = 0:4
     %calculate residual error
     start = find(Tdata == val_start);
     slut = find(Tdata == val_end);
-    error(i+1,1) = norm((Hdata(start:slut)-HR_LM(start:slut))./Hdata(start:slut));
+    scaler = sqrt(length(Hdata(start:slut)))
+    error(i+1,1) = norm((Hdata(start:slut)-HR_LM(start:slut))./Hdata(start:slut)/scaler);
     error(i+1,2) = (max(Hdata(start:slut)) - max(HR_LM(start:slut)))/max(Hdata(start:slut));
     figure(i+1)
     plot(Tdata,Hdata,Tdata,HR_LM)
-    saveas(figure(i+1),strcat('Figures/',pt_name(1:5),'_',num2str(i+1),'_bestRest.jpeg'))
+    saveas(figure(i+1),strcat('Figures/',pt_name(1:5),'_',num2str(i+1),'.jpeg'))
 
-    if error(i+1,1) < .8 || error(i+1,2) < 5/max(Hdata(start:slut))
+    if error(i+1,1) < .8/scaler || error(i+1,2) < 5/max(Hdata(start:slut))
         break
     end
 end
