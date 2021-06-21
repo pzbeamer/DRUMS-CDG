@@ -4,7 +4,7 @@ close all
 pt_name = 'HPV22_20130903_Val1_WS.mat';
 
 %parameters to optimize
-INDMAP = [1 6 7 8 9 10 12 20 21];
+INDMAP = [1 6 7 8 9 10 12 21];
 %residual error vector
 error = zeros(5,2);
 
