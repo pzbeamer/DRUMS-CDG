@@ -246,4 +246,4 @@ for pt = 3:num_rows_in_T%500:500 %Done through 500
     
     
 end 
-save('summary.mat','counts','uniqueCounts', 'betweenTimes','uniqueTimes','patientTotals','uniqueTotals','uniqueLengths','lengths');
+save('summary.mat','counts','uniqueCounts', 'betweenTimes','uniqueTimes','patientTotals','uniqueTotals');

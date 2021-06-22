@@ -7,9 +7,12 @@ for i = 1:12
     if i <= 7
         betweenTimes(i,:) = sort(betweenTimes(i,:),'descend');
         uniqueTimes(i,:) = sort(uniqueTimes(i,:),'descend');
+        lengths(i,:) = sort(lengths(i,:),'descend');
+        uniqueLengths(i,:) = sort(uniqueLengths(i,:),'descend');
     end
     uniqueCounts(i,:) = sort(uniqueCounts(i,:),'descend');
     counts(i,:) = sort(counts(i,:),'descend');
+    
 end
 
 %% Times Between
@@ -77,3 +80,23 @@ xlabel('Ages')
 ylabel('Density')
 title('Patient Ages')
 saveas(fig,'Figures/patientages.jpg');
+
+
+%% Average Lengths
+
+lengthHT = uniqueLengths(1,1:find(uniqueLengths(1,:)==0)-1);
+lengthAS = uniqueLengths(2,1:find(uniqueLengths(2,:)==0)-1);
+lengthDB = uniqueLengths(3,1:find(uniqueLengths(3,:)==0)-1);
+lengthV1 = uniqueLengths(4,1:find(uniqueLengths(4,:)==0)-1);
+lengthV2 = uniqueLengths(5,1:find(uniqueLengths(5,:)==0)-1);
+lengthV3 = uniqueLengths(6,1:find(uniqueLengths(6,:)==0)-1);
+lengthV4 = uniqueLengths(7,1:find(uniqueLengths(7,:)==0)-1);
+fig = figure(3);
+
+boxplot(lengthAS,'Notch', 'on','Widths',0.8,'DataLim',[0,300],'ExtremeMode','clip')
+xlabel('Active Stand')
+ylabel('Length')
+title('Active Stand Lengths')
+saveas(fig,'Figures/ASlength.jpg');
+
+
