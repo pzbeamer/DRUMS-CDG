@@ -36,7 +36,7 @@ function [SPdata,pkprom] = SBPcalc_HRpks(Tdata,Pdata,Hdata,pkprom,graphsYoN,inde
         end
         
     end
-    
+
     T = [Tdata(1); Tdata(sbploc); Tdata(end)]; %includes first and last time point 
     P = [Pdata(sbploc(1)); Pdata(sbploc); Pdata(sbploc(end))];
     SP = griddedInterpolant(T,P,'pchip');

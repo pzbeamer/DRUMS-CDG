@@ -151,7 +151,7 @@ for pt=136:419;
             disp(strcat('There are AS notes for i=',num2str(pt)))
         end
         if flag>0
-            disp(strcat('AS rest time does not meet desired for i=',num2str(pt)))
+            disp(strcat('There are flags for i=',num2str(pt)))
         end
 
         cell_row_for_pt=T(pt,:);
@@ -204,10 +204,10 @@ for pt=136:419;
 
         notes = T{pt,HUTnotes};
         if ~isempty(notes)
-            disp(strcat('There are HUT notes for i=',num2str(pt)))
+            disp(strcat('There are notes for i=',num2str(pt)))
         end
         if flag>0
-            disp(strcat('HUT rest time is less than desired for i=',num2str(pt)))
+            disp(strcat('There are flags for i=',num2str(pt)))
         end
 
         cell_row_for_pt=T(pt,:);
