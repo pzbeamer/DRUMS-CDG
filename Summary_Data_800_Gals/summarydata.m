@@ -6,10 +6,12 @@ num_rows_in_T = 872;
 counts = zeros(12,num_rows_in_T);% HUT rest, AS rest, DB rest, Val1 restb, Val1 reste, Val2 restb, Val2 reste, Val3 restb, Val3 reste, Val4 restb, Val4 reste, patient age
 betweenTimes = zeros(7,num_rows_in_T); %before HUT, AS, DB, Val1-4
 patientTotals = zeros(8,1); %patient total, hut, as, db, val1-4
+lengths = zeros(7,num_rows_in_T);
 
 uniqueTimes = zeros(7,num_rows_in_T); %betweenTimes omitting non-unique patients
 uniqueCounts = zeros(12,num_rows_in_T); %,counts omitting non-unique patients
 uniqueTotals = zeros(8,1); %unique totals
+uniqueLengths = zeros(7,num_rows_in_T); 
 
 missingManeuvers = zeros(7,num_rows_in_T); %which patients who have data are missing each maneuver
 switches = zeros(8,1);  %tracks individual visit's maneuvers
@@ -95,6 +97,7 @@ for pt = 3:num_rows_in_T%500:500 %Done through 500
         switches(2) = 1;
         timesNeeded(1) = celltime_to_seconds(T{pt,HUTstarts});
         timesNeeded(2) = celltime_to_seconds(T{pt,HUTends});
+        lengths(1,pt-2) = celltime_to_seconds(T{pt,HUTends}) - celltime_to_seconds(T{pt,HUTstarts});
     end
 
 %% ---- AS ----
@@ -106,7 +109,7 @@ for pt = 3:num_rows_in_T%500:500 %Done through 500
         switches(3) = 1;
         timesNeeded(3) = celltime_to_seconds(T{pt,ASstarts});
         timesNeeded(4) = celltime_to_seconds(T{pt,ASends});
-        
+        lengths(2,pt-2) = celltime_to_seconds(T{pt,ASends}) - celltime_to_seconds(T{pt,ASstarts});
     end
 
 
@@ -119,6 +122,7 @@ for pt = 3:num_rows_in_T%500:500 %Done through 500
         switches(4) = 1;
         timesNeeded(5) = celltime_to_seconds(T{pt,DBstarts});
         timesNeeded(6) = celltime_to_seconds(T{pt,DBends});
+        lengths(3,pt-2) = celltime_to_seconds(T{pt,DBends}) - celltime_to_seconds(T{pt,DBstarts});
     end
 
 %% ---- Valsalva ----
@@ -141,7 +145,7 @@ for pt = 3:num_rows_in_T%500:500 %Done through 500
             switches(4+i) = 1;
             timesNeeded(5+2*i) = celltime_to_seconds(T{pt,Vals(i,2)});
             timesNeeded(6+2*i) = celltime_to_seconds(T{pt,Vals(i,3)});
-            
+            lengths(3+i,pt-2) = celltime_to_seconds(T{pt,Vals(i,3)}) - celltime_to_seconds(T{pt,Vals(i,2)});
             
        end
     end
@@ -210,6 +214,7 @@ for pt = 3:num_rows_in_T%500:500 %Done through 500
             uniqueTimes(:,pt-2) = betweenTimes(:,pt-2);
             uniqueTotals = uniqueTotals + switches;
             uniqueTotals(1) = uniqueTotals(1)+1;
+            uniqueLengths(:,pt-2) = lengths(:,pt-2);
             for i = 2:8 %since we have a new patient, we update last patient's missing maneuvers
                 if oldswitches(i) == 0
                     missingManeuvers(i-1,pt-3) = 1;
@@ -228,6 +233,7 @@ for pt = 3:num_rows_in_T%500:500 %Done through 500
                     uniqueCounts(i,pt-2) = counts(i,pt-2);
                     uniqueTimes(i,pt-2) = betweenTimes(i,pt-2);
                     uniqueTotals(i) = uniqueTotals(i) +switches(i);
+                    uniqueLengths(i,pt-2) = lengths(i,pt-2);
                 end
             end
             %update oldswitches
@@ -240,4 +246,4 @@ for pt = 3:num_rows_in_T%500:500 %Done through 500
     
     
 end 
-save('summary.mat','counts','uniqueCounts', 'betweenTimes','uniqueTimes','patientTotals','uniqueTotals');
+save('summary.mat','counts','uniqueCounts', 'betweenTimes','uniqueTimes','patientTotals','uniqueTotals','uniqueLengths','lengths');
