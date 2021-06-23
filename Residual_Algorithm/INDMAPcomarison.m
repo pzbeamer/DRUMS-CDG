@@ -1,10 +1,11 @@
 clear all
 close all
 %parameters to optimize
-INDMAP = [1 6  8  10 12 20 21];
+INDMAP = [1 6  8 9 10 12 20 21];
 
 load File_name_cell_06072021_short.mat   
 q = [1 3 5 6 8 9 10 14 17 24 29 30];
+
 
 for i=1:length(q)
     u{i} = strcat(cell_of_file_names{q(i),1}(1:end-9))
@@ -21,7 +22,7 @@ for j = 1:length(u)
     
     %plots
     load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_30_nomHR.mat'))
-    load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_30_optHR6.mat'))
+    load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_30_optHR5(4).mat'))
     
     h = figure;
     set(gcf,'units','normalized','outerposition',[0.2 0.2 .5 .5])
@@ -130,6 +131,6 @@ for j = 1:length(u)
     xlabel('Time (s)')
     ylabel('Outflow')
     
-    fig_name = strcat('FIG6_',u{j});
+    fig_name = strcat('4FIG5_',u{j});
     print(h,fig_name,'-dpng','-r400');
 end

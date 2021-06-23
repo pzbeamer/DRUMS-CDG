@@ -1,5 +1,6 @@
 load File_name_cell_06072021_short.mat   
-q = [1 3 5 6 8 9 10 14 17 24 29 30];
+% q = [1 3 5 6 8 9 10 14 17 24 29 30];
+q = [30];
 
 for i=1:length(q)
     u{i} = strcat(cell_of_file_names{q(i),1}(1:end-9))
@@ -117,6 +118,6 @@ for j = 1:length(u)
     xlabel('Time (s)')
     ylabel('Outflow')
     
-    fig_name = strcat('FIG6_',u{j});
+    fig_name = strcat('FIG9_',u{j});
     print(h,fig_name,'-dpng','-r400');
 end 
