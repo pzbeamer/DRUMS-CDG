@@ -119,7 +119,7 @@ for pt=1:872;
             for j = 1:length(AS_inds)
                 AS_inds(j) = find(abs(t-AS_times(j)) == min(abs(t-AS_times(j))));
             end
-            if AS_inds(1)==AS_inds(2)
+            if AS_inds(1)==AS_inds(2) || AS_inds(1) < dataend(1)/1000 || AS_inds(2)<dataend(1)/1000
                 strcat('Error with ',pt_id)
                 return
             end
@@ -160,7 +160,7 @@ for pt=1:872;
 
 
         if save_workspace == 1
-            save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1}(1:end-9),'_AS_WS.mat'),... %Name of file
+            save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'),... %Name of file
                  'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
                  'AS_rest','AS_start','AS_end','notes','cell_row_for_pt') %Variables to save
         end
@@ -181,7 +181,10 @@ for pt=1:872;
 
             HUT_s = HUT_inds(1):HUT_inds(2);
             HUT_dat = dat(HUT_s,:);
-
+            if HUT_inds(1)==HUT_inds(2) || HUT_inds(1) < dataend(1)/1000 || HUT_inds(2)<dataend(1)/1000
+                strcat('Error with ',pt_id)
+                return
+            end
             s = (1:100:length(HUT_dat(:,1)))'; %Sampling vector 2.5 Hz
             %Calculate needed quantities before you subsample down
             pkprom = 25.*ones(max_HPV_num,1);

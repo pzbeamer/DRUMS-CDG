@@ -27,7 +27,7 @@ ASnotes = 23;
 trackerMAT = cell(1,872,1);
 load('../Summary_Data_800_Gals/summary.mat')
 
-for pt=1:872
+for pt=11
     pt
     pt_id = T{pt,1}{1};
     if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
