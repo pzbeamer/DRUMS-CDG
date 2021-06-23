@@ -35,7 +35,7 @@ ASends = 22;
 ASnotes = 23;
 
 %% Other Variables
-max_HPV_num = 419; % will change for all values
+max_HPV_num = 872; % will change for all values
 rtas = 180; %desired rest time for AS
 rthut = 270; %desired rest time for HUT
 
@@ -43,7 +43,8 @@ rthut = 270; %desired rest time for HUT
 %Pressure data negative at index 50, cause of failure?
 %some HR data is nan at index 113, cause of failure?
 %same HR sitch at index 135
-for pt=136:419;
+for pt=136:872;
+    pt
     pt_id = T{pt,1}{1}
     if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
         load(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))

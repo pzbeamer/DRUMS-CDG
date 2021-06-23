@@ -43,8 +43,9 @@ rthut = 270; %desired rest time for HUT
 %Pressure data negative at index 50, cause of failure?
 %some HR data is nan at index 113, cause of failure?
 %same HR sitch at index 135
-for pt=136:419;
-    pt_id = T{pt,1}{1}
+for pt=3:872;
+    pt
+    pt_id = T{pt,1}{1};
     if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
         load(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
         start_time_of_file = 0;
@@ -151,7 +152,7 @@ for pt=136:419;
             disp(strcat('There are AS notes for i=',num2str(pt)))
         end
         if flag>0
-            disp(strcat('There are flags for i=',num2str(pt)))
+            disp(strcat('AS rest time does not meet desired for i=',num2str(pt)))
         end
 
         cell_row_for_pt=T(pt,:);
@@ -204,10 +205,10 @@ for pt=136:419;
 
         notes = T{pt,HUTnotes};
         if ~isempty(notes)
-            disp(strcat('There are notes for i=',num2str(pt)))
+            disp(strcat('There are HUT notes for i=',num2str(pt)))
         end
         if flag>0
-            disp(strcat('There are flags for i=',num2str(pt)))
+            disp(strcat('HUT rest time is less than desired for i=',num2str(pt)))
         end
 
         cell_row_for_pt=T(pt,:);
