@@ -40,10 +40,11 @@ rtas = 180; %desired rest time for AS
 rthut = 270; %desired rest time for HUT
 
 %% Load In Matlab Files
-%Pressure data negative at index 50, cause of failure?
-%some HR data is nan at index 113, cause of failure?
-%same HR sitch at index 135
-for pt=3:49;
+%index 11
+%index 50 does not have blood pressure
+%some HR nan for index 113, problem?
+%index 135 same
+for pt=136:872;
     pt
     pt_id = T{pt,1}{1}
     if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
@@ -119,8 +120,8 @@ for pt=3:49;
             for j = 1:length(AS_inds)
                 AS_inds(j) = find(abs(t-AS_times(j)) == min(abs(t-AS_times(j))));
             end
-            if AS_inds(1)==AS_inds(2) || AS_inds(1) < dataend(1)/1000 || AS_inds(2)<dataend(1)/1000
-                strcat('Error with ',pt_id)
+            if AS_inds(1)==AS_inds(2) || AS_start > dataend(1)/1000 || AS_end > dataend(1)/1000
+                strcat('Nicole says AS Error with ',pt_id)
                 return
             end
             AS_s = AS_inds(1):AS_inds(2);
@@ -158,9 +159,8 @@ for pt=3:49;
             save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'),... %Name of file
                      'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
                      'AS_rest','AS_start','AS_end','notes','cell_row_for_pt') %Variables to save
-            end
-        
         end
+        
 
 
            %% ---- HUT ----
@@ -178,8 +178,8 @@ for pt=3:49;
 
             HUT_s = HUT_inds(1):HUT_inds(2);
             HUT_dat = dat(HUT_s,:);
-            if HUT_inds(1)==HUT_inds(2) || HUT_inds(1) < dataend(1)/1000 || HUT_inds(2)<dataend(1)/1000
-                strcat('Error with ',pt_id)
+            if HUT_inds(1)==HUT_inds(2) || HUT_start > dataend(1)/1000 || HUT_end > dataend(1)/1000
+                strcat('Nicole says HUT Error with ',pt_id)
                 return
             end
             s = (1:100:length(HUT_dat(:,1)))'; %Sampling vector 2.5 Hz
@@ -214,6 +214,7 @@ for pt=3:49;
             save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/HUT/',T{pt,1}{1},'_HUT_WS.mat'),... %Name of file
                      'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
                      'HUT_rest','HUT_start','HUT_end','notes','cell_row_for_pt') %Variables to save
+        end
     end
 end
 

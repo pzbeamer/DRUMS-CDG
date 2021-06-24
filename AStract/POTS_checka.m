@@ -4,7 +4,7 @@ load('../Summary_Data_800_Gals/summary.mat','betweenTimes');
 pots_possibles=cell(872,1);
 count=1;
 
-for pt=3:872
+for pt=3:158
     if isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'))
 
         load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'));
