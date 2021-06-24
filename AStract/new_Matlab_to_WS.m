@@ -44,7 +44,34 @@ rthut = 270; %desired rest time for HUT
 %index 50 does not have blood pressure
 %some HR nan for index 113, problem?
 %index 135 same
-for pt=136:872;
+%index 159
+%index 166 is wack
+%index 205
+%index 265
+%index 288
+%index 309 unknown issue?
+%index 315 unknown error?
+%index 371
+%index 376
+%index 391
+%index 395
+%index 396
+%index 433
+%index 438 weird error?
+%index 489
+%index 525 line 121 left right sides not compatible
+%index 560
+%index 572
+%index 684
+%index 708
+%index 728
+%index 789 
+%index 791
+%index 799
+%index 842 weird error
+%index 852 strange
+%index 853 strange
+for pt=490:872;
     pt
     pt_id = T{pt,1}{1}
     if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))

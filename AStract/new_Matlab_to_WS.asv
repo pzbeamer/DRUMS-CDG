@@ -40,10 +40,22 @@ rtas = 180; %desired rest time for AS
 rthut = 270; %desired rest time for HUT
 
 %% Load In Matlab Files
-%Pressure data negative at index 50, cause of failure?
-%some HR data is nan at index 113, cause of failure?
-%same HR sitch at index 135
-for pt=3:49;
+%index 11
+%index 50 does not have blood pressure
+%some HR nan for index 113, problem?
+%index 135 same
+%index 159
+%index 166 is wack
+%index 205
+%index 265
+%index 288
+%index 309 pressure data issue?
+%index 525 line 121 left right sides not compatible
+%index 560
+%index 572
+%index 684
+
+for pt=310:872;
     pt
     pt_id = T{pt,1}{1}
     if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
@@ -158,9 +170,8 @@ for pt=3:49;
             save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'),... %Name of file
                      'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
                      'AS_rest','AS_start','AS_end','notes','cell_row_for_pt') %Variables to save
-            end
-        
         end
+        
 
 
            %% ---- HUT ----
@@ -178,7 +189,7 @@ for pt=3:49;
 
             HUT_s = HUT_inds(1):HUT_inds(2);
             HUT_dat = dat(HUT_s,:);
-            if HUT_inds(1)==HUT_inds(2) || HUT_start < dataend(1)/1000 || HUT_end < dataend(1)/1000
+            if HUT_inds(1)==HUT_inds(2) || HUT_start > dataend(1)/1000 || HUT_end > dataend(1)/1000
                 strcat('Nicole says HUT Error with ',pt_id)
                 return
             end
@@ -214,6 +225,7 @@ for pt=3:49;
             save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/HUT/',T{pt,1}{1},'_HUT_WS.mat'),... %Name of file
                      'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
                      'HUT_rest','HUT_start','HUT_end','notes','cell_row_for_pt') %Variables to save
+        end
     end
 end
 
