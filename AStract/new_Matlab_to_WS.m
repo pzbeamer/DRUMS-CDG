@@ -43,7 +43,7 @@ rthut = 270; %desired rest time for HUT
 %Pressure data negative at index 50, cause of failure?
 %some HR data is nan at index 113, cause of failure?
 %same HR sitch at index 135
-for pt=1:872;
+for pt=3:49;
     pt
     pt_id = T{pt,1}{1}
     if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
@@ -145,24 +145,21 @@ for pt=1:872;
                 flag = 1;
             end
 
-        end
+            notes = T{pt,ASnotes};
+            if ~isempty(notes)
+                disp(strcat('There are AS notes for i=',num2str(pt)))
+            end
+            if flag>0
+                disp(strcat('AS rest time does not meet desired for i=',num2str(pt)))
+            end
 
-        notes = T{pt,ASnotes};
-        if ~isempty(notes)
-            disp(strcat('There are AS notes for i=',num2str(pt)))
-        end
-        if flag>0
-            disp(strcat('AS rest time does not meet desired for i=',num2str(pt)))
-        end
+            cell_row_for_pt=T(pt,:);
 
-        cell_row_for_pt=T(pt,:);
-        save_workspace = 1;
-
-
-        if save_workspace == 1
             save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'),... %Name of file
-                 'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
-                 'AS_rest','AS_start','AS_end','notes','cell_row_for_pt') %Variables to save
+                     'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
+                     'AS_rest','AS_start','AS_end','notes','cell_row_for_pt') %Variables to save
+            end
+        
         end
 
 
@@ -204,27 +201,19 @@ for pt=1:872;
                 flag = 1;
             end
 
-        end
+            notes = T{pt,HUTnotes};
+            if ~isempty(notes)
+                disp(strcat('There are HUT notes for i=',num2str(pt)))
+            end
+            if flag>0
+                disp(strcat('HUT rest time is less than desired for i=',num2str(pt)))
+            end
 
-        notes = T{pt,HUTnotes};
-        if ~isempty(notes)
-            disp(strcat('There are HUT notes for i=',num2str(pt)))
-        end
-        if flag>0
-            disp(strcat('HUT rest time is less than desired for i=',num2str(pt)))
-        end
+            cell_row_for_pt=T(pt,:);
 
-        cell_row_for_pt=T(pt,:);
-        save_workspace = 1;
-
-
-        if save_workspace == 1
             save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/HUT/',T{pt,1}{1},'_HUT_WS.mat'),... %Name of file
-                 'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
-                 'HUT_rest','HUT_start','HUT_end','notes','cell_row_for_pt') %Variables to save
-        end
-
-
+                     'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
+                     'HUT_rest','HUT_start','HUT_end','notes','cell_row_for_pt') %Variables to save
     end
 end
 
