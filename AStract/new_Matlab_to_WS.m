@@ -40,38 +40,36 @@ rtas = 180; %desired rest time for AS
 rthut = 270; %desired rest time for HUT
 
 %% Load In Matlab Files
-%index 11
+%index 11, time resets, only saves data before reset
 %index 50 does not have blood pressure
-%some HR nan for index 113, problem?
-%index 135 same
-%index 159
-%index 166 is wack
-%index 205
-%index 265
-%index 288
-%index 309 unknown issue?
-%index 315 unknown error?
-%index 371
-%index 376
-%index 391
-%index 395
-%index 396
-%index 433
-%index 438 weird error?
-%index 489
-%index 525 line 121 left right sides not compatible
-%index 560
-%index 572
-%index 684
-%index 708
-%index 728
-%index 789 
-%index 791
-%index 799
-%index 842 weird error
-%index 852 strange
-%index 853 strange
-for pt=490:872;
+%some HR nan for index 113
+%index 135, fixed
+%index 159, time resets, only saves data before reset
+%index 166, time recording issue fixed
+%index 205, time resets, only saves data before reset
+%index 265, time resets, only saves data before reset
+%index 288, time resets, only saves data before reset
+%index 309, multiple fixed
+%index 315, recording issue
+%index 371, time resets, only saves data before reset
+%index 376, time resets, only saves data before reset
+%index 391, time recorded incorrectly, redownload
+%index 395, time resets, only saves data before reset
+%index 396, time resets, only saves data before reset
+%index 433, time resets, only saves data before reset
+%index 438, time resets, only saves data before reset
+%index 489, time resets, only saves data before reset
+%index 525, redownload spread
+%index 560, time resets, only saves data before reset
+%index 572, time resets, only saves data before reset
+%index 684, time resets, only saves data before reset
+%index 708, time resets, only saves data before reset 
+%index 728, time resets, only saves data before reset 
+%index 789, time resets, only saves data before reset 
+%index 791, time resets, only saves data before reset
+%index 799, need to redownload the excel
+%index 842, need to redownload the excel
+for pt=11;
     pt
     pt_id = T{pt,1}{1}
     if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
@@ -79,7 +77,10 @@ for pt=490:872;
         start_time_of_file = 0;
         automatically_match_channels = 1;
 
-
+        if strcmp(titles(2,:),'Blodtryk, finger')
+            titles=titles(:,1:15);
+            titles(2,:)='Blodtryk finger';
+        end
 
         if automatically_match_channels == 1
             channels = ['EKG            ';'Hjertefrekvens ';'Blodtryk finger'];
@@ -114,8 +115,17 @@ for pt=490:872;
         else
             error(strcat('Undefined error concerning tstart, check index i = ',num2str(pt)))
         end
+        
+        sz=size(dataend);
+        endtime=dataend(1,1);
+        cols=sz(2);
+        if cols>1
+            for i=2:cols
+                endtime=endtime+(dataend(1,i)-dataend(end,i-1));
+            end
+        end
 
-        dat = zeros(dataend(1),4);
+        dat = zeros(endtime,4);
         if length(tickrate) ~= 1
             if mean(tickrate) == tickrate(1)
                 tickrate = tickrate(1);
@@ -124,9 +134,14 @@ for pt=490:872;
             end
         end
 
-        dummy_time_vec= tstart:1/tickrate:dataend(1)/tickrate-1/tickrate;
+  
+        dummy_time_vec= tstart:1/tickrate:endtime/tickrate-1/tickrate;
         dat(:,1) = dummy_time_vec+start_time_of_file;
         for j = 1:length(channel_inds)
+            alldata=data(datastart(channel_inds(j),1):dataend(channel_inds(j),1));
+            for i=2:cols
+                alldata=alldata+data(datastart(channel_inds(j),i):dataend(channel_inds(j),i));
+            end
             dat(:,j+1) = data(datastart(channel_inds(j)):dataend(channel_inds(j))); %i+1 b/c time in column 1
         end
         t = dat(:,1);
