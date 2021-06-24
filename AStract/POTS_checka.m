@@ -3,6 +3,7 @@ T=readtable('../Summary_Data_800_Gals/PatientInfo062221.csv');
 load('../Summary_Data_800_Gals/summary.mat','betweenTimes');
 pots_possibles=cell(872,1);
 count=1;
+c=0;
 
 for pt=3:872
    
@@ -10,7 +11,7 @@ for pt=3:872
     if isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'))
         disp("isfile");
         load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'));
-        
+        c=c+1;
         %rest_ind=1;
         %end_ind=last index
         start_ind=find(abs(Tdata-AS_start)==min(abs(Tdata-AS_start)));
