@@ -40,39 +40,15 @@ rtas = 180; %desired rest time for AS
 rthut = 270; %desired rest time for HUT
 
 %% Load In Matlab Files
-%index 11, time resets, only saves data before reset
 %index 50 does not have blood pressure
-%some HR nan for index 113
-%index 135, fixed
-%index 159, time resets, only saves data before reset
-%index 166, time recording issue fixed
-%index 205, time resets, only saves data before reset
-%index 265, time resets, only saves data before reset
-%index 288, time resets, only saves data before reset
-%index 309, multiple fixed
-%index 315, recording issue
-%index 371, time resets, only saves data before reset
-%index 376, time resets, only saves data before reset
-%index 391, time recorded incorrectly, redownload
-%index 395, time resets, only saves data before reset
-%index 396, time resets, only saves data before reset
-%index 433, time resets, only saves data before reset
-%index 438, time resets, only saves data before reset
-%index 489, time resets, only saves data before reset
-%index 525, redownload spread
-%index 560, time resets, only saves data before reset
-%index 572, time resets, only saves data before reset
-%index 684, time resets, only saves data before reset
-%index 708, time resets, only saves data before reset 
-%index 728, time resets, only saves data before reset 
-%index 789, time resets, only saves data before reset 
-%index 791, time resets, only saves data before reset
-%index 799, need to redownload the excel
-%index 842, need to redownload the excel
-for pt=11;
+%113 not fixed in spreadsheet yet
+%index 154, needs to be fixed in spreadhseet
+%index 175 fixed, need new spreadsheet
+%index 323, needs to be fixed in spreadsheet
+for pt=324:872;
     pt
     pt_id = T{pt,1}{1}
-    if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
+    if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat')) && ~isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',pt_id,'_AS_WS.mat'))
         load(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
         start_time_of_file = 0;
         automatically_match_channels = 1;
@@ -134,15 +110,14 @@ for pt=11;
             end
         end
 
-  
         dummy_time_vec= tstart:1/tickrate:endtime/tickrate-1/tickrate;
         dat(:,1) = dummy_time_vec+start_time_of_file;
         for j = 1:length(channel_inds)
             alldata=data(datastart(channel_inds(j),1):dataend(channel_inds(j),1));
             for i=2:cols
-                alldata=alldata+data(datastart(channel_inds(j),i):dataend(channel_inds(j),i));
+                alldata=[alldata data(datastart(channel_inds(j),i):dataend(channel_inds(j),i))];
             end
-            dat(:,j+1) = data(datastart(channel_inds(j)):dataend(channel_inds(j))); %i+1 b/c time in column 1
+            dat(:,j+1) = alldata;%data(datastart(channel_inds(j)):dataend(channel_inds(j))); %i+1 b/c time in column 1
         end
         t = dat(:,1);
 
@@ -162,7 +137,7 @@ for pt=11;
             for j = 1:length(AS_inds)
                 AS_inds(j) = find(abs(t-AS_times(j)) == min(abs(t-AS_times(j))));
             end
-            if AS_inds(1)==AS_inds(2) || AS_start > dataend(1)/1000 || AS_end > dataend(1)/1000
+            if AS_inds(1)==AS_inds(2) || AS_start > endtime/1000 || AS_end > endtime/1000
                 strcat('Nicole says AS Error with ',pt_id)
                 return
             end
@@ -198,7 +173,7 @@ for pt=11;
 
             cell_row_for_pt=T(pt,:);
 
-            save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'),... %Name of file
+            save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',pt_id,'_AS_WS.mat'),... %Name of file
                      'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
                      'AS_rest','AS_start','AS_end','notes','cell_row_for_pt') %Variables to save
         end
@@ -220,7 +195,7 @@ for pt=11;
 
             HUT_s = HUT_inds(1):HUT_inds(2);
             HUT_dat = dat(HUT_s,:);
-            if HUT_inds(1)==HUT_inds(2) || HUT_start > dataend(1)/1000 || HUT_end > dataend(1)/1000
+            if HUT_inds(1)==HUT_inds(2) || HUT_start > endtime/1000 || HUT_end > endtime/1000
                 strcat('Nicole says HUT Error with ',pt_id)
                 return
             end
@@ -253,7 +228,7 @@ for pt=11;
 
             cell_row_for_pt=T(pt,:);
 
-            save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/HUT/',T{pt,1}{1},'_HUT_WS.mat'),... %Name of file
+            save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/HUT/',pt_id,'_HUT_WS.mat'),... %Name of file
                      'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
                      'HUT_rest','HUT_start','HUT_end','notes','cell_row_for_pt') %Variables to save
         end
