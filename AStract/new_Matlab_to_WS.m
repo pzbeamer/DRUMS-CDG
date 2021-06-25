@@ -41,11 +41,7 @@ rthut = 270; %desired rest time for HUT
 
 %% Load In Matlab Files
 %index 50 does not have blood pressure
-%113 not fixed in spreadsheet yet
-%index 154, needs to be fixed in spreadhseet
-%index 175 fixed, need new spreadsheet
-%index 323, needs to be fixed in spreadsheet
-for pt=324:872;
+for pt=341
     pt
     pt_id = T{pt,1}{1}
     if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat')) && ~isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',pt_id,'_AS_WS.mat'))
@@ -58,7 +54,7 @@ for pt=324:872;
             titles(2,:)='Blodtryk finger';
         end
 
-        if automatically_match_channels == 1
+        if automatically_match_channels == 1 && pt~=337
             channels = ['EKG            ';'Hjertefrekvens ';'Blodtryk finger'];
             channel_inds = zeros(3,1);
             for j = 1:size(channels,1)
