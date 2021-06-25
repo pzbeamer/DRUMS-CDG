@@ -33,22 +33,28 @@ ASrests = 20;
 ASstarts = 21;
 ASends = 22;
 ASnotes = 23;
+DBrests = 24; %Deep breathing 
+DBstarts = 25;
+DBends = 26;
+DBnotes = 27;
 
 %% Other Variables
 max_HPV_num = 872; % will change for all values
 rtas = 180; %desired rest time for AS
 rthut = 270; %desired rest time for HUT
+rtdb = 100; %desired rest time for DB
+make_AS = 0;
+make_HUT = 0;
+make_DB = 1;
 
 %% Load In Matlab Files
 %index 50 does not have blood pressure
-%113 not fixed in spreadsheet yet
-%index 154, needs to be fixed in spreadhseet
-%index 175 fixed, need new spreadsheet
-%index 323, needs to be fixed in spreadsheet
-for pt=324:872;
+%index 90 fixed in spread
+%index 216 fixed in spread
+for pt=240:872
     pt
     pt_id = T{pt,1}{1}
-    if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat')) && ~isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',pt_id,'_AS_WS.mat'))
+    if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
         load(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
         start_time_of_file = 0;
         automatically_match_channels = 1;
@@ -58,7 +64,7 @@ for pt=324:872;
             titles(2,:)='Blodtryk finger';
         end
 
-        if automatically_match_channels == 1
+        if automatically_match_channels == 1 && pt~=337
             channels = ['EKG            ';'Hjertefrekvens ';'Blodtryk finger'];
             channel_inds = zeros(3,1);
             for j = 1:size(channels,1)
@@ -127,110 +133,165 @@ for pt=324:872;
 
 
         %% ---- AS ----
+        if make_AS==1
+            if ~isempty(T{pt,ASrests}{1})
+                AS_rest = celltime_to_seconds(T{pt,ASrests});
+                AS_start = celltime_to_seconds(T{pt,ASstarts});
+                AS_end = celltime_to_seconds(T{pt,ASends});
+                AS_times = [AS_rest,AS_end];
+                AS_inds = zeros(1,length(AS_times));
+                for j = 1:length(AS_inds)
+                    AS_inds(j) = find(abs(t-AS_times(j)) == min(abs(t-AS_times(j))));
+                end
+                if AS_inds(1)==AS_inds(2) || AS_start > endtime/1000 || AS_end > endtime/1000
+                    strcat('Nicole says AS Error with ',pt_id)
+                    return
+                end
+                AS_s = AS_inds(1):AS_inds(2);
+                AS_dat = dat(AS_s,:);
 
-        if ~isempty(T{pt,ASrests}{1})
-            AS_rest = celltime_to_seconds(T{pt,ASrests});
-            AS_start = celltime_to_seconds(T{pt,ASstarts});
-            AS_end = celltime_to_seconds(T{pt,ASends});
-            AS_times = [AS_rest,AS_end];
-            AS_inds = zeros(1,length(AS_times));
-            for j = 1:length(AS_inds)
-                AS_inds(j) = find(abs(t-AS_times(j)) == min(abs(t-AS_times(j))));
+                s = (1:100:length(AS_dat(:,1)))'; %Sampling vector 2.5 Hz
+                %Calculate needed quantities before you subsample down
+                pkprom = 25.*ones(max_HPV_num,1);
+                SPdata_not_sampled = SBPcalc_HRpks(AS_dat(:,1),AS_dat(:,4),AS_dat(:,3),pkprom(pt),0,pt,1,1);
+                SPdata = SPdata_not_sampled(s);
+                sdat = AS_dat(s,:);
+                Tdata = sdat(:,1);
+                ECG = sdat(:,2);
+                Hdata = sdat(:,3);
+                Pdata = sdat(:,4);
+                ASrestind = find(abs(Tdata-AS_rest) == min(abs(Tdata-AS_rest)));
+                ASendind = find(abs(Tdata-AS_end) == min(abs(Tdata-AS_end)));
+                ASstartind = find(abs(Tdata-AS_start) == min(abs(Tdata-AS_start)));
+
+                flag = 0;
+                if Tdata(ASstartind)-Tdata(ASrestind)<rtas
+                    flag = 1;
+                end
+
+                notes = T{pt,ASnotes};
+                if ~isempty(notes)
+                    disp(strcat('There are AS notes for i=',num2str(pt)))
+                end
+                if flag>0
+                    disp(strcat('AS rest time does not meet desired for i=',num2str(pt)))
+                end
+
+                cell_row_for_pt=T(pt,:);
+
+                save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',pt_id,'_AS_WS.mat'),... %Name of file
+                         'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
+                         'AS_rest','AS_start','AS_end','notes','cell_row_for_pt') %Variables to save
             end
-            if AS_inds(1)==AS_inds(2) || AS_start > endtime/1000 || AS_end > endtime/1000
-                strcat('Nicole says AS Error with ',pt_id)
-                return
-            end
-            AS_s = AS_inds(1):AS_inds(2);
-            AS_dat = dat(AS_s,:);
-
-            s = (1:100:length(AS_dat(:,1)))'; %Sampling vector 2.5 Hz
-            %Calculate needed quantities before you subsample down
-            pkprom = 25.*ones(max_HPV_num,1);
-            SPdata_not_sampled = SBPcalc_HRpks(AS_dat(:,1),AS_dat(:,4),AS_dat(:,3),pkprom(pt),0,pt,1,1);
-            SPdata = SPdata_not_sampled(s);
-            sdat = AS_dat(s,:);
-            Tdata = sdat(:,1);
-            ECG = sdat(:,2);
-            Hdata = sdat(:,3);
-            Pdata = sdat(:,4);
-            ASrestind = find(abs(Tdata-AS_rest) == min(abs(Tdata-AS_rest)));
-            ASendind = find(abs(Tdata-AS_end) == min(abs(Tdata-AS_end)));
-            ASstartind = find(abs(Tdata-AS_start) == min(abs(Tdata-AS_start)));
-
-            flag = 0;
-            if Tdata(ASstartind)-Tdata(ASrestind)<rtas
-                flag = 1;
-            end
-
-            notes = T{pt,ASnotes};
-            if ~isempty(notes)
-                disp(strcat('There are AS notes for i=',num2str(pt)))
-            end
-            if flag>0
-                disp(strcat('AS rest time does not meet desired for i=',num2str(pt)))
-            end
-
-            cell_row_for_pt=T(pt,:);
-
-            save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',pt_id,'_AS_WS.mat'),... %Name of file
-                     'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
-                     'AS_rest','AS_start','AS_end','notes','cell_row_for_pt') %Variables to save
         end
         
 
 
            %% ---- HUT ----
+        if make_HUT==1
+            if ~isempty(T{pt,HUTrests}{1})
+                HUT_rest = celltime_to_seconds(T{pt,HUTrests});
+                HUT_start = celltime_to_seconds(T{pt,HUTstarts});
+                HUT_end = celltime_to_seconds(T{pt,HUTends});
+                HUT_times = [HUT_rest,HUT_end];
+                HUT_inds = zeros(1,length(HUT_times));
+                for j = 1:length(HUT_inds)
+                        find(abs(t-HUT_times(j)) == min(abs(t-HUT_times(j))));
+                        HUT_inds(j) = find(abs(t-HUT_times(j)) == min(abs(t-HUT_times(j))));
+                end
 
-        if ~isempty(T{pt,HUTrests}{1})
-            HUT_rest = celltime_to_seconds(T{pt,HUTrests});
-            HUT_start = celltime_to_seconds(T{pt,HUTstarts});
-            HUT_end = celltime_to_seconds(T{pt,HUTends});
-            HUT_times = [HUT_rest,HUT_end];
-            HUT_inds = zeros(1,length(HUT_times));
-            for j = 1:length(HUT_inds)
-                    find(abs(t-HUT_times(j)) == min(abs(t-HUT_times(j))));
-                    HUT_inds(j) = find(abs(t-HUT_times(j)) == min(abs(t-HUT_times(j))));
+                HUT_s = HUT_inds(1):HUT_inds(2);
+                HUT_dat = dat(HUT_s,:);
+                if HUT_inds(1)==HUT_inds(2) || HUT_start > endtime/1000 || HUT_end > endtime/1000
+                    strcat('Nicole says HUT Error with ',pt_id)
+                    return
+                end
+                s = (1:100:length(HUT_dat(:,1)))'; %Sampling vector 2.5 Hz
+                %Calculate needed quantities before you subsample down
+                pkprom = 25.*ones(max_HPV_num,1);
+                SPdata_not_sampled = SBPcalc_HRpks(HUT_dat(:,1),HUT_dat(:,4),HUT_dat(:,3),pkprom(pt),0,pt,1,1);
+                SPdata = SPdata_not_sampled(s);
+                sdat = HUT_dat(s,:);
+                Tdata = sdat(:,1);
+                ECG = sdat(:,2);
+                Hdata = sdat(:,3);
+                Pdata = sdat(:,4);
+                HUTrestind = find(abs(Tdata-HUT_rest) == min(abs(Tdata-HUT_rest)));
+                HUTendind = find(abs(Tdata-HUT_end) == min(abs(Tdata-HUT_end)));
+                HUTstartind = find(abs(Tdata-HUT_start) == min(abs(Tdata-HUT_start)));
+
+                flag = 0;
+                if Tdata(HUTstartind)-Tdata(HUTrestind)<rthut
+                    flag = 1;
+                end
+
+                notes = T{pt,HUTnotes};
+                if ~isempty(notes)
+                    disp(strcat('There are HUT notes for i=',num2str(pt)))
+                end
+                if flag>0
+                    disp(strcat('HUT rest time is less than desired for i=',num2str(pt)))
+                end
+
+                cell_row_for_pt=T(pt,:);
+
+                save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/HUT/',pt_id,'_HUT_WS.mat'),... %Name of file
+                         'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
+                         'HUT_rest','HUT_start','HUT_end','notes','cell_row_for_pt') %Variables to save
             end
+        end
+        
+                %% ---- DB ----
+        if make_DB==1
+            if ~isempty(T{pt,DBrests}{1})
+                DB_rest = celltime_to_seconds(T{pt,DBrests});
+                DB_start = celltime_to_seconds(T{pt,DBstarts});
+                DB_end = celltime_to_seconds(T{pt,DBends});
+                DB_times = [DB_rest,DB_end];
+                DB_inds = zeros(1,length(DB_times));
+                for j = 1:length(DB_inds)
+                    DB_inds(j) = find(abs(t-DB_times(j)) == min(abs(t-DB_times(j))));
+                end
+                if DB_inds(1)==DB_inds(2) || DB_start > endtime/1000 || DB_end > endtime/1000
+                    strcat('Nicole says DB Error with ',pt_id)
+                    return
+                end
+                DB_s = DB_inds(1):DB_inds(2);
+                DB_dat = dat(DB_s,:);
 
-            HUT_s = HUT_inds(1):HUT_inds(2);
-            HUT_dat = dat(HUT_s,:);
-            if HUT_inds(1)==HUT_inds(2) || HUT_start > endtime/1000 || HUT_end > endtime/1000
-                strcat('Nicole says HUT Error with ',pt_id)
-                return
+                s = (1:100:length(DB_dat(:,1)))'; %Sampling vector 2.5 Hz
+                %Calculate needed quantities before you subsample down
+                pkprom = 25.*ones(max_HPV_num,1);
+                SPdata_not_sampled = SBPcalc_HRpks(DB_dat(:,1),DB_dat(:,4),DB_dat(:,3),pkprom(pt),0,pt,1,1);
+                SPdata = SPdata_not_sampled(s);
+                sdat = DB_dat(s,:);
+                Tdata = sdat(:,1);
+                ECG = sdat(:,2);
+                Hdata = sdat(:,3);
+                Pdata = sdat(:,4);
+                DBrestind = find(abs(Tdata-DB_rest) == min(abs(Tdata-DB_rest)));
+                DBendind = find(abs(Tdata-DB_end) == min(abs(Tdata-DB_end)));
+                DBstartind = find(abs(Tdata-DB_start) == min(abs(Tdata-DB_start)));
+
+                flag = 0;
+                if Tdata(DBstartind)-Tdata(DBrestind)<rtdb
+                    flag = 1;
+                end
+
+                notes = T{pt,DBnotes};
+                if ~isempty(notes)
+                    disp(strcat('There are DB notes for i=',num2str(pt)))
+                end
+                if flag>0
+                    disp(strcat('DB rest time does not meet desired for i=',num2str(pt)))
+                end
+
+                cell_row_for_pt=T(pt,:);
+
+                save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Deep_Breathing/',pt_id,'_DB_WS.mat'),... %Name of file
+                         'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
+                         'DB_rest','DB_start','DB_end','notes','cell_row_for_pt') %Variables to save
             end
-            s = (1:100:length(HUT_dat(:,1)))'; %Sampling vector 2.5 Hz
-            %Calculate needed quantities before you subsample down
-            pkprom = 25.*ones(max_HPV_num,1);
-            SPdata_not_sampled = SBPcalc_HRpks(HUT_dat(:,1),HUT_dat(:,4),HUT_dat(:,3),pkprom(pt),0,pt,1,1);
-            SPdata = SPdata_not_sampled(s);
-            sdat = HUT_dat(s,:);
-            Tdata = sdat(:,1);
-            ECG = sdat(:,2);
-            Hdata = sdat(:,3);
-            Pdata = sdat(:,4);
-            HUTrestind = find(abs(Tdata-HUT_rest) == min(abs(Tdata-HUT_rest)));
-            HUTendind = find(abs(Tdata-HUT_end) == min(abs(Tdata-HUT_end)));
-            HUTstartind = find(abs(Tdata-HUT_start) == min(abs(Tdata-HUT_start)));
-
-            flag = 0;
-            if Tdata(HUTstartind)-Tdata(HUTrestind)<rthut
-                flag = 1;
-            end
-
-            notes = T{pt,HUTnotes};
-            if ~isempty(notes)
-                disp(strcat('There are HUT notes for i=',num2str(pt)))
-            end
-            if flag>0
-                disp(strcat('HUT rest time is less than desired for i=',num2str(pt)))
-            end
-
-            cell_row_for_pt=T(pt,:);
-
-            save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/HUT/',pt_id,'_HUT_WS.mat'),... %Name of file
-                     'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
-                     'HUT_rest','HUT_start','HUT_end','notes','cell_row_for_pt') %Variables to save
         end
     end
 end
