@@ -49,9 +49,10 @@ make_DB = 1;
 
 %% Load In Matlab Files
 %index 50 does not have blood pressure
-%index 90 fixed in spread
-%index 216 fixed in spread
-for pt=240:872
+%index 784 has issue, not with spread, calibration occurs during it which 
+%might explain it, the issue comes with getting the systolic bp measure
+
+for pt=784
     pt
     pt_id = T{pt,1}{1}
     if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
