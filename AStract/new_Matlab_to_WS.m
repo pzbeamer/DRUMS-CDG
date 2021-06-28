@@ -355,7 +355,7 @@ for pt=784
                         if val_rest_end - val_end < rt2
                             flag(2) = 1;
                         end
-                        indices = [HUTstarts HUTends ASstarts ASends Vals(1,2) Vals(2,2) Vals(3,2) Vals(4,2)]
+                        indices = [HUTstarts ASstarts DBstarts Vals(1,2) Vals(2,2) Vals(3,2) Vals(4,2)]
                         times = zeros(1,7);
                         for i = 1:7
                             if ~isempty(T{pt,indices(i)}{1})
