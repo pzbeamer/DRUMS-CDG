@@ -231,7 +231,7 @@ for pt = 3:num_rows_in_T%500:500 %Done through 500
                 if oldswitches(i) == 0 && switches(i) == 1 %if they didn't have maneuver on previous visits but do now, record these data as unique
                     
                     uniqueCounts(i,pt-2) = counts(i,pt-2);
-                    uniqueTimes(i,pt-2) = betweenTimes(i,pt-2);
+                    uniqueTimes(i-1,pt-2) = betweenTimes(i-1,pt-2);
                     uniqueTotals(i) = uniqueTotals(i) +switches(i);
                     uniqueLengths(i,pt-2) = lengths(i,pt-2);
                 end
