@@ -22,8 +22,8 @@ for pt=3:872
             begin_avg_ind=find(abs(Tdata-(AS_start-30))==min(abs(Tdata-(AS_start-30))));
         end
 
-        avg_HR_before=mean(Hdata(begin_avg_ind:end_avg_ind));
-        maxHR=max(movmean(Hdata(start_ind:end),50));
+        avg_HR_before=median(Hdata(begin_avg_ind:end_avg_ind));
+        maxHR=max(movmean(Hdata(start_ind:end), 50));
 
         if (maxHR>=avg_HR_before+30 && T{pt,3}>19) || (maxHR>=avg_HR_before+40)
             disp(strcat(T{pt,1}," Meets Qualifications"));
