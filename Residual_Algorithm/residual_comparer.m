@@ -17,9 +17,10 @@ for j = 1:length(u)
     %parameters to optimize
     %INDMAP = [1 6 7 8 9 10 12 20 21]; %subset 1
     %INDMAP = [1 6 7 8 9 10 20 21]; %subset 2
+    INDMAP = [1 6 7   9 10 20 21]; %subset 2 no 8
     %INDMAP = [7 10 11 19 20 21]; %subset 3
     %INDMAP = [1    5 6 7 8 9 10      12 13  20 21 ]; %subset 4
-    INDMAP = [1 5 6 7 8 9 10 12 20 21 ]; %subset 5
+    %INDMAP = [1 5 6 7 8 9 10 12 20 21 ]; %subset 5
     
     %residual error vector
     error = zeros(5,2);
@@ -50,7 +51,9 @@ for j = 1:length(u)
     %plots
         clear h
         load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_',num2str(30 - 5*i),'_nomHR.mat'))
-        load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_',num2str(30 - 5*i),'_optHRsub5.mat'))
+        load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_',num2str(30 - 5*i),'_optHRsub3tau.mat'))
+
+        load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_',num2str(30 - 5*i),'_optHRsub2no8.mat'))
     
         h = figure(j+1);
         set(gcf,'units','normalized','outerposition',[0.2 0.2 .5 .5])
@@ -161,7 +164,9 @@ for j = 1:length(u)
         
         hold off
 
-        fig_name = strcat('sub5FIG_',u{j},'_',num2str(30 - 5*i));
+        fig_name = strcat('sub3tauFIG_',u{j},'_',num2str(30 - 5*i));
+
+        fig_name = strcat('sub2no8FIG_',u{j},'_',num2str(30 - 5*i));
         print(h,fig_name,'-dpng','-r400');
 end
 %identify which rest length did the best

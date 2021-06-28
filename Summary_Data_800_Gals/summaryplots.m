@@ -6,14 +6,17 @@ load('summary.mat');
 for i = 1:12
     if i <= 7
         betweenTimes(i,:) = sort(betweenTimes(i,:),'descend');
+        averageBetween(i) = mean(betweenTimes(i,1:find(betweenTimes(i,:)==0)));
         uniqueTimes(i,:) = sort(uniqueTimes(i,:),'descend');
         lengths(i,:) = sort(lengths(i,:),'descend');
+        averageLength(i) = mean(lengths(i,1:find(lengths(i,:)==0)));
         uniqueLengths(i,:) = sort(uniqueLengths(i,:),'descend');
     end
     uniqueCounts(i,:) = sort(uniqueCounts(i,:),'descend');
     counts(i,:) = sort(counts(i,:),'descend');
     
 end
+
 
 %% Times Between
 uniqueHT = uniqueTimes(1,1:find(uniqueTimes(1,:)==0)-1);

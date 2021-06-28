@@ -1,5 +1,5 @@
 clear
-T = readtable('PatientInfo06162021.xlsx-Sheet1.csv','Headerlines',2);
+T = readtable('PatientInfo062221.csv','Headerlines',2);
 
 %% New Variables
 num_rows_in_T = 872;
@@ -91,7 +91,7 @@ for pt = 3:num_rows_in_T%500:500 %Done through 500
     %% ---- HUT ----
 
 
-    if ~isempty(T{pt,HUTrests}{1})&& ~isempty(T{pt,HUTends}{1})
+    if ~isempty(T{pt,HUTrests}{1})&& ~isempty(T{pt,HUTends}{1}) && ~isempty(T{pt,HUTstarts}{1})
         counts(1,pt-2) = celltime_to_seconds(T{pt,HUTstarts})-celltime_to_seconds(T{pt,HUTrests}); %HUT rest time
         patientTotals(2) = patientTotals(2)+1;
         switches(2) = 1;
@@ -103,7 +103,7 @@ for pt = 3:num_rows_in_T%500:500 %Done through 500
 %% ---- AS ----
 
 
-    if ~isempty(T{pt,ASrests}{1})
+    if ~isempty(T{pt,ASrests}{1}) && ~isempty(T{pt,ASstarts}{1}) && ~isempty(T{pt,ASends}{1})
         counts(2,pt-2) = celltime_to_seconds(T{pt,ASstarts})-celltime_to_seconds(T{pt,ASrests}); %AS rest time
         patientTotals(3) = patientTotals(3)+1;
         switches(3) = 1;
@@ -116,7 +116,7 @@ for pt = 3:num_rows_in_T%500:500 %Done through 500
 %% ---- Deep breathing (DB) ----
 
 
-    if ~isempty(T{pt,DBrests}{1})
+    if ~isempty(T{pt,DBrests}{1}) && ~isempty(T{pt,DBstarts}{1}) && ~isempty(T{pt,DBends}{1})
         counts(3,pt-2) = celltime_to_seconds(T{pt,DBstarts})-celltime_to_seconds(T{pt,DBrests}); %DB rest time
         patientTotals(4) = patientTotals(4)+1;
         switches(4) = 1;
@@ -231,7 +231,7 @@ for pt = 3:num_rows_in_T%500:500 %Done through 500
                 if oldswitches(i) == 0 && switches(i) == 1 %if they didn't have maneuver on previous visits but do now, record these data as unique
                     
                     uniqueCounts(i,pt-2) = counts(i,pt-2);
-                    uniqueTimes(i,pt-2) = betweenTimes(i,pt-2);
+                    uniqueTimes(i-1,pt-2) = betweenTimes(i-1,pt-2);
                     uniqueTotals(i) = uniqueTotals(i) +switches(i);
                     uniqueLengths(i,pt-2) = lengths(i,pt-2);
                 end
