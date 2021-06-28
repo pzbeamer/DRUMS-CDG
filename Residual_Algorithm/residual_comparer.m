@@ -51,11 +51,9 @@ for j = 1:length(u)
     %plots
         clear h
         load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_',num2str(30 - 5*i),'_nomHR.mat'))
-<<<<<<< HEAD
         load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_',num2str(30 - 5*i),'_optHRsub3tau.mat'))
-=======
+
         load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_',num2str(30 - 5*i),'_optHRsub2no8.mat'))
->>>>>>> 55b389007fcd1fb04020e8a61eb116b31372fe75
     
         h = figure(j+1);
         set(gcf,'units','normalized','outerposition',[0.2 0.2 .5 .5])
@@ -166,11 +164,9 @@ for j = 1:length(u)
         
         hold off
 
-<<<<<<< HEAD
         fig_name = strcat('sub3tauFIG_',u{j},'_',num2str(30 - 5*i));
-=======
+
         fig_name = strcat('sub2no8FIG_',u{j},'_',num2str(30 - 5*i));
->>>>>>> 55b389007fcd1fb04020e8a61eb116b31372fe75
         print(h,fig_name,'-dpng','-r400');
 end
 %identify which rest length did the best

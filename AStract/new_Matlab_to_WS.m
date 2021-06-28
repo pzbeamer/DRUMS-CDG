@@ -37,6 +37,8 @@ DBrests = 24; %Deep breathing
 DBstarts = 25;
 DBends = 26;
 DBnotes = 27;
+Vals = [28:32;33:37;38:42;43:47]; %Each row a new val, cols rest, start, end,rest end, notes
+
 
 %% Other Variables
 max_HPV_num = 872; % will change for all values
@@ -46,6 +48,7 @@ rtdb = 100; %desired rest time for DB
 make_AS = 0;
 make_HUT = 0;
 make_DB = 1;
+make_VAL = 0;
 
 %% Load In Matlab Files
 %index 50 does not have blood pressure
@@ -131,7 +134,7 @@ for pt=784
 
         Age = T{pt,ages};
         Sex = T{pt,genders};
-
+        cell_row_for_pt=T(pt,:);
 
         %% ---- AS ----
         if make_AS==1
@@ -178,7 +181,6 @@ for pt=784
                     disp(strcat('AS rest time does not meet desired for i=',num2str(pt)))
                 end
 
-                cell_row_for_pt=T(pt,:);
 
                 save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',pt_id,'_AS_WS.mat'),... %Name of file
                          'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
@@ -234,7 +236,7 @@ for pt=784
                     disp(strcat('HUT rest time is less than desired for i=',num2str(pt)))
                 end
 
-                cell_row_for_pt=T(pt,:);
+               
 
                 save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/HUT/',pt_id,'_HUT_WS.mat'),... %Name of file
                          'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
@@ -287,11 +289,89 @@ for pt=784
                     disp(strcat('DB rest time does not meet desired for i=',num2str(pt)))
                 end
 
-                cell_row_for_pt=T(pt,:);
 
                 save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Deep_Breathing/',pt_id,'_DB_WS.mat'),... %Name of file
                          'Age','ECG','Hdata','Pdata','Sex','SPdata','Tdata','flag',...
                          'DB_rest','DB_start','DB_end','notes','cell_row_for_pt') %Variables to save
+            end
+        end
+        
+        if make_VAL==1
+            rt1 = 15;
+            rt2 = 30; %Make sure these agree with those above
+
+            val_check = zeros(1,4);
+            for i = 1:4
+                val_check(i) = ~isempty(T{pt,Vals(i,1)}{1});
+            end
+            num_of_vals = sum(val_check);
+            
+            if num_of_vals > 0
+                for i = 1:4
+                    if val_check(i)%1:num_of_vals 
+                        val__rest_start = celltime_to_seconds(T{pt,Vals(i,1)});
+                        val_start = celltime_to_seconds(T{pt,Vals(i,2)});
+                        val_end = celltime_to_seconds(T{pt,Vals(i,3)});
+                        val__rest_end = celltime_to_seconds(T{pt,Vals(i,4)});
+                        
+                        val_times = [val__rest_start,val_rest_end]; %Rest start and Rest end
+                        val_inds = zeros(1,length(val_times));
+                        for j = 1:length(val_inds)
+                            val_inds(j) = find(abs(t-val_times(j)) == min(abs(t-val_times(j))));
+                        end
+                        val_s = val_inds(1):val_inds(2);
+                        val_dat = dat(val_s,:);
+                        cut1_ind = find(abs(dat(:,1)-(val_start-rt1)) == min(abs(dat(:,1)-(val_start-rt1))));
+                        cut2_ind = find(abs(dat(:,1)-(val_end+rt2)) == min(abs(dat(:,1)-(val_end+rt2))));
+                        dat_cut = dat(cut1_ind:cut2_ind,:);
+                        s = (1:100:length(val_dat(:,1)))'; %Sampling vector 2.5 Hz
+                        %Calculate needed quantities before you subsample down
+                        Rdata_not_sampled = makeresp(dat_cut(:,1),dat_cut(:,2),0);%Be careful, I added line 8 in the function, may cause problems.
+                        Rdata = Rdata_not_sampled(s);
+                        pkprom = 25.*ones(max_HPV_num,1);
+                        SPdata_not_sampled = SBPcalc_HRpks(val_dat(:,1),val_dat(:,4),val_dat(:,3),pkprom(pt),0,pt,1,1);
+                        SPdata = SPdata_not_sampled(s);
+                        sdat = val_dat(s,:);
+                        Tdata = sdat(:,1);
+                        ECG = sdat(:,2);
+                        Hdata = sdat(:,3);
+                        Pdata = sdat(:,4);
+                        Pth = zeros(length(Tdata),1);
+                        start_ind = find(abs(Tdata-val_start) == min(abs(Tdata-val_start)));
+                        end_ind = find(abs(Tdata-val_end) == min(abs(Tdata-val_end)));
+                        Pth(start_ind:end_ind) = 40.*ones(length(start_ind:end_ind),1);
+                        
+                        
+                        % FLAGGING SHORTENED REST PERIODS
+                        % "Column" 4 is a 3x1 vector,entries are as follows:
+                        % flag(1) = 1 if rest before valsalva is shorter than rt1, 0 o/w
+                        % flag(2) = 1 if rest after valsalva is shorter than rt2, 0 o/w
+                        % flag(3) = 1 if time between valsalva end and start of next manenuver
+                        % is less than rt2, 0 if this time is larger than rt2 or if flag(2) = 0
+                        flag = zeros(3,1);
+                        if val_start - val_rest_start < rt1
+                            flag(1) = 1;
+                        end
+                        if val_rest_end - val_end < rt2
+                            flag(2) = 1;
+                        end
+                        indices = [HUTstarts HUTends ASstarts ASends Vals(1,2) Vals(2,2) Vals(3,2) Vals(4,2)]
+                        times = zeros(1,7);
+                        for i = 1:7
+                            if ~isempty(T{pt,indices(i)}{1})
+                                times(i)  = cell_time_to_seconds(T{pt,indices(i)}) - val_end;
+                            end
+                        end
+                        times = sort(times,'ascend');
+                        if times(find(times > 0)) < rt2 
+                            flag(3) = 1;
+                        end
+                        save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Deep_Breathing/',pt_id,'_val',num2str(i),'_WS.mat'),... %Name of file
+                         'Age','ECG','Hdata','Pdata','Pth','Rdata','Sex','SPdata','Tdata','flag',...
+                         'val_rest_start','val_start','val_end','val_rest_end','notes','cell_row_for_pt')
+                    end
+                end
+                
             end
         end
     end

@@ -1,5 +1,5 @@
 clear
-T = readtable('PatientInfo06222021.xlsx-Sheet1.csv','Headerlines',2);
+T = readtable('PatientInfo062221.csv','Headerlines',2);
 
 %% New Variables
 num_rows_in_T = 872;
