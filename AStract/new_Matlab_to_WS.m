@@ -296,8 +296,10 @@ for pt=784
             end
         end
         
+        %% Valsalva
+        
         if make_VAL==1
-            rt1 = 15;
+            rt1 = 30;
             rt2 = 30; %Make sure these agree with those above
 
             val_check = zeros(1,4);
@@ -309,12 +311,12 @@ for pt=784
             if num_of_vals > 0
                 for i = 1:4
                     if val_check(i)%1:num_of_vals 
-                        val__rest_start = celltime_to_seconds(T{pt,Vals(i,1)});
+                        val_rest_start = celltime_to_seconds(T{pt,Vals(i,1)});
                         val_start = celltime_to_seconds(T{pt,Vals(i,2)});
                         val_end = celltime_to_seconds(T{pt,Vals(i,3)});
-                        val__rest_end = celltime_to_seconds(T{pt,Vals(i,4)});
+                        val_rest_end = celltime_to_seconds(T{pt,Vals(i,4)});
                         
-                        val_times = [val__rest_start,val_rest_end]; %Rest start and Rest end
+                        val_times = [val_rest_start,val_rest_end]; %Rest start and Rest end
                         val_inds = zeros(1,length(val_times));
                         for j = 1:length(val_inds)
                             val_inds(j) = find(abs(t-val_times(j)) == min(abs(t-val_times(j))));
@@ -325,21 +327,34 @@ for pt=784
                         cut2_ind = find(abs(dat(:,1)-(val_end+rt2)) == min(abs(dat(:,1)-(val_end+rt2))));
                         dat_cut = dat(cut1_ind:cut2_ind,:);
                         s = (1:100:length(val_dat(:,1)))'; %Sampling vector 2.5 Hz
-                        %Calculate needed quantities before you subsample down
-                        Rdata_not_sampled = makeresp(dat_cut(:,1),dat_cut(:,2),0);%Be careful, I added line 8 in the function, may cause problems.
-                        Rdata = Rdata_not_sampled(s);
-                        pkprom = 25.*ones(max_HPV_num,1);
-                        SPdata_not_sampled = SBPcalc_HRpks(val_dat(:,1),val_dat(:,4),val_dat(:,3),pkprom(pt),0,pt,1,1);
-                        SPdata = SPdata_not_sampled(s);
                         sdat = val_dat(s,:);
                         Tdata = sdat(:,1);
                         ECG = sdat(:,2);
                         Hdata = sdat(:,3);
                         Pdata = sdat(:,4);
                         Pth = zeros(length(Tdata),1);
-                        start_ind = find(abs(Tdata-val_start) == min(abs(Tdata-val_start)));
-                        end_ind = find(abs(Tdata-val_end) == min(abs(Tdata-val_end)));
-                        Pth(start_ind:end_ind) = 40.*ones(length(start_ind:end_ind),1);
+                        VALstartind = find(abs(Tdata-val_start) == min(abs(Tdata-val_start)));
+                        VALendind = find(abs(Tdata-val_end) == min(abs(Tdata-val_end)));
+                        VALresteind = find(abs(Tdata-val_rest_end) == min(abs(Tdata-val_rest_end)));
+                        Pth(VALstartind:VALendind) = 40.*ones(length(VALstartind:end_ind),1);
+                        
+                        
+                        %Calculate needed quantities before you subsample down
+                        Rdata_not_sampled = makeresp(dat_cut(:,1),dat_cut(:,2),0);%Be careful, I added line 8 in the function, may cause problems.
+                        Rdata = Rdata_not_sampled(s);
+                        
+                        unsub_rstart_ind = val_inds(1);
+                        unsub_start_ind = find(abs(t-val_start) == min(abs(t-val_start)));
+                        unsub_end_ind = find(abs(t-val_end) == min(abs(t-val_end)));
+                        unsub_rend_ind = val_inds(2);
+                        
+                        
+                        pkprom = 25.*ones(max_HPV_num,1);
+                        SPdata_not_sampledRS = SBPcalc_HRpks(val_dat(unsub_rstart_ind:unsub_start_ind,1),val_dat(unsub_rstart_ind:unsub_start_ind,4),val_dat(unsub_rstart_ind:unsub_start_ind,3),pkprom(pt),0,pt,1,1);
+                        SPdata_not_sampledV = SBPcalc_HRpks(val_dat(unsub_start_ind+1:unsub_end_ind,1),val_dat(unsub_start_ind+1:unsub_end_ind,4),val_dat(unsub_start_ind+1:unsub_end_ind,3),pkprom(pt),0,pt,1,1);
+                        SPdata_not_sampledRE = SBPcalc_HRpks(val_dat(unsub_end_ind+1:unsub_rend_ind,1),val_dat(unsub_end_ind+1:unsub_rend_ind,4),val_dat(unsub_end_ind+1:unsub_rend_ind,3),pkprom(pt),0,pt,1,1);
+                        SPdata = [SPdata_not_sampledRS(1:100:VALstartind) SPdata_not_sampledV(VALstartind+1:100:VALendind) SPdata_not_sampledRE(VALendind+1:100:VALresteind)];
+                        
                         
                         
                         % FLAGGING SHORTENED REST PERIODS
@@ -355,7 +370,7 @@ for pt=784
                         if val_rest_end - val_end < rt2
                             flag(2) = 1;
                         end
-                        indices = [HUTstarts HUTends ASstarts ASends Vals(1,2) Vals(2,2) Vals(3,2) Vals(4,2)]
+                        indices = [HUTstarts ASstarts DBstarts Vals(1,2) Vals(2,2) Vals(3,2) Vals(4,2)];
                         times = zeros(1,7);
                         for i = 1:7
                             if ~isempty(T{pt,indices(i)}{1})
