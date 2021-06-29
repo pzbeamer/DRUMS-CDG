@@ -4,6 +4,11 @@ function [SPdata,pkprom] = SBPcalc_HRpks(Tdata,Pdata,Hdata,pkprom,graphsYoN,inde
     %Run code with output graphs first to eyeball, then comment out. 
     %automate - do you want the algorithm to help determine a pkprom?
     graphs = graphsYoN; %0= no graphs, 1=with graphs
+    
+    maximum = max(Pdata);
+    Pdata = Pdata/maximum;
+    
+   % pkprom=pkprom/maximum;
 
     dt = mean(diff(Tdata));
     
@@ -36,13 +41,13 @@ function [SPdata,pkprom] = SBPcalc_HRpks(Tdata,Pdata,Hdata,pkprom,graphsYoN,inde
         end
         
     end
-
+    
+    Pdata = Pdata*maximum;
+    %pkprom = pkprom*maximum;
     T = [Tdata(1); Tdata(sbploc); Tdata(end)]; %includes first and last time point 
-    P
     P = [Pdata(sbploc(1)); Pdata(sbploc); Pdata(sbploc(end))];
     SP = griddedInterpolant(T,P,'pchip');
     SPdata = SP(Tdata); %Create SBP vector at Tdata time points
-    
     
 
     if graphs == 1

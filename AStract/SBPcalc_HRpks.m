@@ -6,6 +6,7 @@ function [SPdata,pkprom] = SBPcalc_HRpks(Tdata,Pdata,Hdata,pkprom,graphsYoN,inde
     graphs = graphsYoN; %0= no graphs, 1=with graphs
 
     dt = mean(diff(Tdata));
+
     
     flag = 1; %Start with flag = 1 %When to exit loop
     count = 0; %Inifinite loops are bad, can adjust max iterations
@@ -38,6 +39,7 @@ function [SPdata,pkprom] = SBPcalc_HRpks(Tdata,Pdata,Hdata,pkprom,graphsYoN,inde
     end
 
     T = [Tdata(1); Tdata(sbploc); Tdata(end)]; %includes first and last time point 
+
     P = [Pdata(sbploc(1)); Pdata(sbploc); Pdata(sbploc(end))];
     SP = griddedInterpolant(T,P,'pchip');
     SPdata = SP(Tdata); %Create SBP vector at Tdata time points

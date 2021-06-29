@@ -47,15 +47,15 @@ rthut = 270; %desired rest time for HUT
 rtdb = 100; %desired rest time for DB
 make_AS = 0;
 make_HUT = 0;
-make_DB = 1;
-make_VAL = 0;
+make_DB = 0;
+make_VAL = 1;
 
 %% Load In Matlab Files
 %index 50 does not have blood pressure
 %index 784 has issue, not with spread, calibration occurs during it which 
 %might explain it, the issue comes with getting the systolic bp measure
 
-for pt=784
+for pt=29
     pt
     pt_id = T{pt,1}{1}
     if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
@@ -323,9 +323,7 @@ for pt=784
                         end
                         val_s = val_inds(1):val_inds(2);
                         val_dat = dat(val_s,:);
-                        cut1_ind = find(abs(dat(:,1)-(val_start-rt1)) == min(abs(dat(:,1)-(val_start-rt1))));
-                        cut2_ind = find(abs(dat(:,1)-(val_end+rt2)) == min(abs(dat(:,1)-(val_end+rt2))));
-                        dat_cut = dat(cut1_ind:cut2_ind,:);
+ 
                         s = (1:100:length(val_dat(:,1)))'; %Sampling vector 2.5 Hz
                         sdat = val_dat(s,:);
                         Tdata = sdat(:,1);
@@ -336,24 +334,38 @@ for pt=784
                         VALstartind = find(abs(Tdata-val_start) == min(abs(Tdata-val_start)));
                         VALendind = find(abs(Tdata-val_end) == min(abs(Tdata-val_end)));
                         VALresteind = find(abs(Tdata-val_rest_end) == min(abs(Tdata-val_rest_end)));
-                        Pth(VALstartind:VALendind) = 40.*ones(length(VALstartind:end_ind),1);
+                        Pth(VALstartind:VALendind) = 40.*ones(length(VALstartind:VALendind),1);
                         
                         
                         %Calculate needed quantities before you subsample down
-                        Rdata_not_sampled = makeresp(dat_cut(:,1),dat_cut(:,2),0);%Be careful, I added line 8 in the function, may cause problems.
+                        Rdata_not_sampled = makeresp(val_dat(:,1),val_dat(:,2),0);%Be careful, I added line 8 in the function, may cause problems.
                         Rdata = Rdata_not_sampled(s);
                         
-                        unsub_rstart_ind = val_inds(1);
-                        unsub_start_ind = find(abs(t-val_start) == min(abs(t-val_start)));
-                        unsub_end_ind = find(abs(t-val_end) == min(abs(t-val_end)));
-                        unsub_rend_ind = val_inds(2);
+                        unsub_rstart_ind = 1;
+                        unsub_start_ind = find(abs(t-val_start) == min(abs(t-val_start)))-val_inds(1)+1;
+                        unsub_end_ind = find(abs(t-val_end) == min(abs(t-val_end)))-val_inds(1)+1;
+                        %unsub_rend_ind = end;
+                        
+                        pkprom = 5*ones(max_HPV_num,1);
+                        %SPdata_not_sampledRS = SBPcalc_HRpks(val_dat(unsub_rstart_ind:unsub_start_ind,1),val_dat(unsub_rstart_ind:unsub_start_ind,4),val_dat(unsub_rstart_ind:unsub_start_ind,3),pkprom(pt),0,pt,1,1);
+                        %SPdata_not_sampledV = SBPcalc_HRpks(val_dat(unsub_start_ind+1:unsub_end_ind,1),val_dat(unsub_start_ind+1:unsub_end_ind,4),val_dat(unsub_start_ind+1:unsub_end_ind,3),pkprom(pt),0,pt,1,1);
+                        %SPdata_not_sampledRE = SBPcalc_HRpks(val_dat(unsub_end_ind+1:end,1),val_dat(unsub_end_ind+1:end,4),val_dat(unsub_end_ind+1:end,3),pkprom(pt),0,pt,1,1);
                         
                         
-                        pkprom = 25.*ones(max_HPV_num,1);
-                        SPdata_not_sampledRS = SBPcalc_HRpks(val_dat(unsub_rstart_ind:unsub_start_ind,1),val_dat(unsub_rstart_ind:unsub_start_ind,4),val_dat(unsub_rstart_ind:unsub_start_ind,3),pkprom(pt),0,pt,1,1);
-                        SPdata_not_sampledV = SBPcalc_HRpks(val_dat(unsub_start_ind+1:unsub_end_ind,1),val_dat(unsub_start_ind+1:unsub_end_ind,4),val_dat(unsub_start_ind+1:unsub_end_ind,3),pkprom(pt),0,pt,1,1);
-                        SPdata_not_sampledRE = SBPcalc_HRpks(val_dat(unsub_end_ind+1:unsub_rend_ind,1),val_dat(unsub_end_ind+1:unsub_rend_ind,4),val_dat(unsub_end_ind+1:unsub_rend_ind,3),pkprom(pt),0,pt,1,1);
-                        SPdata = [SPdata_not_sampledRS(1:100:VALstartind) SPdata_not_sampledV(VALstartind+1:100:VALendind) SPdata_not_sampledRE(VALendind+1:100:VALresteind)];
+                        %SpRS1=SPdata_not_sampledRS(1:100:end);
+                        %diff1=ceil(length(SPdata_not_sampledRS)/100)-length(SpRS1);
+                        %SpV1=SPdata_not_sampledV(100-diff1:100:end);
+                        %diff2=ceil(length(SPdata_not_sampledV)/100)-length(SpV1);
+                        %SpRE1=SPdata_not_sampledRE(100-diff2:100:end);
+                        %SPdata = [SpRS1' SpV1' SpRE1']';
+                        %figure;
+                        %plot(Tdata,SPdata,'m',Tdata,Pdata,'b');
+                        
+                        SPdata_not_sampled = SBPcalc_HRpks_windows(val_dat(:,1),val_dat(:,4),val_dat(:,3),pkprom(pt),1,pt,1,1);
+                        SPdata = SPdata_not_sampled(s);
+                        %figure;
+                        %plot(Tdata,SPdata,'m',Tdata,Pdata,'b');
+                        return
                         
                         
                         
@@ -372,16 +384,25 @@ for pt=784
                         end
                         indices = [HUTstarts ASstarts DBstarts Vals(1,2) Vals(2,2) Vals(3,2) Vals(4,2)];
                         times = zeros(1,7);
-                        for i = 1:7
-                            if ~isempty(T{pt,indices(i)}{1})
-                                times(i)  = cell_time_to_seconds(T{pt,indices(i)}) - val_end;
+                        for ii = 1:7
+                            if ~isempty(T{pt,indices(ii)}{1})
+                                times(ii)  = celltime_to_seconds(T{pt,indices(ii)}) - val_end;
                             end
                         end
                         times = sort(times,'ascend');
                         if times(find(times > 0)) < rt2 
                             flag(3) = 1;
                         end
-                        save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Deep_Breathing/',pt_id,'_val',num2str(i),'_WS.mat'),... %Name of file
+                        
+                        notes = T{pt,Vals(i,5)};
+                        if ~isempty(notes)
+                            disp(strcat('There are Val',num2str(i),' notes for i=',num2str(pt)))
+                        end
+                        if flag>0
+                            disp(strcat('Val',num2str(i),' rest time does not meet desired for i=',num2str(pt)))
+                        end
+                        
+                        save(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_id,'_val',num2str(i),'_WS.mat'),... %Name of file
                          'Age','ECG','Hdata','Pdata','Pth','Rdata','Sex','SPdata','Tdata','flag',...
                          'val_rest_start','val_start','val_end','val_rest_end','notes','cell_row_for_pt')
                     end
