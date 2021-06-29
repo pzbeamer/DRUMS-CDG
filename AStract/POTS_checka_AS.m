@@ -1,6 +1,6 @@
 clear all
 T=readtable('../Summary_Data_800_Gals/PatientInfo062221.csv');
-load('../Summary_Data_800_Gals/summary.mat','betweenTimes');
+load('../Summary_Data_800_Gals/summary.mat','uniqueTimes');
 pots_possibles=cell(872,1);
 count=1;
 c=0;
@@ -8,7 +8,7 @@ c=0;
 for pt=3:872
    
     T{pt,1}{1}
-    if isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'))
+    if (isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat')) && any(uniqueTimes(2,pt-2)))
         disp("isfile");
         load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'));
         c=c+1;
@@ -16,7 +16,7 @@ for pt=3:872
         %end_ind=last index
         start_ind=find(abs(Tdata-AS_start)==min(abs(Tdata-AS_start)));
         end_avg_ind=find(abs(Tdata-(AS_start-5))==min(abs(Tdata-(AS_start-5))));
-        if betweenTimes(2,pt-2)<30
+        if uniqueTimes(2,pt-2)<30
             begin_avg_ind=1;
         else
             begin_avg_ind=find(abs(Tdata-(AS_start-30))==min(abs(Tdata-(AS_start-30))));
