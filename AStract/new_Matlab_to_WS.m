@@ -55,7 +55,7 @@ make_VAL = 1;
 %index 784 has issue, not with spread, calibration occurs during it which 
 %might explain it, the issue comes with getting the systolic bp measure
 
-for pt=29
+for pt=3:872
     pt
     pt_id = T{pt,1}{1}
     if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
@@ -157,7 +157,7 @@ for pt=29
                 s = (1:100:length(AS_dat(:,1)))'; %Sampling vector 2.5 Hz
                 %Calculate needed quantities before you subsample down
                 pkprom = 25.*ones(max_HPV_num,1);
-                SPdata_not_sampled = SBPcalc_HRpks(AS_dat(:,1),AS_dat(:,4),AS_dat(:,3),pkprom(pt),0,pt,1,1);
+                SPdata_not_sampled = SBPcalc_HRpks_scaled(AS_dat(:,1),AS_dat(:,4),AS_dat(:,3),pkprom(pt),0,pt,1,1);
                 SPdata = SPdata_not_sampled(s);
                 sdat = AS_dat(s,:);
                 Tdata = sdat(:,1);
@@ -212,7 +212,7 @@ for pt=29
                 s = (1:100:length(HUT_dat(:,1)))'; %Sampling vector 2.5 Hz
                 %Calculate needed quantities before you subsample down
                 pkprom = 25.*ones(max_HPV_num,1);
-                SPdata_not_sampled = SBPcalc_HRpks(HUT_dat(:,1),HUT_dat(:,4),HUT_dat(:,3),pkprom(pt),0,pt,1,1);
+                SPdata_not_sampled = SBPcalc_HRpks_scaled(HUT_dat(:,1),HUT_dat(:,4),HUT_dat(:,3),pkprom(pt),0,pt,1,1);
                 SPdata = SPdata_not_sampled(s);
                 sdat = HUT_dat(s,:);
                 Tdata = sdat(:,1);
@@ -265,7 +265,7 @@ for pt=29
                 s = (1:100:length(DB_dat(:,1)))'; %Sampling vector 2.5 Hz
                 %Calculate needed quantities before you subsample down
                 pkprom = 25.*ones(max_HPV_num,1);
-                SPdata_not_sampled = SBPcalc_HRpks(DB_dat(:,1),DB_dat(:,4),DB_dat(:,3),pkprom(pt),0,pt,1,1);
+                SPdata_not_sampled = SBPcalc_HRpks_scaled(DB_dat(:,1),DB_dat(:,4),DB_dat(:,3),pkprom(pt),0,pt,1,1);
                 SPdata = SPdata_not_sampled(s);
                 sdat = DB_dat(s,:);
                 Tdata = sdat(:,1);
@@ -346,7 +346,7 @@ for pt=29
                         unsub_end_ind = find(abs(t-val_end) == min(abs(t-val_end)))-val_inds(1)+1;
                         %unsub_rend_ind = end;
                         
-                        pkprom = 5*ones(max_HPV_num,1);
+                        pkprom = .08*ones(max_HPV_num,1);
                         %SPdata_not_sampledRS = SBPcalc_HRpks(val_dat(unsub_rstart_ind:unsub_start_ind,1),val_dat(unsub_rstart_ind:unsub_start_ind,4),val_dat(unsub_rstart_ind:unsub_start_ind,3),pkprom(pt),0,pt,1,1);
                         %SPdata_not_sampledV = SBPcalc_HRpks(val_dat(unsub_start_ind+1:unsub_end_ind,1),val_dat(unsub_start_ind+1:unsub_end_ind,4),val_dat(unsub_start_ind+1:unsub_end_ind,3),pkprom(pt),0,pt,1,1);
                         %SPdata_not_sampledRE = SBPcalc_HRpks(val_dat(unsub_end_ind+1:end,1),val_dat(unsub_end_ind+1:end,4),val_dat(unsub_end_ind+1:end,3),pkprom(pt),0,pt,1,1);
@@ -361,7 +361,7 @@ for pt=29
                         %figure;
                         %plot(Tdata,SPdata,'m',Tdata,Pdata,'b');
                         
-                        SPdata_not_sampled = SBPcalc_HRpks_windows(val_dat(:,1),val_dat(:,4),val_dat(:,3),pkprom(pt),1,pt,1,1);
+                        SPdata_not_sampled = SBPcalc_HRpks_scaled(val_dat(:,1),val_dat(:,4),val_dat(:,3),pkprom(pt),1,pt,1,1);
                         SPdata = SPdata_not_sampled(s);
                         %figure;
                         %plot(Tdata,SPdata,'m',Tdata,Pdata,'b');

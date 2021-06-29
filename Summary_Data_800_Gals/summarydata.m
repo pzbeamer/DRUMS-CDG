@@ -227,7 +227,7 @@ for pt = 3:num_rows_in_T%500:500 %Done through 500
             end
             %update oldswitches to new patient
             oldswitches = switches;
-            n = 0;
+            n = 0;  
         else
             n = n +1;
             for i = 2:8 %If a patient isn't unique, they still might have data their previous visits didn't

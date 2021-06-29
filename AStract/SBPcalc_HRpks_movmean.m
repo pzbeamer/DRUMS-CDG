@@ -5,8 +5,9 @@ function [SPdata,pkprom] = SBPcalc_HRpks(Tdata,Pdata,Hdata,pkprom,graphsYoN,inde
     %automate - do you want the algorithm to help determine a pkprom?
     graphs = graphsYoN; %0= no graphs, 1=with graphs
     
+    
     maximum = max(Pdata);
-    Pdata = Pdata/maximum;
+    Pdata_scaled = (Pdata-movmean(Pdata,100))/maximum;
     
    % pkprom=pkprom/maximum;
 
@@ -15,10 +16,10 @@ function [SPdata,pkprom] = SBPcalc_HRpks(Tdata,Pdata,Hdata,pkprom,graphsYoN,inde
     flag = 1; %Start with flag = 1 %When to exit loop
     count = 0; %Inifinite loops are bad, can adjust max iterations
     max_iterations = 5;
-    tol = .05; %Arbitrary, seems to work nicely though
+    tol = -.05; %Arbitrary, seems to work nicely though
     while flag == 1 && count <= max_iterations
 %         [~,sbploc] = findpeaks(Pdata,'MinPeakDistance',round(.25/dt),'MinPeakProminence',pkprom); %Find pks in BP
-        [~,sbploc] = findpeaks(Pdata,'MinPeakDistance',round(.25/dt),'MinPeakProminence',pkprom); %Find pks in BP
+        [~,sbploc] = findpeaks(Pdata_scaled,'MinPeakDistance',round(.25/dt),'MinPeakProminence',pkprom); %Find pks in BP
         if automate == 0
             break % If you don't want the algoritm the while loop breaks here
         end
@@ -42,7 +43,7 @@ function [SPdata,pkprom] = SBPcalc_HRpks(Tdata,Pdata,Hdata,pkprom,graphsYoN,inde
         
     end
     
-    Pdata = Pdata*maximum;
+   
     %pkprom = pkprom*maximum;
     T = [Tdata(1); Tdata(sbploc); Tdata(end)]; %includes first and last time point 
     P = [Pdata(sbploc(1)); Pdata(sbploc); Pdata(sbploc(end))];
@@ -55,14 +56,14 @@ function [SPdata,pkprom] = SBPcalc_HRpks(Tdata,Pdata,Hdata,pkprom,graphsYoN,inde
         clf
         
         hold on
-      %rectangle('Position',[153.8 60 1.2 100],'FaceColor',[.6 .6 .6])
-      %rectangle('Position',[155 60 12.8 100],'FaceColor',[.8 .8 .8])
-      %rectangle('Position',[167.8 60 1.2 100],'FaceColor',[.6 .6 .6])
-      %rectangle('Position',[169 60 16 100],'FaceColor',[.8 .8 .8])
+      rectangle('Position',[153.8 60 1.2 100],'FaceColor',[.6 .6 .6])
+      rectangle('Position',[155 60 12.8 100],'FaceColor',[.8 .8 .8])
+      rectangle('Position',[167.8 60 1.2 100],'FaceColor',[.6 .6 .6])
+      rectangle('Position',[169 60 16 100],'FaceColor',[.8 .8 .8])
         plot(Tdata,Pdata,'b')
         plot(Tdata,SPdata,'r','LineWidth',2)
-     % xline(160,'k--')
-      %xlim([140,200])
+      xline(160,'k--')
+      xlim([140,200])
       title(strcat('i=',num2str(index),'val_num=',num2str(val_num)))
         set(gca,'fontsize',18)
         set(gca,'Fontsize',20)
