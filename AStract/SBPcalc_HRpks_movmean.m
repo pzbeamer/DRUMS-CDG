@@ -56,14 +56,14 @@ function [SPdata,pkprom] = SBPcalc_HRpks(Tdata,Pdata,Hdata,pkprom,graphsYoN,inde
         clf
         
         hold on
-      rectangle('Position',[153.8 60 1.2 100],'FaceColor',[.6 .6 .6])
-      rectangle('Position',[155 60 12.8 100],'FaceColor',[.8 .8 .8])
-      rectangle('Position',[167.8 60 1.2 100],'FaceColor',[.6 .6 .6])
-      rectangle('Position',[169 60 16 100],'FaceColor',[.8 .8 .8])
+      %rectangle('Position',[153.8 60 1.2 100],'FaceColor',[.6 .6 .6])
+      %rectangle('Position',[155 60 12.8 100],'FaceColor',[.8 .8 .8])
+      %rectangle('Position',[167.8 60 1.2 100],'FaceColor',[.6 .6 .6])
+      %rectangle('Position',[169 60 16 100],'FaceColor',[.8 .8 .8])
         plot(Tdata,Pdata,'b')
         plot(Tdata,SPdata,'r','LineWidth',2)
-      xline(160,'k--')
-      xlim([140,200])
+      %xline(160,'k--')
+      %xlim([140,200])
       title(strcat('i=',num2str(index),'val_num=',num2str(val_num)))
         set(gca,'fontsize',18)
         set(gca,'Fontsize',20)

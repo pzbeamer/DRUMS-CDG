@@ -1,4 +1,4 @@
-function [SPdata,pkprom] = SBPcalc_HRpks(Tdata,Pdata,Hdata,pkprom,graphsYoN,index,val_num,automate)
+function [SPdata,pkprom] = SBPcalc_HRpks_scaled(Tdata,Pdata,Hdata,pkprom,graphsYoN,index,val_num,automate)
     %Determine SBP signal 
     %Pkprm := MinPeakProminence, usually 25 is good but may need to go lower
     %Run code with output graphs first to eyeball, then comment out. 
