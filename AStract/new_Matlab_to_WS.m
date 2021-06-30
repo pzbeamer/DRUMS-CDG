@@ -1,5 +1,5 @@
 clear all
-T = readtable('../Summary_Data_800_Gals/PatientInfo062221.csv','Headerlines',2);
+T = readtable('../Summary_Data_800_Gals/PatientInfo_063021.csv','Headerlines',2);
 % Td = readtable('../HPV_demographic_info_2_9_21.csv'); %THIS WILL PRODUCE WARNINGS BUT IT'S FINE d = demographics
 % HPV_numbers = Td.HPV_nummer;
 % Ages = Td.Alder;
@@ -66,7 +66,7 @@ make_VAL = 1;
 %     = 784
 %     = 808
 
-for pt=3:47
+for pt=3:500
     pt
     pt_id = T{pt,1}{1}
     if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
@@ -357,7 +357,7 @@ for pt=3:47
                         unsub_end_ind = find(abs(t-val_end) == min(abs(t-val_end)))-val_inds(1)+1;
                         %unsub_rend_ind = end;
                         
-                        pkprom = .15*ones(max_HPV_num,1);
+                        %pkprom = .15*ones(max_HPV_num,1);
                         %SPdata_not_sampledRS = SBPcalc_HRpks(val_dat(unsub_rstart_ind:unsub_start_ind,1),val_dat(unsub_rstart_ind:unsub_start_ind,4),val_dat(unsub_rstart_ind:unsub_start_ind,3),pkprom(pt),0,pt,1,1);
                         %SPdata_not_sampledV = SBPcalc_HRpks(val_dat(unsub_start_ind+1:unsub_end_ind,1),val_dat(unsub_start_ind+1:unsub_end_ind,4),val_dat(unsub_start_ind+1:unsub_end_ind,3),pkprom(pt),0,pt,1,1);
                         %SPdata_not_sampledRE = SBPcalc_HRpks(val_dat(unsub_end_ind+1:end,1),val_dat(unsub_end_ind+1:end,4),val_dat(unsub_end_ind+1:end,3),pkprom(pt),0,pt,1,1);
