@@ -13,7 +13,7 @@ function Func_DriverBasic_p(pt_file_name,restTime)
     printon = 0; 
 
     %% Load data and preprocess data 
-    load(strcat('Valsalva/',pt_file_name)); %Load workspace
+    load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_file_name)); %Load workspace
     %  load ../HPV6_20131029_Val1_WS.mat 
     
     dt = mean(diff(Tdata));

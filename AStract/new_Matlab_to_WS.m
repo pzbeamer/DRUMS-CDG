@@ -56,18 +56,6 @@ make_VAL = 1;
 %might explain it, the issue comes with getting the systolic bp measure
 
 
-%Errors to resolve:
-%ptid = 6 
-%     = 47
-%     = 80
-%     = 181
-%     = 189
-%     = 215
-%     = 249
-%     = 250
-%     = 284
-
-
 
 for pt=609:872
 
