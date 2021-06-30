@@ -1,6 +1,6 @@
 
 
-function [SPdata] = SBPcalc_ben(Tdata,Pdata,graphsYoN)
+function [SPdata S] = SBPcalc_ben(Tdata,Pdata,graphsYoN)
 
 
 
@@ -14,7 +14,7 @@ function [SPdata] = SBPcalc_ben(Tdata,Pdata,graphsYoN)
     %% Filter out oscillations due to respiration at .1 Hz 
 
 
-    Pmean = movmean(Pdata,round(1/.1)); 
+    Pmean = movmean(Pdata,round(1/dt)); 
 
     if figson == 1
         figure
@@ -39,14 +39,14 @@ function [SPdata] = SBPcalc_ben(Tdata,Pdata,graphsYoN)
 
     % Find all peaks that are a minimum of .15 s apart. We use 0.15 s to so 
     % that we don't pick up dicrotic notches as SBP peaks 
-    [~,z] = findpeaks(BaselinecorrectedP,'MinPeakDistance',round(.15/dt)); 
+    [~,z] = findpeaks(BaselinecorrectedP,'MinPeakDistance',round(.2/dt)); 
 
     % Find the mean height of all the peaks 
     zz = mean(BaselinecorrectedP(z)); 
 
     % Find the peaks again that greater than 1/2 of the mean of the height of
     % all the peaks 
-    [~,iSP] = findpeaks(BaselinecorrectedP,'MinPeakHeight',zz/2,'MinPeakDistance',round(.15/dt)); 
+    [~,iSP] = findpeaks(BaselinecorrectedP,'MinPeakHeight',zz/2,'MinPeakDistance',round(.2/dt)); 
 
     % Assign vectors for the SBP interpolant. We need to have the first and
     % last time points to ensure the interpolant doesn't do crazy stuff at the
@@ -60,15 +60,15 @@ function [SPdata] = SBPcalc_ben(Tdata,Pdata,graphsYoN)
 
     if figson == 1
 
-        figure
+        
         hold on 
-        plot(Tdata,BaselinecorrectedP(iSP),'ro')
+        plot(Tdata(iSP),BaselinecorrectedP(iSP),'ro')
 
         figure
         
         hold on 
-        plot(Tdata(iSP),Pdata(iSP),'b')
-        plot(Tdata(iSP),SPdata1,'r')
+        plot(Tdata,Pdata,'b')
+        plot(Tdata,SPdata1,'r')
 
     end
 
