@@ -68,7 +68,10 @@ make_VAL = 1;
 %     = 284
 
 
+
 for pt=3:872
+
+
     pt
     pt_id = T{pt,1}{1}
     if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
@@ -375,12 +378,16 @@ for pt=3:872
                         %plot(Tdata,SPdata,'m',Tdata,Pdata,'b');
                         
                         %SPdata_not_sampled = SBPcalc_HRpks_ben(Tdata,Pdata,1);
+
                         [SPdata S] = SBPcalc_ben(val_dat(:,1),val_dat(:,4),1);
                         SPdata = SPdata(s);
                         %SPdata2 = S(val_dat(s,1));
                         %figure(15);
                         %clf
                         %plot(Tdata,SPdata1,'g',val_dat(:,1),val_dat(:,4),'b',Tdata,SPdata2,'r');
+
+                        
+                        
                         
                         
                         
