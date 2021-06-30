@@ -69,7 +69,7 @@ make_VAL = 1;
 
 
 
-for pt=3:872
+for pt=500:872
 
 
     pt
@@ -173,8 +173,8 @@ for pt=3:872
                 s = (1:100:length(AS_dat(:,1)))'; %Sampling vector 2.5 Hz
                 %Calculate needed quantities before you subsample down
                 pkprom = 25.*ones(max_HPV_num,1);
-                SPdata_not_sampled = SBPcalc_HRpks_scaled(AS_dat(:,1),AS_dat(:,4),AS_dat(:,3),pkprom(pt),0,pt,1,1);
-                SPdata = SPdata_not_sampled(s);
+                [SPdata S] = SBPcalc_ben(AS_dat(:,1),AS_dat(:,4),1);
+                SPdata = SPdata(s);
                 sdat = AS_dat(s,:);
                 Tdata = sdat(:,1);
                 ECG = sdat(:,2);
@@ -228,8 +228,8 @@ for pt=3:872
                 s = (1:100:length(HUT_dat(:,1)))'; %Sampling vector 2.5 Hz
                 %Calculate needed quantities before you subsample down
                 pkprom = 25.*ones(max_HPV_num,1);
-                SPdata_not_sampled = SBPcalc_HRpks_scaled(HUT_dat(:,1),HUT_dat(:,4),HUT_dat(:,3),pkprom(pt),0,pt,1,1);
-                SPdata = SPdata_not_sampled(s);
+                [SPdata S] = SBPcalc_ben(HUT_dat(:,1),HUT_dat(:,4),1);
+                SPdata = SPdata(s);
                 sdat = HUT_dat(s,:);
                 Tdata = sdat(:,1);
                 ECG = sdat(:,2);
@@ -281,8 +281,8 @@ for pt=3:872
                 s = (1:100:length(DB_dat(:,1)))'; %Sampling vector 2.5 Hz
                 %Calculate needed quantities before you subsample down
                 pkprom = 25.*ones(max_HPV_num,1);
-                SPdata_not_sampled = SBPcalc_HRpks_scaled(DB_dat(:,1),DB_dat(:,4),DB_dat(:,3),pkprom(pt),0,pt,1,1);
-                SPdata = SPdata_not_sampled(s);
+                [SPdata S] = SBPcalc_ben(DB_dat(:,1),DB_dat(:,4),1);
+                SPdata = SPdata(s);
                 sdat = DB_dat(s,:);
                 Tdata = sdat(:,1);
                 ECG = sdat(:,2);
@@ -357,27 +357,6 @@ for pt=3:872
                         Rdata_not_sampled = makeresp(val_dat(:,1),val_dat(:,2),0);%Be careful, I added line 8 in the function, may cause problems.
                         Rdata = Rdata_not_sampled(s);
                         
-                        unsub_rstart_ind = 1;
-                        unsub_start_ind = find(abs(t-val_start) == min(abs(t-val_start)))-val_inds(1)+1;
-                        unsub_end_ind = find(abs(t-val_end) == min(abs(t-val_end)))-val_inds(1)+1;
-                        %unsub_rend_ind = end;
-                        
-                        %pkprom = .15*ones(max_HPV_num,1);
-                        %SPdata_not_sampledRS = SBPcalc_HRpks(val_dat(unsub_rstart_ind:unsub_start_ind,1),val_dat(unsub_rstart_ind:unsub_start_ind,4),val_dat(unsub_rstart_ind:unsub_start_ind,3),pkprom(pt),0,pt,1,1);
-                        %SPdata_not_sampledV = SBPcalc_HRpks(val_dat(unsub_start_ind+1:unsub_end_ind,1),val_dat(unsub_start_ind+1:unsub_end_ind,4),val_dat(unsub_start_ind+1:unsub_end_ind,3),pkprom(pt),0,pt,1,1);
-                        %SPdata_not_sampledRE = SBPcalc_HRpks(val_dat(unsub_end_ind+1:end,1),val_dat(unsub_end_ind+1:end,4),val_dat(unsub_end_ind+1:end,3),pkprom(pt),0,pt,1,1);
-                        
-                        
-                        %SpRS1=SPdata_not_sampledRS(1:100:end);
-                        %diff1=ceil(length(SPdata_not_sampledRS)/100)-length(SpRS1);
-                        %SpV1=SPdata_not_sampledV(100-diff1:100:end);
-                        %diff2=ceil(length(SPdata_not_sampledV)/100)-length(SpV1);
-                        %SpRE1=SPdata_not_sampledRE(100-diff2:100:end);
-                        %SPdata = [SpRS1' SpV1' SpRE1']';
-                        %figure;
-                        %plot(Tdata,SPdata,'m',Tdata,Pdata,'b');
-                        
-                        %SPdata_not_sampled = SBPcalc_HRpks_ben(Tdata,Pdata,1);
 
                         [SPdata S] = SBPcalc_ben(val_dat(:,1),val_dat(:,4),1);
                         SPdata = SPdata(s);
