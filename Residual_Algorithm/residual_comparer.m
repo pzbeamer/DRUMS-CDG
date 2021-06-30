@@ -6,7 +6,7 @@ load File_name_cell_06072021_short.mat
 q = [1 3 5 6 8 9 10 14 17 24 29 30];
 
 for i=1:length(q)
-    u{i} = strcat(cell_of_file_names{q(i),1}(1:end-9))
+    u{i} = strcat(cell_of_file_names{q(i),1}(1:end-9));
 end
 
 for j = 1:length(u)
@@ -36,8 +36,8 @@ for j = 1:length(u)
         HR_LM = Func_DriverBasic_LM_p(nomHRfile,INDMAP);
     
         %calculate residual error
-        start = find(Tdata == val_start);
-        slut = find(Tdata == val_end);
+        start = min(find(Tdata >= val_start));
+        slut = min(find(Tdata >= val_end));
         scaler = sqrt(length(Hdata(start:slut)))
         error(i+1,1) = norm((Hdata(start:slut)-HR_LM(start:slut))./Hdata(start:slut)/scaler);
         error(i+1,2) = (max(Hdata(start:slut)) - max(HR_LM(start:slut)))/max(Hdata(start:slut));
@@ -51,11 +51,9 @@ for j = 1:length(u)
     end
     %plots
         clear h
-        load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_',num2str(30 - 5*i),'_nomHR.mat'))
-        load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_',num2str(30 - 5*i),'_optHRsub3tau.mat'))
-
-        load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_',num2str(30 - 5*i),'_optHRsub2no8.mat'))
-    
+        num = min(error(:,1));
+        load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_',num2str(30 - 5*num),'_nomHR.mat'))
+        load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_',num2str(30 - 5*num),'_optHRsub1.mat'))    
         h = figure(j+1);
         set(gcf,'units','normalized','outerposition',[0.2 0.2 .5 .5])
         % BP
@@ -165,9 +163,7 @@ for j = 1:length(u)
         
         hold off
 
-        fig_name = strcat('sub3tauFIG_',u{j},'_',num2str(30 - 5*i));
-
-        fig_name = strcat('sub2no8FIG_',u{j},'_',num2str(30 - 5*i));
+        fig_name = strcat('sub1FIG_',u{j},'_',num2str(30 - 5*i));
         print(h,fig_name,'-dpng','-r400');
 end
 %identify which rest length did the best
