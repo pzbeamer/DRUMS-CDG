@@ -1,5 +1,5 @@
 clear
-T = readtable('PatientInfo062221.csv','Headerlines',2);
+T = readtable('PatientInfo_063021.csv','Headerlines',2);
 
 %% New Variables
 num_rows_in_T = 872;
@@ -19,6 +19,9 @@ oldswitches = zeros(8,1); %tracks each unique patient's # of maneuvers
 timesBefore = zeros(1,num_rows_in_T);
 n = 0;
 oldpat = "HPV1";
+
+%NG
+ng = cell(1,872);
 
 
 
@@ -151,6 +154,12 @@ for pt = 3:num_rows_in_T%500:500 %Done through 500
        end
     end
     num_of_vals = sum(val_check);
+    
+    %% Nitroglycerin
+    if ~isempty(T{pt,HUTNG}{1})
+        ng(1,pt-2) = T{pt,HUTNG};
+    end
+    
     
     %% Times between maneuvers
     %order times of maneuvers
