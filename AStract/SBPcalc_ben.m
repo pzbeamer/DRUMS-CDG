@@ -39,7 +39,7 @@ function [SPdata S] = SBPcalc_ben(Tdata,Pdata,graphsYoN)
 
     % Find all peaks that are a minimum of .15 s apart. We use 0.15 s to so 
     % that we don't pick up dicrotic notches as SBP peaks 
-    [~,z] = findpeaks(BaselinecorrectedP,'MinPeakDistance',round(.2/dt)); 
+    [~,z] = findpeaks(BaselinecorrectedP,'MinPeakDistance',round(.3/dt)); 
 
     % Find the mean height of all the peaks 
     zz = mean(BaselinecorrectedP(z)); 

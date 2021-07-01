@@ -65,7 +65,7 @@ for j = 1:length(u)
         plot(ones(2,1)*val_end,Plims,'k--')
         plot(ones(2,1)*Tdata(i_t3),Plims,'k--')
         plot(ones(2,1)*Tdata(i_t4),Plims,'k--')
-        plot(Tdata,Pdata,'b')
+        plot(val_dat(:,1),val_dat(:,4),'b')
         plot(Tdata,SPdata,'b','linewidth',2)
 
         set(gca,'FontSize',15)

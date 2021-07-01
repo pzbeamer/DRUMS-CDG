@@ -60,7 +60,7 @@ make_VAL = 1;
 
 
 
-for pt=500:872
+for pt=85
 
 
     pt
@@ -353,7 +353,7 @@ for pt=500:872
                    
                        
 
-                        [SPdata S] = SBPcalc_ben(val_dat(:,1),val_dat(:,4),0);
+                        [SPdata S] = SBPcalc_ben(val_dat(:,1),val_dat(:,4),1);
                         SPdata = SPdata(s);
                         %SPdata2 = S(val_dat(s,1));
                         %figure(15);
