@@ -66,7 +66,7 @@ make_VAL = 1;
 %Many patients will not have any data, and if this is the case no figures
 %will show up. If that happens just move on to the next one.
 
-for pt=85
+for pt=9
 
     %% PREPROCESS DATA AND STUFF (SOPHIE CAN IGNORE)
     pt
