@@ -1,7 +1,7 @@
 %% READ TABLE (SOPHIE CAN IGNORE)
 
 clear all  
-T = readtable('../Summary_Data_800_Gals/PatientInfo_063021.csv','Headerlines',2);
+T = readtable('PatientInfo_063021.csv','Headerlines',2);
 % Td = readtable('../HPV_demographic_info_2_9_21.csv'); %THIS WILL PRODUCE WARNINGS BUT IT'S FINE d = demographics
 % HPV_numbers = Td.HPV_nummer;
 % Ages = Td.Alder;
