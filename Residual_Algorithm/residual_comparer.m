@@ -10,7 +10,7 @@ for i=1:length(q)
     u{i} = strcat(cell_of_file_names{q(i),1}(1:end-9));
 end
 
-for j = 1:length(u) 
+for j = 2%:length(u) 
     u{j};
     %optimizing
     pt_name = strcat(u{j},'_val1_WS.mat'); 

@@ -52,7 +52,7 @@ make_HUT = 0;
 make_DB = 0;
 make_VAL = 1;
 
-%% Load In Matlab Files (SOPHIE CAN IGNORE)
+%% Load In Matlab Files 
 %index 50 does not have blood pressure
 %index 784 has issue, not with spread, calibration occurs during it which 
 %might explain it, the issue comes with getting the systolic bp measure
@@ -357,12 +357,15 @@ for pt=85
 
                      
                    
-%% SOPHIE SPOT
-
-%Change this minPeakDistance variable whenever the systolic blood pressure figures look bad. Remember
-%increasing minPeakDistance captures more peaks and decreasing it captures fewer. Also, try stay
-%within like .1-.5 as values. If no values in there work just pick the least bad one you can find.
-
+                        %% SOPHIE SPOT
+                        
+                        %Change this minPeakDistance variable whenever the
+                        %systolic blood pressure figures look bad. Remember
+                        %increasing minPeakDistance captures more peaks,
+                        %and decreasing it captures fewer. Also, try stay
+                        %within like .1-.5 as values. If no values in there
+                        %work just pick the least bad one you can find.
+                        
                         
                         minPeakDistance = .30;
                         [SPdata S] = SBPcalc_ben(val_dat(:,1),val_dat(:,4),minPeakDistance,1);
