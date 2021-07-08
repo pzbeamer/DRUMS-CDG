@@ -4,13 +4,13 @@ close all
 
 load File_name_cell_06072021_short.mat   
 %q = [1 3 5 6 8 9 10 14 17 24 29 30];
-q = [1 6 9 24 30];
+q = [1];
 
 for i=1:length(q)
     u{i} = strcat(cell_of_file_names{q(i),1}(1:end-9));
 end
 
-for j = 2%:length(u) 
+for j = 1%:length(u) 
     u{j};
     %optimizing
     pt_name = strcat(u{j},'_val1_WS.mat'); 
