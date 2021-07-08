@@ -3,13 +3,14 @@ close all
 %patient to read
 
 load File_name_cell_06072021_short.mat   
-q = [1 3 5 6 8 9 10 14 17 24 29 30];
+%q = [1 3 5 6 8 9 10 14 17 24 29 30];
+q = [1 6 9 24 30];
 
 for i=1:length(q)
     u{i} = strcat(cell_of_file_names{q(i),1}(1:end-9));
 end
 
-for j = 1:length(u)
+for j = 2%:length(u) 
     u{j};
     %optimizing
     pt_name = strcat(u{j},'_val1_WS.mat'); 
@@ -23,9 +24,9 @@ for j = 1:length(u)
     %INDMAP = [1 5 6 7 8 9 10 12 20 21 ]; %subset 5
     %}
     %residual error vector
-    INDMAP = [1 6 7 8 9 10 12 20 21];
-    error = zeros(5,2);
+    INDMAP = [1 6 8 9 10 20 21];
 
+    error  = zeros(5,2);
     for i = 0:4
         %call forward evaluation with 30-5*i second rest periods
         Func_DriverBasic_p(pt_name,[30 - 5*i 30]);
@@ -51,9 +52,18 @@ for j = 1:length(u)
     end
     %plots
         clear h
-        num = min(error(:,1));
-        load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_',num2str(30 - 5*num),'_nomHR.mat'))
-        load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_',num2str(30 - 5*num),'_optHRsub1.mat'))    
+        
+     
+        if i == 4
+            num = find(error(:,1) == min(error(:,1)))-1;
+            load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_',num2str(30 - 5*num),'_nomHR.mat'))
+            load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_',num2str(30 - 5*num),'_optHRsub1.mat'))
+        else
+            load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_',num2str(30 - 5*i),'_nomHR.mat'))
+            load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_',num2str(30 - 5*i),'_optHRsub1.mat'))
+        end
+          
+        
         h = figure(j+1);
         set(gcf,'units','normalized','outerposition',[0.2 0.2 .5 .5])
         % BP
@@ -65,7 +75,7 @@ for j = 1:length(u)
         plot(ones(2,1)*val_end,Plims,'k--')
         plot(ones(2,1)*Tdata(i_t3),Plims,'k--')
         plot(ones(2,1)*Tdata(i_t4),Plims,'k--')
-        plot(Tdata,Pdata,'b')
+        plot(val_dat(:,1),val_dat(:,4),'b')
         plot(Tdata,SPdata,'b','linewidth',2)
 
         set(gca,'FontSize',15)
@@ -105,7 +115,7 @@ for j = 1:length(u)
         set(gca,'FontSize',15)
         xlim(Tlims)
         ylim(Hlims)
-        xlabel('Time (s)')
+        
         ylabel('HR (bpm)')
         title('Nominal')
     
@@ -124,7 +134,7 @@ for j = 1:length(u)
         set(gca,'FontSize',15)
         xlim(Tlims)
         ylim(Hlims)
-        xlabel('Time (s)')
+        
         ylabel('HR (bpm)')
         title('Optimized')
 
@@ -138,10 +148,12 @@ for j = 1:length(u)
         plot(ones(2,1)*Tdata(i_t3),2,'k--')
         plot(ones(2,1)*Tdata(i_t4),2,'k--')
         plot(Tdata,Tpb_LM,'color',[.5 0 .5],'linewidth',2) % purple parasympathetic
+        ylim([0 2])
+        yyaxis right 
         plot(Tdata,Ts_LM,'color',[0 0.75 .75],'linewidth',2)  % slightly darker green than the 'g' command
         set(gca,'FontSize',15)
         xlim(Tlims)
-        ylim([0 2])
+        
         xlabel('Time (s)')
         ylabel('Outflow')
     

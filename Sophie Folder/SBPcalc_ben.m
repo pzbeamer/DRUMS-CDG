@@ -5,8 +5,6 @@ function [SPdata S] = SBPcalc_ben(Tdata,Pdata,minPeakDist,graphsYoN)
 
 
     figson = graphsYoN; 
-
-
     dt = mean(diff(Tdata)); 
 
     %Pdata = Pdata/max(Pdata); 
@@ -18,7 +16,6 @@ function [SPdata S] = SBPcalc_ben(Tdata,Pdata,minPeakDist,graphsYoN)
 
     if figson == 1
         figure
-        
         hold on 
         plot(Tdata,Pdata,'b')
         plot(Tdata,Pmean,'r','linewidth',2)

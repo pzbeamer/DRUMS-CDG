@@ -1,7 +1,7 @@
 %% READ TABLE (SOPHIE CAN IGNORE)
 
 clear all  
-T = readtable('../Summary_Data_800_Gals/PatientInfo_063021.csv','Headerlines',2);
+T = readtable('PatientInfo_063021.csv','Headerlines',2);
 % Td = readtable('../HPV_demographic_info_2_9_21.csv'); %THIS WILL PRODUCE WARNINGS BUT IT'S FINE d = demographics
 % HPV_numbers = Td.HPV_nummer;
 % Ages = Td.Alder;
@@ -66,7 +66,7 @@ make_VAL = 1;
 %Many patients will not have any data, and if this is the case no figures
 %will show up. If that happens just move on to the next one.
 
-for pt=9
+for pt=37
 
     %% PREPROCESS DATA AND STUFF (SOPHIE CAN IGNORE)
     pt
@@ -314,7 +314,6 @@ for pt=9
         if make_VAL==1
             rt1 = 30;
             rt2 = 30; %Make sure these agree with those above
-
             val_check = zeros(1,4);
             for i = 1:4
                 val_check(i) = ~isempty(T{pt,Vals(i,1)}{1});

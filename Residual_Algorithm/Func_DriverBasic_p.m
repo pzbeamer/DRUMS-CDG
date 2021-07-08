@@ -18,6 +18,7 @@ function Func_DriverBasic_p(pt_file_name,restTime)
     
     dt = mean(diff(Tdata));
     
+    
     %Calculate length of time before valsalva
     
     timeAvailableS = val_start - Tdata(1);
@@ -40,17 +41,22 @@ function Func_DriverBasic_p(pt_file_name,restTime)
     %Cut all the data out
     startTime = find(Tdata > Tdata(1) + timeCutS);
     endTime = find(Tdata >= Tdata(end) - timeCutE);
+    startTimeV = find(val_dat(:,1) > val_dat(1,1) + timeCutS);
+    endTimeV = find(val_dat(:,1) >= val_dat(end,1) - timeCutE);
     
     Tdata = Tdata(startTime:endTime);
     Hdata = Hdata(startTime:endTime);
     Pdata = Pdata(startTime:endTime);
     Rdata = Rdata(startTime:endTime);
     SPdata = SPdata(startTime:endTime);
+    val_dat = val_dat(startTimeV:endTimeV,:);
+    
     
      % Rescale times to start at 0
     val_start = val_start - Tdata(1); 
     val_end   = val_end - Tdata(1); 
-    Tdata     = Tdata - Tdata(1); 
+    Tdata     = Tdata - Tdata(1);
+    val_dat(:,1) = val_dat(:,1) - val_dat(1,1);
 
     % Determine start and end times of the data set 
     t_start = Tdata(1); 
