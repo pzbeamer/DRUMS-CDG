@@ -66,7 +66,7 @@ make_VAL = 1;
 %Many patients will not have any data, and if this is the case no figures
 %will show up. If that happens just move on to the next one.
 
-for pt=37
+for pt=240
 
     %% PREPROCESS DATA AND STUFF (SOPHIE CAN IGNORE)
     pt
@@ -363,7 +363,7 @@ for pt=37
 %within like .1-.5 as values. If no values in there work just pick the least bad one you can find.
 
                         
-                        minPeakDistance = .30;
+                        minPeakDistance = .45;
                         [SPdata S] = SBPcalc_ben(val_dat(:,1),val_dat(:,4),minPeakDistance,1);
                         
                         %% Valsalva continued (SOPHIE CAN IGNORE)
