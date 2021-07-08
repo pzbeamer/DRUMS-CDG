@@ -363,7 +363,7 @@ for pt=37
 %within like .1-.5 as values. If no values in there work just pick the least bad one you can find.
 
                         
-                        minPeakDistance = .30;
+                        minPeakDistance = .70;
                         [SPdata S] = SBPcalc_ben(val_dat(:,1),val_dat(:,4),minPeakDistance,1);
                         
                         %% Valsalva continued (SOPHIE CAN IGNORE)
