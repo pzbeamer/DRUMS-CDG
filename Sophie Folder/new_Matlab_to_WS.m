@@ -1,7 +1,9 @@
 %% READ TABLE (SOPHIE CAN IGNORE)
 
-clear all  
-T = readtable('PatientInfo_063021.csv','Headerlines',2);
+clear all
+close all
+T = readtable('PatientInfo07082021.csv','Headerlines',2);
+
 % Td = readtable('../HPV_demographic_info_2_9_21.csv'); %THIS WILL PRODUCE WARNINGS BUT IT'S FINE d = demographics
 % HPV_numbers = Td.HPV_nummer;
 % Ages = Td.Alder;
@@ -66,7 +68,8 @@ make_VAL = 1;
 %Many patients will not have any data, and if this is the case no figures
 %will show up. If that happens just move on to the next one.
 
-for pt=37
+%[216 226 235 249 279 281 289 309 330 344 367 377 446 461 471 474 477 538 565 567 580]
+for pt= 580
 
     %% PREPROCESS DATA AND STUFF (SOPHIE CAN IGNORE)
     pt
@@ -363,7 +366,7 @@ for pt=37
 %within like .1-.5 as values. If no values in there work just pick the least bad one you can find.
 
                         
-                        minPeakDistance = .30;
+                        minPeakDistance = .35;
                         [SPdata S] = SBPcalc_ben(val_dat(:,1),val_dat(:,4),minPeakDistance,1);
                         
                         %% Valsalva continued (SOPHIE CAN IGNORE)
