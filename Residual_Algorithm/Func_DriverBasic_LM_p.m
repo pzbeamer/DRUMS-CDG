@@ -19,7 +19,7 @@ function [HR_LM] = Func_DriverBasic_LM_p(pt_file_name,INDMAP)
     %Global parameters
     
     ALLPARS  = pars;
-    ODE_TOL  = 1e-10; 
+    ODE_TOL  = 1e-8; 
     DIFF_INC = sqrt(ODE_TOL);
 
     gpars.INDMAP   = INDMAP;
