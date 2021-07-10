@@ -368,9 +368,25 @@ for pt= 15
 %within like .1-.5 as values. If no values in there work just pick the least bad one you can find.
 
                         
+<<<<<<< HEAD
 
                         minPeakDistance = .35;
 
+=======
+<<<<<<< HEAD
+                        minPeakDistance = .70;
+=======
+<<<<<<< HEAD
+                        
+=======
+<<<<<<< HEAD
+                        minPeakDistance = .45;
+=======
+                        minPeakDistance = .35;
+>>>>>>> 0f833338ec306b76d013d7b7601374a6ff664425
+>>>>>>> 67c8fe1781266b1425f7647b6d2ef79d18d9b596
+>>>>>>> e4458e8d2b7f6e1bf5bbf869bbd353cb7c8a303e
+>>>>>>> e8cccbf028e02f396fff2c2580fc72284004cd4d
                         [SPdata S] = SBPcalc_ben(val_dat(:,1),val_dat(:,4),minPeakDistance,1);
                         
                         %% Valsalva continued (SOPHIE CAN IGNORE)
