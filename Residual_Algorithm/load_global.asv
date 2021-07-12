@@ -73,75 +73,78 @@ Hpb = (1 - Hbar/HI + Hpr*Tpr_ss + Hs*Ts_ss)/Tpb_ss;
 
 %% Outputs
 
-pars = [A; B;                       %1-2
+pars0 = [A; B;                       %1-2
     Kpb; Kpr; Ks;                   %Gains 3-5
     taupb; taupr; taus; tauH;       %Time Constants 6-9
-    qw; qpb; qpr; qs;               %Sigmoid Steepnesses 9=12
-    sw; spb; spr; ss;               %Sigmoid Shifts 1
-    HI; Hpb; Hpr; Hs;               %Heart Rate Parameters 
-    Ds];                            %Delay
+    qw; qpb; qpr; qs;               %Sigmoid Steepnesses 9-12
+    sw; spb; spr; ss;               %Sigmoid Shifts 13-16
+    HI; Hpb; Hpr; Hs;               %Heart Rate Parameters 17-21
+    Ds];                            %Delay 22
+scaled = .2 *rad
+
 
 %% Parameter bounds
 
 %Vary nominal parameters by +/- 50%
-lb  = pars*.5; 
-ub  = pars*1.5;
+lb  = pars*.125; 
+ub  = pars*8;
 
 %B - Convex combination
 lb(2)  = .01;                       
 ub(2)  = 1;                                      
 
-%tau_pb - M p/m 2 SD 
-lb(6)  = max(6.5 - 2*5.7,0.01);    
-ub(6)  = 6.5 + 2*5.7;               
+% %tau_pb - M p/m 2 SD 
+% lb(6)  = max(6.5 - 2*5.7,0.01);    
+% ub(6)  = 6.5 + 2*5.7;               
+% 
+% %tau_pr - M p/m 2 SD 
+% lb(7)  = .01;    
+% ub(7)  = 31.2;     
+% 
+% %tau_s is 8
+% 
+% %tau_H
+% lb(9) = 0.01;
+% ub(9) = 1.5;
+% 
+% %q_w
+% lb(10) = 0.01;
+% ub(10) = 0.09;
+% 
+% %s_w - M p/m 2 SD
+% lb(14) = max(123 - 2*20,0.01);      
+% ub(14) = 123 + 2*20;               
+% 
+% % %s_pb - M p/m 2 SD
+% % lb(15) = max(0.54 - 2*5e-3,0.01);   
+% % ub(15) = 0.54 + 2*5e-3;        
+% 
+% %s_pr - M p/m 2 SD
+% lb(16) = max(4.88 - 2*0.21,0.01); 
+% ub(16) = 4.88 + 2*0.21;             
+% 
+% % %s_s - M p/m 2 SD
+% % lb(17) = max(0.05 - 2*5e-3,0.01);  
+% % ub(17) = 0.05 + 2*5e-3;          
+% 
+% %H_I - M p/m 2 SD 
+% lb(18) = max(100 - 2*7,0.01);     
+% ub(18) = 100 + 2*7;           
+% 
+% %H_pb - M p/m 2 SD 
+% lb(19) = max(0.5 - 2*0.2,0.01);     
+% ub(19) = 0.5 + 2*0.2;             
+% 
+% %H_pr -  M p/m 2 SD - calc
+% lb(20) = max(0.3 - 2*0.4,0.01);   
+% ub(20) = 0.3 +2*0.4;              
+% 
+% %H_s - M p/m 2 SD - calc
+% lb(21) = max(0.3 - 2*0.4,0.01);     
+% ub(21) = 1.5;                         
 
-%tau_pr - M p/m 2 SD 
-lb(7)  = .01;    
-ub(7)  = 31.2;     
-
-%tau_s is 8
-
-%tau_H
-lb(9) = 0.01;
-ub(9) = 1.5;
-
-%q_w
-lb(10) = 0.01;
-ub(10) = 0.09;
-
-%s_w - M p/m 2 SD
-lb(14) = max(123 - 2*20,0.01);      
-ub(14) = 123 + 2*20;               
-
-% %s_pb - M p/m 2 SD
-% lb(15) = max(0.54 - 2*5e-3,0.01);   
-% ub(15) = 0.54 + 2*5e-3;        
-
-%s_pr - M p/m 2 SD
-lb(16) = max(4.88 - 2*0.21,0.01); 
-ub(16) = 4.88 + 2*0.21;             
-
-% %s_s - M p/m 2 SD
-% lb(17) = max(0.05 - 2*5e-3,0.01);  
-% ub(17) = 0.05 + 2*5e-3;          
-
-%H_I - M p/m 2 SD 
-lb(18) = max(100 - 2*7,0.01);     
-ub(18) = 100 + 2*7;           
-
-%H_pb - M p/m 2 SD 
-lb(19) = max(0.5 - 2*0.2,0.01);     
-ub(19) = 0.5 + 2*0.2;             
-
-%H_pr -  M p/m 2 SD - calc
-lb(20) = max(0.3 - 2*0.4,0.01);   
-ub(20) = 0.3 +2*0.4;              
-
-%H_s - M p/m 2 SD - calc
-lb(21) = max(0.3 - 2*0.4,0.01);     
-ub(21) = 1.5;                         
-
-
+ lb(22) = 2;     
+ ub(22) = 6;
 %% Outputs
 
 pars = log(pars);
