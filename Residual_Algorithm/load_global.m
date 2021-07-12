@@ -1,5 +1,6 @@
-function [pars, lb, ub] = load_global(data)
+function [pars, lb, ub] = load_global(data, INDMAP)
 
+global pars0
 age    = data.age;  
 
 %Initial mean values
@@ -73,7 +74,7 @@ Hpb = (1 - Hbar/HI + Hpr*Tpr_ss + Hs*Ts_ss)/Tpb_ss;
 
 %% Outputs
 
-pars = [A; B;                       %1-2
+pars0 = [A; B;                       %1-2
     Kpb; Kpr; Ks;                   %Gains 3-5
     taupb; taupr; taus; tauH;       %Time Constants 6-9
     qw; qpb; qpr; qs;               %Sigmoid Steepnesses 9-12
@@ -81,11 +82,15 @@ pars = [A; B;                       %1-2
     HI; Hpb; Hpr; Hs;               %Heart Rate Parameters 17-21
     Ds];                            %Delay 22
 
+
+scaled = .4 *rand(size(pars0))-.2;%zeros(size(pars0));
+pars = pars0;
+pars(INDMAP') = pars0(INDMAP') .* (1+scaled(INDMAP'));
 %% Parameter bounds
 
 %Vary nominal parameters by +/- 50%
-lb  = pars*.25; 
-ub  = pars*4;
+lb  = pars0*.125; 
+ub  = pars0*8;
 
 %B - Convex combination
 lb(2)  = .01;                       
@@ -134,14 +139,15 @@ ub(2)  = 1;
 % ub(19) = 0.5 + 2*0.2;             
 % 
 % %H_pr -  M p/m 2 SD - calc
-% lb(20) = max(0.3 - 2*0.4,0.01);   
-% ub(20) = 0.3 +2*0.4;              
+%  lb(20) = max(0.3 - 2*0.4,0.01);   
+%  ub(20) = (0.3 +2*0.4);              
 % 
 % %H_s - M p/m 2 SD - calc
 % lb(21) = max(0.3 - 2*0.4,0.01);     
 % ub(21) = 1.5;                         
 
-
+ lb(22) = 2;     
+ ub(22) = 6;
 %% Outputs
 
 pars = log(pars);

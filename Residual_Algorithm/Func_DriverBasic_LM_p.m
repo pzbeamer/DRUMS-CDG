@@ -1,5 +1,5 @@
 %DriverBasic_LM
-function [HR_LM] = Func_DriverBasic_LM_p(pt_file_name,INDMAP)
+function [HR_LM] = Func_DriverBasic_LM_p(pt_file_name,INDMAP,k)
 %     clear all
     %close all
     tic
@@ -14,7 +14,7 @@ function [HR_LM] = Func_DriverBasic_LM_p(pt_file_name,INDMAP)
 
     %% Get nominal parameter values
 
-    [pars,low,hi] = load_global(data); 
+    [pars,low,hi] = load_global(data, INDMAP); 
 
     %Global parameters
     
@@ -37,12 +37,12 @@ function [HR_LM] = Func_DriverBasic_LM_p(pt_file_name,INDMAP)
     opthi  = hi(INDMAP);
     optlow = low(INDMAP);
 
-    maxiter = 40; 
+    maxiter = 30; 
     mode    = 2; 
     nu0     = 2.d-1; 
 
     [xopt, histout, costdata, jachist, xhist, rout, sc] = ...
-         newlsq_v2(optx,'opt_wrap',1.d-4,maxiter,...
+         newlsq_v2(optx,'opt_wrap',1.d-3,maxiter,...
          mode,nu0,opthi,optlow,data); 
 
     pars_LM = pars;
@@ -52,7 +52,7 @@ function [HR_LM] = Func_DriverBasic_LM_p(pt_file_name,INDMAP)
 
     optpars = exp(pars_LM);
     disp('optimized parameters')
-    disp([INDMAP' optpars(INDMAP)])
+    disp([INDMAP' optpars(INDMAP) exp(hi(INDMAP)) exp(low(INDMAP))])
 
     time = Outputs(:,1); 
     Tpb_LM  = Outputs(:,2);
@@ -60,7 +60,7 @@ function [HR_LM] = Func_DriverBasic_LM_p(pt_file_name,INDMAP)
     Tpr_LM  = Outputs(:,4); 
 
 %     save optHR.mat 
-    save(strcat('Valsalva/optHR_residuals/',pt_file_name(25:end-10),'_optHRsub1.mat'))
+    save(strcat('Valsalva/optHR_residuals/',pt_file_name(25:end-10),'_',num2str(k),'_optHR.mat'))
 
     elapsed_time = toc;
     elapsed_time = elapsed_time/60

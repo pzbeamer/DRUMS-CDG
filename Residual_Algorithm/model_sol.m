@@ -1,5 +1,6 @@
 function [HR,rout,J,Outputs] = model_sol(pars,data)
 
+global pars0
 pars = exp(pars); 
 
 %% Unpack structure 
@@ -14,7 +15,7 @@ echoon  = data.gpars.echoon;
 
 %% Get initial conditions 
 
-Init = initialconditions(pars,data); 
+Init = initialconditions(pars0,data); 
 
 %% Write data files up to event
 
