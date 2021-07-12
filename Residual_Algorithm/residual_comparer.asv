@@ -1,10 +1,10 @@
-% clear all
-% close all
+clear all
+close all
 %patient to read
 
 load File_name_cell_06072021_short.mat   
-q = [1 3 5 6 8 9 10 14 17 24 29 30];
-
+%q = [1 3 5 6 8 9 10 14 17 24 29 30];
+q = [1 6 9 24 30];
 
 for i=1:length(q)
     u{i} = strcat(cell_of_file_names{q(i),1}(1:end-9));
@@ -24,13 +24,12 @@ for j = 2%:length(u)
     %INDMAP = [1 5 6 7 8 9 10 12 20 21 ]; %subset 5
     %}
     %residual error vector
-    INDMAP = [1 6 7 8 9 10 20 21]
-    %INDMAP = [1 6 7 10 20 21];
+    INDMAP = [1 6 8 9 10 20 21];
     
     
 
     error  = zeros(5,2);
-    for i = 0%:4
+    for i = 0:4
         %call forward evaluation with 30-5*i second rest periods
         Func_DriverBasic_p(pt_name,[30 - 5*i 30]);
     
@@ -150,10 +149,10 @@ for j = 2%:length(u)
         plot(ones(2,1)*val_end,2,'k--')
         plot(ones(2,1)*Tdata(i_t3),2,'k--')
         plot(ones(2,1)*Tdata(i_t4),2,'k--')
-        plot(Tdata,Tpb_LM*optpars(19),'color',[.5 0 .5],'linewidth',2) % purple parasympathetic
-         ylim([0 1])
-%         yyaxis right 
-        plot(Tdata,Ts_LM*optpars(21),'color',[0 0.75 .75],'linewidth',2)  % slightly darker green than the 'g' command
+        plot(Tdata,Tpb_LM,'color',[.5 0 .5],'linewidth',2) % purple parasympathetic
+        ylim([0 2])
+        yyaxis right 
+        plot(Tdata,Ts_LM,'color',[0 0.75 .75],'linewidth',2)  % slightly darker green than the 'g' command
         set(gca,'FontSize',15)
         xlim(Tlims)
         
@@ -168,11 +167,11 @@ for j = 2%:length(u)
         plot(ones(2,1)*val_end,2,'k--')
         plot(ones(2,1)*Tdata(i_t3),2,'k--')
         plot(ones(2,1)*Tdata(i_t4),2,'k--')
-        plot(Tdata,Tpr_LM*optpars(20),'color',[1 .5 0],'linewidth',2)  % orange
+        plot(Tdata,Tpr_LM,'color',[1 .5 0],'linewidth',2)  % orange
     
         set(gca,'FontSize',15)
         xlim(Tlims)
-        ylim([0 1])
+        ylim([0 2])
         xlabel('Time (s)')
         ylabel('Outflow')
         
