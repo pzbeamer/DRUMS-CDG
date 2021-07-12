@@ -9,7 +9,11 @@
 % clear all 
 
 load('Sens/sensHPV20_20120919_val1.mat')
-INDMAP = [1 3 13 14 15 18 19 22]; %put all parameters
+
+INDMAP = [3 13 15 18 19]; 
+%(1,13), (1,15), (13,15), (3,19) correlated > 0.95
+
+
 
 S = sens(:,INDMAP);
 
@@ -27,7 +31,7 @@ for i = 1:a
     end
 end
 
-tol = .9; 
+tol = .95; 
 rn = triu(r,1) % extract upper triangular part of the matrix
 [i,j] = find(abs(rn)>tol); % parameters with a value bigger than 0.95 are correlated
 

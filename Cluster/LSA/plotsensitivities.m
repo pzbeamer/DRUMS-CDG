@@ -4,7 +4,7 @@ pb = [20 22 27 28 32 33 34 41 45];
 Snormv1 = zeros(22,10);
 Snormv2 = zeros(22,10);
 for jkl = 1:9
-    load(strcat('sens',num2str(pb(jkl)),'.mat'));
+    load(strcat('sens',pt_id,'.mat'));
     sens_norm1 = sens_norm;
     load(strcat('sens',num2str(pb(jkl)),'_2.mat'));
     sens_norm2 = sens_norm;
