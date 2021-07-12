@@ -1,28 +1,25 @@
-%parameters to optimize
-INDMAP = [1 6  8 9 10 12 20 21];
+% clear all
+% close all
 
-load File_name_cell_06072021_short.mat   
-q = [1 3 5 6 8 9 10 14 17 24 29 30];
+T = readtable('../PatientInfo_063021.csv','Headerlines',2);
+INDMAP = [1 6 7 8 9 10 20 21]; %INDMAP subject to change
 
-
-for i=1:length(q)
-    u{i} = strcat(cell_of_file_names{q(i),1}(1:end-9))
-end
-
-
-for j = 1:1
-    u{j};
-    %optimizing
-%     pt_name = strcat(u{j},'_Val1_WS.mat'); 
-%     nomHRfile =strcat('Valsalva/nomHR_residuals/',pt_name(1:end-7),'_30_nomHR.mat');
-%     load(nomHRfile)
-%     Func_DriverBasic_LM_p(nomHRfile,INDMAP);
+for pt=60
+    pt
+    pt_id = T{pt,1}{1}
     
-    %plots
-    load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_30_nomHR.mat'))
-%     load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_30_optHR5(4).mat'))
-    
-    h = figure;
+    if isfile(strcat('../MatFiles/',pt_id,'_val1_WS.mat'))
+       load(strcat('../MatFiles/',pt_id,'_val1_WS.mat'))
+       nomHR = strcat('../Valsalva/nomHR_residuals/',pt_id,'_val1_nomHR.mat'); %nomHR
+       HR_LM = Func_DriverBasic_LM(nomHR,INDMAP);
+       load(strcat('../Valsalva/optHR_residuals/',pt_id,'_val1_optHR.mat'));
+       
+       
+       %% plots
+       
+       figure(1)
+hold on
+
     set(gcf,'units','normalized','outerposition',[0.2 0.2 .5 .5])
     % BP
     subplot(3,2,1)
@@ -128,10 +125,6 @@ for j = 1:1
     ylim([0 2])
     xlabel('Time (s)')
     ylabel('Outflow')
-    
-    fig_name = strcat('4FIG5_',u{j});
-    print(h,fig_name,'-dpng','-r400');
-    
-    pause
-    
+       
+    end
 end
