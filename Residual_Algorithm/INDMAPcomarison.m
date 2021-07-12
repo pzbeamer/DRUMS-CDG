@@ -1,5 +1,3 @@
-clear all
-close all
 %parameters to optimize
 INDMAP = [1 6  8 9 10 12 20 21];
 
@@ -12,17 +10,17 @@ for i=1:length(q)
 end
 
 
-for j = 1:length(u)
+for j = 1:1
     u{j};
     %optimizing
-    pt_name = strcat(u{j},'_Val1_WS.mat'); 
-    nomHRfile =strcat('Valsalva/nomHR_residuals/',pt_name(1:end-7),'_30_nomHR.mat');
-    load(nomHRfile)
-    Func_DriverBasic_LM_p(nomHRfile,INDMAP);
+%     pt_name = strcat(u{j},'_Val1_WS.mat'); 
+%     nomHRfile =strcat('Valsalva/nomHR_residuals/',pt_name(1:end-7),'_30_nomHR.mat');
+%     load(nomHRfile)
+%     Func_DriverBasic_LM_p(nomHRfile,INDMAP);
     
     %plots
     load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_30_nomHR.mat'))
-    load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_30_optHR5(4).mat'))
+%     load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_30_optHR5(4).mat'))
     
     h = figure;
     set(gcf,'units','normalized','outerposition',[0.2 0.2 .5 .5])
@@ -133,4 +131,7 @@ for j = 1:length(u)
     
     fig_name = strcat('4FIG5_',u{j});
     print(h,fig_name,'-dpng','-r400');
+    
+    pause
+    
 end
