@@ -1,5 +1,5 @@
 
-%DriverBasic_sens
+%DriverBasic_sens creates sens files in loop
 
 clear all
 close all
@@ -15,7 +15,7 @@ for pt=[37 48 59 60 65 66 67]
    
     %% Load data and preprocess data 
     if isfile(strcat('../MatFiles/',pt_id,'_val1_WS.mat'))
-        load(strcat('../Valsalva/nomHR_residuals/',pt_id,'_val1_nomHR.mat'))
+       load(strcat('../Valsalva/nomHR_residuals/',pt_id,'_val1_nomHR.mat'))
 
     echoon  = 1; 
     printon = 0; 
