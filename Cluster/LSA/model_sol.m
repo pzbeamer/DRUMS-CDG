@@ -1,5 +1,6 @@
 function [HR,rout,J,Outputs] = model_sol(pars,data)
 
+global pars0
 pars = exp(pars); 
 
 %% Unpack structure 
@@ -14,7 +15,7 @@ echoon  = data.gpars.echoon;
 
 %% Get initial conditions 
 
-Init = initialconditions(pars,data); 
+Init = initialconditions(pars0,data); 
 
 %% Write data files up to event
 
@@ -98,7 +99,7 @@ Ts  = s(:,4);
 HR  = s(:,5); 
 
 
-if round(time(end-1),2) == round(tspan(end),2) && length(time)>length(tspan)  %why is this line necessary???
+if round(time(end-1),2) == round(tspan(end),2) && length(time)>length(tspan)  
     time = time(1:end-1); 
     Tpb = Tpb(1:end-1);
     Tpr = Tpr(1:end-1); 
@@ -106,10 +107,16 @@ if round(time(end-1),2) == round(tspan(end),2) && length(time)>length(tspan)  %w
     HR = HR(1:end-1); 
 end 
 %% Interdpolate solution and calculate outputs
+[~,startm] = max(find(time <= data.val_start)); %add valstart and valend to the parameters
+[~,slutm] = max(find(time <= data.val_end));
+[~,startd] = max(find(tspan <= data.val_start)); 
+[~,slutd] = max(find(tspan <= data.val_end));
 
-HM = max(Hdata); 
-rout = [(HR - Hdata)./Hdata/sqrt(length(Hdata)); 
-    (max(HR) - HM)/HM]; 
+HRmodelM   = max(HR(startm:slutm));
+HRdataM    = max(Hdata(startd:slutd));
+HRdatamean = mean(Hdata(startd:slutd));
+rout     = [(HR' - Hdata')/HRdatamean/sqrt(length(Hdata)) ... 
+            (HRmodelM - HRdataM)/HRdataM]';
 
 J = rout'*rout;
 
