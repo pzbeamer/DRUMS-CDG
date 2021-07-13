@@ -9,8 +9,10 @@
 % clear all 
 
 load('Sens/sensHPV34_20140217_val1.mat')
-INDMAP = [1 6 8 14 15 20]; 
-%(1,15), (1,14), (14,14) correlated > 0.97
+%INDMAP = [1 6 8 14 15 20]; 
+%(1,15), (1,14), (14,14) correlated > 0.97, remove 1
+INDMAP = [6 8 14 15 20]; 
+%(15,20) correlated 0.95
 
 S = sens(:,INDMAP);
 
