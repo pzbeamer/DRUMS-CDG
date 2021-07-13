@@ -1,7 +1,7 @@
 %clear all
 % close all
 %patient to read
-
+format shortg;
 
 load File_name_cell_06072021_short.mat   
 q = [1 3 5 6 8 9 10 14 17 24 29 30];
@@ -13,7 +13,7 @@ end
 
 for k = 1:1
     j = 4;
-    u{j};
+    u{k};
     %optimizing
     pt_name = strcat(u{j},'_val1_WS.mat'); 
     %{
@@ -28,9 +28,10 @@ for k = 1:1
     %}
     %residual error vector
     %INDMAP = [1 6 7 8 9 10 20 21];
-    INDMAP = [3 6 13 14 15 18];
+    %INDMAP = [3 6 8 14 15 18 19];
 %     INDMAP = [2 6 7 8 19 20 21];
     %INDMAP = [1 6 7 10 20 21];
+    INDMAP = [1 6 8 14 15 20];
     
     
 
@@ -72,7 +73,7 @@ for k = 1:1
         end
           
         
-        figure(j+1);
+        h=figure(j+1);
         set(gcf,'units','normalized','outerposition',[0.2 0.2 .5 .5])
         % BP
         subplot(3,2,1)
@@ -184,7 +185,7 @@ for k = 1:1
         hold off
 
         fig_name = strcat('sub1FIG_',u{j},'_',num2str(30 - 5*i));
-        %print(h,fig_name,'-dpng','-r400');
+        print(h,fig_name,'-dpng','-r400');
         
         
 end

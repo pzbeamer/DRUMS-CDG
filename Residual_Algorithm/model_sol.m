@@ -112,10 +112,11 @@ end
 [~,startd] = max(find(tspan <= data.val_start)); 
 [~,slutd] = max(find(tspan <= data.val_end));
 
-HRmodelM = max(HR(startm:slutm));
-HRdataM = max(Hdata(startd:slutd));
-rout = [(HR - Hdata)./Hdata/sqrt(length(Hdata)); 
-    (HRmodelM - HRdataM)/HRdataM]; 
+HRmodelM   = max(HR(startm:slutm));
+HRdataM    = max(Hdata(startd:slutd));
+HRdatamean = mean(Hdata(startd:slutd));
+rout     = [(HR' - Hdata')/HRdatamean/sqrt(length(Hdata)) ... 
+            (HRmodelM - HRdataM)/HRdataM]';
 
 J = rout'*rout;
 
