@@ -35,7 +35,7 @@ for pt = 6:40
 
 %% Baselines
 
-val_start = data.val_start;
+            val_start = data.val_start;
             val_end = data.val_end;
             Hdata = data.Hdata;
             Pdata = data.Pdata;

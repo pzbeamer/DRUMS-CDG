@@ -63,5 +63,5 @@ function [HR_LM] = Func_DriverBasic_LM_p(pt_file_name,INDMAP,k)
     save(strcat('Valsalva/optHR_residuals/',pt_file_name(25:end-10),'_',num2str(k),'_optHR.mat'))
 
     elapsed_time = toc;
-    elapsed_time = elapsed_time/60
+    elapsed_time = elapsed_time/60;
 end

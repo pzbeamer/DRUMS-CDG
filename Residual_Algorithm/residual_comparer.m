@@ -1,5 +1,5 @@
 %clear all
-% close all
+close all
 %patient to read
 format shortg;
 
@@ -10,10 +10,9 @@ q = [1 3 5 6 8 9 10 14 17 24 29 30];
 for i=1:length(q)
     u{i} = strcat(cell_of_file_names{q(i),1}(1:end-9));
 end
-
-for k = 1:1
-    j = 4;
-    u{k};
+k=1;
+for k = 1:10
+    j = 1;
     %optimizing
     pt_name = strcat(u{j},'_val1_WS.mat'); 
     %{
@@ -31,9 +30,9 @@ for k = 1:1
     %INDMAP = [3 6 8 14 15 18 19];
 %     INDMAP = [2 6 7 8 19 20 21];
     %INDMAP = [1 6 7 10 20 21];
-    INDMAP = [1 6 8 14 15 20];
+    INDMAP = [6 8 14 15 20];
     
-    
+   
 
     error  = zeros(5,2);
     for i = 0%:3
@@ -48,11 +47,12 @@ for k = 1:1
         %calculate residual error
         start = min(find(Tdata >= val_start));
         slut = min(find(Tdata >= val_end));
-        scaler = sqrt(length(Hdata(start:slut)))
+        scaler = sqrt(length(Hdata(start:slut)));
         error(i+1,1) = norm((Hdata(start:slut)-HR_LM(start:slut))./Hdata(start:slut)/scaler);
         error(i+1,2) = (max(Hdata(start:slut)) - max(HR_LM(start:slut)))/max(Hdata(start:slut));
         
         if error(i+1,1) < .8/scaler || error(i+1,2) < 5/max(Hdata(start:slut))
+             disp(strcat('Error =', num2str(error(i+1,1))))
              break
         end
         
@@ -62,10 +62,11 @@ for k = 1:1
     %% plots
         %clear h
         
-     
+        
         if i == 4
+            disp(strcat('Error =', num2str(min(error(:,1)))))
             num = find(error(:,1) == min(error(:,1)))-1;
-            load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_',num2str(30 - 5*num),'_nomHR.mat'))
+            load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_',num2str(30 - 5*num),'_',num2str(k),'_nomHR.mat'))
             load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_',num2str(30 - 5*num),'_optHR.mat'))
         else
             load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_',num2str(30 - 5*i),'_nomHR.mat'))
@@ -178,13 +179,13 @@ for k = 1:1
     
         set(gca,'FontSize',15)
         xlim(Tlims)
-        ylim([0 1])
+        ylim([0 .5])
         xlabel('Time (s)')
         ylabel('Outflow')
         
         hold off
 
-        fig_name = strcat('sub1FIG_',u{j},'_',num2str(30 - 5*i));
+        fig_name = strcat('FIG_',u{j},'_',num2str(30 - 5*i));
         print(h,fig_name,'-dpng','-r400');
         
         

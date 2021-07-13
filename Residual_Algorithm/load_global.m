@@ -83,7 +83,7 @@ pars0 = [A; B;                       %1-2
     Ds];                            %Delay 22
 
 
-scaled = .4 *rand(size(pars0))-.2;%zeros(size(pars0));
+scaled = .2 *rand(size(pars0))-.1;%zeros(size(pars0));
 pars = pars0;
 pars(INDMAP') = pars0(INDMAP') .* (1+scaled(INDMAP'));
 %% Parameter bounds
