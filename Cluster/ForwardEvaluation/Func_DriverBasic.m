@@ -1,5 +1,5 @@
 function Func_DriverBasic(pt_file_name,restTime)
-    %pass in a file name to read and a vector of rest times needed
+     %pass in a file name to read and a vector of rest times needed
     %restTime = [start end]
     %Call "Driver basic" in an automated way
     %DriverBasic 
@@ -13,10 +13,11 @@ function Func_DriverBasic(pt_file_name,restTime)
     printon = 0; 
 
     %% Load data and preprocess data 
-    load(strcat('../MatFiles/',pt_file_name)); %Load workspace
+    load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_file_name)); %Load workspace
     %  load ../HPV6_20131029_Val1_WS.mat 
     
     dt = mean(diff(Tdata));
+    
     
     %Calculate length of time before valsalva
     
@@ -67,8 +68,10 @@ function Func_DriverBasic(pt_file_name,restTime)
 
     % Find the indices of the time data points that are closest to the VM start
     % and end times 
+  
     [~,i_ts] = min(abs(Tdata - val_start)); 
-    [~,i_te] = min(abs(Tdata - val_end)); 
+    [~,i_te] = min(abs(Tdata - val_end));
+    
 
     %% Find steady-state baseline values up to VM start
 
@@ -81,7 +84,11 @@ function Func_DriverBasic(pt_file_name,restTime)
     %% Find time for end of phase I 
     % Select the point at which the SBP recuperates to baseline within 10 s of
     % the end of the breath hold 
-    [~,i_t1] = min(abs(SPdata(i_ts:i_ts+round(5/dt)) - Pbar)); 
+    if i_te < i_ts+round(5/dt)
+        [~,i_t1] = min(abs(SPdata(i_ts:i_te) - Pbar)); 
+    else
+        [~,i_t1] = min(abs(SPdata(i_ts:i_ts+round(5/dt)) - Pbar)); 
+    end
     i_t1 = i_ts + i_t1; 
 
     %% Find time for middle of phase II 
@@ -174,6 +181,7 @@ function Func_DriverBasic(pt_file_name,restTime)
     data.i_t4      = i_t4;  
     data.age       = Age; 
     data.dt        = dt; 
+    
 
     %Global parameters substructure
     gpars.echoon = echoon; 
@@ -189,9 +197,10 @@ function Func_DriverBasic(pt_file_name,restTime)
     [HR,~,~,Outputs] = model_sol(pars,data);
 
     time = Outputs(:,1);
+    T_pb = Outputs(:,2);
     T_s   = Outputs(:,3);
     T_pr  = Outputs(:,4); 
-    T_pb  = Outputs(:,2);
+    
 
     %% Set limits for the axes of each plot 
 

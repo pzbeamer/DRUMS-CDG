@@ -41,7 +41,7 @@ val_start = data.val_start;
             Pdata = data.Pdata;
             
             HRbeforeVal = mean(Hdata(1:round(val_start)));
-            HRadfterVal = mean(Hdata(round(val_end):end));
+            HRafterVal = mean(Hdata(round(val_end):end));
             SBPbeforeVal = mean(Pdata(1:round(val_start)));
             SBPafterVal = mean(Pdata(round(val_end):end));
 
@@ -54,7 +54,17 @@ pressure = data.Pdata(data.i_t1:data.i_te);
           maximum = find(pressure == max(pressure));
           minimum = find(pressure == min(pressure));
           alpha(1,pt-3) = (pressure(maximum) - pressure(minimum))...
-              /(time(maximum)-time(minimum)); 
+              /(time(maximum)-time(minimum));
+          
+%% Max HR and BP
+
+%Phase 2
+
+
+%Phase 3
+
+
         end
+save('markers.mat','alpha','beta','gamma','HRbeforeVal','HRafterVal','SBPbeforeVal','SBPafterVal')
     end    
 end
