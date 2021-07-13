@@ -1,5 +1,5 @@
 clear all
-T = readtable('PatientInfo07082021.csv','Headerlines',2);
+T = readtable('PatientInfo07132021.csv','Headerlines',2);
 for pt = 1:250
     pt_id = T{pt,1}{1}
   
