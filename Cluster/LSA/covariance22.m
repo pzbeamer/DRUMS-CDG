@@ -10,7 +10,7 @@
 
 load('Sens/sensHPV22_20130903_val1.mat')
 INDMAP = [1 6 8 14 15 20]; 
-%(1,15) correlated 0.996
+%(1,15) correlated 0.986
 
 S = sens(:,INDMAP);
 

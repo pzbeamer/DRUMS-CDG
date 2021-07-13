@@ -10,10 +10,11 @@
 
 load('Sens/sensHPV20_20120919_val1.mat')
 
-INDMAP = [3 13 15 18 19]; 
+%INDMAP = [3 13 15 18 19]; 
 %(1,13), (1,15), (13,15), (3,19) correlated > 0.95
 
-
+INDMAP = [1 6 8 14 15 20]; 
+%(1,15) correlated 0.996
 
 S = sens(:,INDMAP);
 

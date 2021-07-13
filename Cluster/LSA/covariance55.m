@@ -8,9 +8,9 @@
 
 % clear all 
 
-load('Sens/sensHPV22_20130903_val1.mat')
+load('Sens/sensHPV55_20140804_val1.mat')
 INDMAP = [1 6 8 14 15 20]; 
-%(1,15) correlated 0.996
+%(1,14),(1,15) correlated > 0.96
 
 S = sens(:,INDMAP);
 
