@@ -37,9 +37,7 @@ end
 ct=1;
 for i=1:869
     if ~isempty(negatives{1,i})
-        negvals{1,ct}=negatives{1,i};
-        negvals{2,ct}=negatives{2,i};
-        negvals{3,ct}=negatives{3,i};
+        negvals{:,ct}=negatives{:,i};
         ct=ct+1;
     end
 end

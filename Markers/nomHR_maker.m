@@ -18,10 +18,10 @@ T = readtable('PatientInfo07082021.csv','Headerlines',2);
 
 %pt 249 ('HPV186_20151008') No val_dat?
 
-for pt = [15 25 220 623 645]
+for pt = 3:872
     pt
     pt_id = T{pt,1}{1}
-    for i = 1:4
+    for i = 1:1
         pt_file_name = strcat(pt_id,'_val',num2str(i),'_WS.mat');
         
         if isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_file_name))
