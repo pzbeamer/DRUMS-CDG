@@ -1,5 +1,5 @@
 %clear all
-% close all
+close all
 %patient to read
 format shortg;
 
@@ -11,8 +11,8 @@ for i=1:length(q)
     u{i} = strcat(cell_of_file_names{q(i),1}(1:end-9));
 end
 k=1;
-for k = 1:1
-    j = 4;
+for k = 1:10
+    j = 1;
     %optimizing
     pt_name = strcat(u{j},'_val1_WS.mat'); 
     %{
@@ -30,12 +30,12 @@ for k = 1:1
     %INDMAP = [3 6 8 14 15 18 19];
 %     INDMAP = [2 6 7 8 19 20 21];
     %INDMAP = [1 6 7 10 20 21];
-    INDMAP = [1 6 8 14 15 20];
+    INDMAP = [6 8 14 15 20];
     
    
 
     error  = zeros(5,2);
-    for i = 0:3%:3
+    for i = 0%:3
         %call forward evaluation with 30-5*i second rest periods
         Func_DriverBasic_p(pt_name,[30 - 5*i 30],INDMAP);
     
@@ -63,7 +63,7 @@ for k = 1:1
         %clear h
         
         
-        if i == 3
+        if i == 4
             disp(strcat('Error =', num2str(min(error(:,1)))))
             num = find(error(:,1) == min(error(:,1)))-1;
             load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_',num2str(30 - 5*num),'_',num2str(k),'_nomHR.mat'))
@@ -179,7 +179,7 @@ for k = 1:1
     
         set(gca,'FontSize',15)
         xlim(Tlims)
-        ylim([0 .3])
+        ylim([0 .5])
         xlabel('Time (s)')
         ylabel('Outflow')
         
