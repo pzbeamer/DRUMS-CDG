@@ -9,7 +9,12 @@ INDMAP = [6 8 14 15 20];
 
     
 for pt= 37%[37 48 59 60 65 66 67]
+<<<<<<< HEAD
     
+=======
+
+    pt
+>>>>>>> 34938d84d9f2db1c2767a38a713d591f1e8d0e02
     pt_id = T{pt,1}{1}
     
     %How much rest are we cutting?
@@ -113,6 +118,7 @@ for pt= 37%[37 48 59 60 65 66 67]
                 saveDat.xhist(k,1:length(xhist)) = xhist;
                 
             end
+<<<<<<< HEAD
             %% Save
             save(strcat(pt_id,'_optimized.mat'),'saveDat');
        end
@@ -121,3 +127,284 @@ end
 
 
 
+=======
+        end
+    end
+>>>>>>> 8a1f75dd22aa423be3fcea7efe190801e88d09af
+    
+<<<<<<< HEAD
+    %{
+%     %% plots
+%         %clear h
+%         
+%         
+=======
+
+    %% plots
+        %clear h
+        
+        
+<<<<<<< HEAD
+>>>>>>> 574776ba54b4387bdd9d3f649cd4754c9a166b43
+%         if i == 4
+%             disp(strcat('Error =', num2str(min(error(:,1)))))
+%             num = find(error(:,1) == min(error(:,1)))-1;
+%             load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_',num2str(30 - 5*num),'_',num2str(k),'_nomHR.mat'))
+%             load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_',num2str(30 - 5*num),'_optHR.mat'))
+%         else
+%             load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_',num2str(30 - 5*i),'_nomHR.mat'))
+%             load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_',num2str(30 - 5*i),'_',num2str(k),'_optHR.mat'))
+%         end
+%           
+%         
+%         h=figure(j+1);
+%         set(gcf,'units','normalized','outerposition',[0.2 0.2 .5 .5])
+%         % BP
+%         subplot(3,2,1)
+%         hold on 
+%         plot(ones(2,1)*val_start,Plims,'k--')
+%         plot(ones(2,1)*Tdata(i_t1),Plims,'k--')
+%         plot(ones(2,1)*Tdata(i_t2),Plims,'k:')
+%         plot(ones(2,1)*val_end,Plims,'k--')
+%         plot(ones(2,1)*Tdata(i_t3),Plims,'k--')
+%         plot(ones(2,1)*Tdata(i_t4),Plims,'k--')
+%         plot(val_dat(:,1),val_dat(:,4),'b')
+%         plot(Tdata,SPdata,'b','linewidth',2)
+% 
+%         set(gca,'FontSize',15)
+%         xlim(Tlims)
+%         ylim(Plims)
+%         ylabel('BP (bpm)')
+% 
+%         % Pth
+%         subplot(3,2,2)
+%         hold on 
+% 
+%         plot(ones(2,1)*val_start,Pthlims,'k--')
+%         plot(ones(2,1)*Tdata(i_t1),Pthlims,'k--')
+%         plot(ones(2,1)*Tdata(i_t2),Pthlims,'k:')
+%         plot(ones(2,1)*val_end,Pthlims,'k--')
+%         plot(ones(2,1)*Tdata(i_t3),Pthlims,'k--')
+%         plot(ones(2,1)*Tdata(i_t4),Pthlims,'k--')
+%         plot(Tdata,Pth,'b','linewidth',2)
+% 
+%         set(gca,'FontSize',15)
+%         xlim(Tlims)
+%         ylim(Pthlims)
+%         ylabel('P_{th} (bpm)')
+% 
+%         % HR 
+%         subplot(3,2,3)
+%         hold on 
+%         plot(ones(2,1)*val_start,Hlims,'k--')
+%         plot(ones(2,1)*Tdata(i_t1),Hlims,'k--')
+%         plot(ones(2,1)*Tdata(i_t2),Hlims,'k:')
+%         plot(ones(2,1)*val_end,Hlims,'k--')
+%         plot(ones(2,1)*Tdata(i_t3),Hlims,'k--')
+%         plot(ones(2,1)*Tdata(i_t4),Hlims,'k--')
+%         plot(Tdata,Hdata,'b','linewidth',2)
+%         plot(Tdata,HR,'r','linewidth',2)
+%     
+%         set(gca,'FontSize',15)
+%         xlim(Tlims)
+%         ylim(Hlims)
+%         
+%         ylabel('HR (bpm)')
+%         title('Nominal')
+%     
+%         subplot(3,2,4)
+%         hold on 
+%         plot(ones(2,1)*val_start,Hlims,'k--')
+%         plot(ones(2,1)*Tdata(i_t1),Hlims,'k--')
+%         plot(ones(2,1)*Tdata(i_t2),Hlims,'k:')
+%         plot(ones(2,1)*val_end,Hlims,'k--')
+%         plot(ones(2,1)*Tdata(i_t3),Hlims,'k--')
+%         plot(ones(2,1)*Tdata(i_t4),Hlims,'k--')
+%         plot(Tdata,Hdata,'b','linewidth',2)
+%         plot(Tdata,HR_LM,'r','linewidth',2)
+%     
+% 
+%         set(gca,'FontSize',15)
+%         xlim(Tlims)
+%         ylim(Hlims)
+%         
+%         ylabel('HR (bpm)')
+%         title('Optimized')
+% 
+%         % Neural tones
+%         subplot(3,2,5)
+%         hold on 
+%         plot(ones(2,1)*val_start,2,'k--')
+%         plot(ones(2,1)*Tdata(i_t1),2,'k--')
+%         plot(ones(2,1)*Tdata(i_t2),2,'k:')
+%         plot(ones(2,1)*val_end,2,'k--')
+%         plot(ones(2,1)*Tdata(i_t3),2,'k--')
+%         plot(ones(2,1)*Tdata(i_t4),2,'k--')
+%         plot(Tdata,Tpb_LM*optpars(19),'color',[.5 0 .5],'linewidth',2) % purple parasympathetic
+%          ylim([0 1])
+% %         yyaxis right 
+%         plot(Tdata,Ts_LM*optpars(21),'color',[0 0.75 .75],'linewidth',2)  % slightly darker green than the 'g' command
+%         set(gca,'FontSize',15)
+%         xlim(Tlims)
+%         
+%         xlabel('Time (s)')
+%         ylabel('Outflow')
+%     
+%         subplot(3,2,6)
+%         hold on 
+%         plot(ones(2,1)*val_start,2,'k--')
+%         plot(ones(2,1)*Tdata(i_t1),2,'k--')
+%         plot(ones(2,1)*Tdata(i_t2),2,'k:')
+%         plot(ones(2,1)*val_end,2,'k--')
+%         plot(ones(2,1)*Tdata(i_t3),2,'k--')
+%         plot(ones(2,1)*Tdata(i_t4),2,'k--')
+%         plot(Tdata,Tpr_LM*optpars(20),'color',[1 .5 0],'linewidth',2)  % orange
+%     
+%         set(gca,'FontSize',15)
+%         xlim(Tlims)
+%         ylim([0 .5])
+%         xlabel('Time (s)')
+%         ylabel('Outflow')
+%         
+%         hold off
+% 
+%         fig_name = strcat('FIG_',u{j},'_',num2str(30 - 5*i));
+%         print(h,fig_name,'-dpng','-r400');
+<<<<<<< HEAD
+%         
+=======
+=======
+        if i == 4
+            disp(strcat('Error =', num2str(min(error(:,1)))))
+            num = find(error(:,1) == min(error(:,1)))-1;
+            load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_',num2str(30 - 5*num),'_',num2str(k),'_nomHR.mat'))
+            load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_',num2str(30 - 5*num),'_optHR.mat'))
+        else
+            load(strcat('Valsalva/nomHR_residuals/',u{j},'_Val1_',num2str(30 - 5*i),'_nomHR.mat'))
+            load(strcat('Valsalva/optHR_residuals/',u{j},'_Val1_',num2str(30 - 5*i),'_',num2str(k),'_optHR.mat'))
+        end
+          
+        
+        h=figure(j+1);
+        set(gcf,'units','normalized','outerposition',[0.2 0.2 .5 .5])
+        % BP
+        subplot(3,2,1)
+        hold on 
+        plot(ones(2,1)*val_start,Plims,'k--')
+        plot(ones(2,1)*Tdata(i_t1),Plims,'k--')
+        plot(ones(2,1)*Tdata(i_t2),Plims,'k:')
+        plot(ones(2,1)*val_end,Plims,'k--')
+        plot(ones(2,1)*Tdata(i_t3),Plims,'k--')
+        plot(ones(2,1)*Tdata(i_t4),Plims,'k--')
+        plot(val_dat(:,1),val_dat(:,4),'b')
+        plot(Tdata,SPdata,'b','linewidth',2)
+
+        set(gca,'FontSize',15)
+        xlim(Tlims)
+        ylim(Plims)
+        ylabel('BP (bpm)')
+
+        % Pth
+        subplot(3,2,2)
+        hold on 
+
+        plot(ones(2,1)*val_start,Pthlims,'k--')
+        plot(ones(2,1)*Tdata(i_t1),Pthlims,'k--')
+        plot(ones(2,1)*Tdata(i_t2),Pthlims,'k:')
+        plot(ones(2,1)*val_end,Pthlims,'k--')
+        plot(ones(2,1)*Tdata(i_t3),Pthlims,'k--')
+        plot(ones(2,1)*Tdata(i_t4),Pthlims,'k--')
+        plot(Tdata,Pth,'b','linewidth',2)
+
+        set(gca,'FontSize',15)
+        xlim(Tlims)
+        ylim(Pthlims)
+        ylabel('P_{th} (bpm)')
+
+        % HR 
+        subplot(3,2,3)
+        hold on 
+        plot(ones(2,1)*val_start,Hlims,'k--')
+        plot(ones(2,1)*Tdata(i_t1),Hlims,'k--')
+        plot(ones(2,1)*Tdata(i_t2),Hlims,'k:')
+        plot(ones(2,1)*val_end,Hlims,'k--')
+        plot(ones(2,1)*Tdata(i_t3),Hlims,'k--')
+        plot(ones(2,1)*Tdata(i_t4),Hlims,'k--')
+        plot(Tdata,Hdata,'b','linewidth',2)
+        plot(Tdata,HR,'r','linewidth',2)
+    
+        set(gca,'FontSize',15)
+        xlim(Tlims)
+        ylim(Hlims)
+        
+        ylabel('HR (bpm)')
+        title('Nominal')
+    
+        subplot(3,2,4)
+        hold on 
+        plot(ones(2,1)*val_start,Hlims,'k--')
+        plot(ones(2,1)*Tdata(i_t1),Hlims,'k--')
+        plot(ones(2,1)*Tdata(i_t2),Hlims,'k:')
+        plot(ones(2,1)*val_end,Hlims,'k--')
+        plot(ones(2,1)*Tdata(i_t3),Hlims,'k--')
+        plot(ones(2,1)*Tdata(i_t4),Hlims,'k--')
+        plot(Tdata,Hdata,'b','linewidth',2)
+        plot(Tdata,HR_LM,'r','linewidth',2)
+    
+
+        set(gca,'FontSize',15)
+        xlim(Tlims)
+        ylim(Hlims)
+        
+        ylabel('HR (bpm)')
+        title('Optimized')
+
+        % Neural tones
+        subplot(3,2,5)
+        hold on 
+        plot(ones(2,1)*val_start,2,'k--')
+        plot(ones(2,1)*Tdata(i_t1),2,'k--')
+        plot(ones(2,1)*Tdata(i_t2),2,'k:')
+        plot(ones(2,1)*val_end,2,'k--')
+        plot(ones(2,1)*Tdata(i_t3),2,'k--')
+        plot(ones(2,1)*Tdata(i_t4),2,'k--')
+        plot(Tdata,Tpb_LM*optpars(19),'color',[.5 0 .5],'linewidth',2) % purple parasympathetic
+         ylim([0 1])
+%         yyaxis right 
+        plot(Tdata,Ts_LM*optpars(21),'color',[0 0.75 .75],'linewidth',2)  % slightly darker green than the 'g' command
+        set(gca,'FontSize',15)
+        xlim(Tlims)
+        
+        xlabel('Time (s)')
+        ylabel('Outflow')
+    
+        subplot(3,2,6)
+        hold on 
+        plot(ones(2,1)*val_start,2,'k--')
+        plot(ones(2,1)*Tdata(i_t1),2,'k--')
+        plot(ones(2,1)*Tdata(i_t2),2,'k:')
+        plot(ones(2,1)*val_end,2,'k--')
+        plot(ones(2,1)*Tdata(i_t3),2,'k--')
+        plot(ones(2,1)*Tdata(i_t4),2,'k--')
+        plot(Tdata,Tpr_LM*optpars(20),'color',[1 .5 0],'linewidth',2)  % orange
+    
+        set(gca,'FontSize',15)
+        xlim(Tlims)
+        ylim([0 .5])
+        xlabel('Time (s)')
+        ylabel('Outflow')
+        
+        hold off
+
+        fig_name = strcat('FIG_',u{j},'_',num2str(30 - 5*i));
+        print(h,fig_name,'-dpng','-r400');
+>>>>>>> 8a1f75dd22aa423be3fcea7efe190801e88d09af
+>>>>>>> 574776ba54b4387bdd9d3f649cd4754c9a166b43
+        
+    %}
+       
+end
+end
+%identify which rest length did the best
+%saveas(figure(i+1),strcat('Figures/',pt_name(1:end-7),'_bestRest.jpeg'))
+>>>>>>> 34938d84d9f2db1c2767a38a713d591f1e8d0e02
