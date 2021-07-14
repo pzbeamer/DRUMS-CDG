@@ -6,6 +6,34 @@ format shortg;
 T = readtable('../PatientInfo07132021.csv','Headerlines',2);
 INDMAP = [6 8 14 15 20];
 
+<<<<<<< HEAD
+=======
+
+for i=1:length(q)
+    u{i} = strcat(cell_of_file_names{q(i),1}(1:end-9));
+end
+k=1;
+for k = 1:10
+    j = 3;
+    %optimizing
+    pt_name = strcat(u{j},'_val1_WS.mat'); 
+    %{
+    %parameters to optimize
+    %INDMAP = [1 6 7 8 9 10 12 20 21]; %subset 1
+    %INDMAP = [1 6 7 8 9 10 20 21]; %subset 2
+    %INDMAP = [1 6 7   9 10 20 21]; %subset 2 no 8
+    %INDMAP = [7 10 11 19 20 21]; %subset 3
+    %INDMAP = [1    5 6
+ 7 8 9 10      12 13  20 21 ]; %subset 4
+    %INDMAP = [1 5 6 7 8 9 10 12 20 21 ]; %subset 5
+    %}
+    %residual error vector
+    %INDMAP = [1 6 7 8 9 10 20 21];
+    %INDMAP = [3 6 8 14 15 18 19];
+%     INDMAP = [2 6 7 8 19 20 21];
+    %INDMAP = [1 6 7 10 20 21];
+    INDMAP = [6 8 14 15 20];
+>>>>>>> 691faec43bbe24c05c5451d6669956237caef4d5
     
 for pt=[37 48 59 60 65 66 67]
     pt
@@ -15,6 +43,12 @@ for pt=[37 48 59 60 65 66 67]
        load(strcat('../MatFiles/',pt_id,'_val1_WS.mat'))
 
     error  = zeros(5,2);
+<<<<<<< HEAD
+=======
+    for i = 3%:3
+        %call forward evaluation with 30-5*i second rest periods
+        Func_DriverBasic_p(pt_name,[30 - 5*i 30],INDMAP);
+>>>>>>> 691faec43bbe24c05c5451d6669956237caef4d5
     
     for i = 0%:3 %reducing rest before 
         
@@ -173,11 +207,15 @@ for pt=[37 48 59 60 65 66 67]
         fig_name = strcat('FIG_',u{j},'_',num2str(30 - 5*i));
         print(h,fig_name,'-dpng','-r400');
         
+<<<<<<< HEAD
         
     end
 end
+=======
+        pause
+>>>>>>> 691faec43bbe24c05c5451d6669956237caef4d5
 
 
 %identify which rest length did the best
 %saveas(figure(i+1),strcat('Figures/',pt_name(1:end-7),'_bestRest.jpeg'))
-
+end
