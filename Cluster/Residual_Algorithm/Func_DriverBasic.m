@@ -186,7 +186,7 @@ function Func_DriverBasic(pt_file_name,restTime,INDMAP)
     
     %% Solve model with nominal parameters 
 
-    [HR,~,~,Outputs] = model_sol(pars,data);
+    [HR,~,~,Outputs,Init] = model_sol(pars,data);
 
     time = Outputs(:,1);
     T_s   = Outputs(:,3);
@@ -205,7 +205,7 @@ function Func_DriverBasic(pt_file_name,restTime,INDMAP)
     pt = pt_file_name;
     clear i
     clear pt_file_name
-    save(strcat('../Valsalva/nomHR_residuals/',pt(1:(end-7)),'_',num2str(restTimeS),'_nomHR.mat'))
+    save(strcat('../Valsalva/nomHR_residuals/nomHR_',num2str(restTime(1)),'.mat'))
     
     elapsed_time = toc;
     

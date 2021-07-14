@@ -1,5 +1,5 @@
 %DriverBasic_LM
-function [HR_LM] = Func_DriverBasic_LM(pt_file_name,INDMAP,k)
+function [HR_LM] = Func_DriverBasic_LM(pt_file_name,INDMAP,restTime)
 %     clear all
     %close all
     tic
@@ -60,7 +60,7 @@ function [HR_LM] = Func_DriverBasic_LM(pt_file_name,INDMAP,k)
     Tpr_LM  = Outputs(:,4); 
 
 %     save optHR.mat 
-    save(strcat('../Valsalva/optHR_residuals/',pt_file_name(1:end-10),'_',num2str(k),'_optHR.mat'))
+    save(strcat('../Valsalva/optHR_residuals/optHR_',num2str(restTime(1)),'.mat'))
 
     elapsed_time = toc;
     elapsed_time = elapsed_time/60;

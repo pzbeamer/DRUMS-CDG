@@ -22,9 +22,8 @@ for pt= 37%[37 48 59 60 65 66 67]
     saveDat.restTime = 30;
     saveDat.Init = zeros(8,4);
     saveDat.error = zeros(8,1);
-    saveDat.flag = 0;
+    saveDat
     
-    % if there's a file
     if isfile(strcat('../MatFiles/',pt_id,'_val1_WS.mat'))
        
        error  = zeros(5,2);
@@ -37,7 +36,7 @@ for pt= 37%[37 48 59 60 65 66 67]
            
             if k == 1
                 for i = 0:3 %reducing rest before
-                    %% run forward eval and optimization
+
                     
                     %call forward evaluation with 30-5*i second rest periods
                     Func_DriverBasic(pt_WS,[30 - 5*i 30],INDMAP);
@@ -56,10 +55,6 @@ for pt= 37%[37 48 59 60 65 66 67]
                     error(i+1,1) = norm((Hdata(start:slut)-HR_LM(start:slut))./Hdata(start:slut)/scaler);
                     error(i+1,2) = (max(Hdata(start:slut)) - max(HR_LM(start:slut)))/max(Hdata(start:slut));
 
-                    %% Save necessary stats
-                    
-                    %if the rest time was good enough, save stuff and break
-                    %out of loop
                     if error(i+1,1) < .8/scaler || error(i+1,2) < 5/max(Hdata(start:slut))
                         restCut = i;
                         saveDat.restTime = 30 - restCut * 5;
@@ -75,7 +70,6 @@ for pt= 37%[37 48 59 60 65 66 67]
                     elseif i == 3
                         %Rest cut is the best residual error if none are
                         %satisfactory
-                        saveDat.flag = 1;
                         restCut = find(error(:,1) == min(error(:,1)))-1;
                         saveDat.restTime = 30 - restCut * 5;
                         saveDat.error(k) = error(i+1,1);
@@ -90,7 +84,7 @@ for pt= 37%[37 48 59 60 65 66 67]
                 end
                 
             else %for the rest of the random starts, we don't need to vary rest time
-                %% run forward eval and optimization
+                
                 Func_DriverBasic(pt_WS,[30 - 5*restCut 30],INDMAP);
 
                 nomHRfile =strcat('nomHR_',num2str(30-5*restCut),'.mat');
@@ -100,7 +94,7 @@ for pt= 37%[37 48 59 60 65 66 67]
                 HR_LM = Func_DriverBasic_LM(nomHRfile,INDMAP,30-5*restCut);
                 
            
-                %% save necessary stats
+                %save necessary stats
                 load(strcat('../Valsalva/nomHR_residuals/nomHR_',num2str(30-5*restCut),'.mat'))
                 start = min(find(Tdata >= val_start));
                 slut = min(find(Tdata >= val_end));
@@ -113,7 +107,7 @@ for pt= 37%[37 48 59 60 65 66 67]
                 saveDat.xhist(k,1:length(xhist)) = xhist;
                 
             end
-            %% Save
+            
             save(strcat(pt_id,'_optimized.mat'),'saveDat');
        end
     end
