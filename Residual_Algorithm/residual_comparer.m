@@ -12,7 +12,7 @@ for i=1:length(q)
 end
 k=1;
 for k = 1:10
-    j = 1;
+    j = 3;
     %optimizing
     pt_name = strcat(u{j},'_val1_WS.mat'); 
     %{
@@ -35,7 +35,7 @@ for k = 1:10
    
 
     error  = zeros(5,2);
-    for i = 0%:3
+    for i = 3%:3
         %call forward evaluation with 30-5*i second rest periods
         Func_DriverBasic_p(pt_name,[30 - 5*i 30],INDMAP);
     
@@ -188,10 +188,9 @@ for k = 1:10
         fig_name = strcat('FIG_',u{j},'_',num2str(30 - 5*i));
         print(h,fig_name,'-dpng','-r400');
         
-        
-end
+        pause
 
 
 %identify which rest length did the best
 %saveas(figure(i+1),strcat('Figures/',pt_name(1:end-7),'_bestRest.jpeg'))
-
+end
