@@ -4,7 +4,7 @@
 T = readtable('../PatientInfo07132021.csv','Headerlines',2);
 INDMAP = [1 6 7 8 9 10 20 21]; %INDMAP subject to change
 
-for pt= 1:50%[37 48 59 60 65 66 67]
+for pt=37%[37 48 59 60 65 66 67]
     pt
     pt_id = T{pt,1}{1}
     

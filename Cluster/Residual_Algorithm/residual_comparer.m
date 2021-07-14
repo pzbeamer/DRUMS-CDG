@@ -7,7 +7,8 @@ T = readtable('../PatientInfo07132021.csv','Headerlines',2);
 INDMAP = [6 8 14 15 20];
 
     
-for pt=37 %[37 48 59 60 65 66 67]
+for pt= 37%[37 48 59 60 65 66 67]
+
     pt
     pt_id = T{pt,1}{1}
     
@@ -179,10 +180,8 @@ for pt=37 %[37 48 59 60 65 66 67]
 %         
         
     %}
-    end
+       
 end
-
-
+end
 %identify which rest length did the best
 %saveas(figure(i+1),strcat('Figures/',pt_name(1:end-7),'_bestRest.jpeg'))
-
