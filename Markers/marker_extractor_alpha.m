@@ -1,7 +1,7 @@
 clear all
 close all
 
-T = readtable('PatientInfo07132021.csv','Headerlines',2);
+T = readtable('PatientInfo07082021.csv','Headerlines',2);
 alpha = zeros(1,869);
 negatives = cell(3,869);
 
