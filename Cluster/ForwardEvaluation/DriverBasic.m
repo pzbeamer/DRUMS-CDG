@@ -1,24 +1,24 @@
-% clear all
-% close all
+clear all
+close all
 %patient to read
 
 
-T = readtable('PatientInfo_063021.csv','Headerlines',2);
+T = readtable('../PatientInfo07132021.csv','Headerlines',2);
 
-for pt=[37 48 59 60 65 66 67]
+for pt=37%[37 48 59 60 65 66 67]
     pt
     pt_id = T{pt,1}{1}
     
     if isfile(strcat('../MatFiles/',pt_id,'_val1_WS.mat'))
        load(strcat('../MatFiles/',pt_id,'_val1_WS.mat'))
+
        pt_id = strcat(pt_id,'_val1_WS.mat');
        Func_DriverBasic(pt_id,[30 30]);
        nomHRfile =strcat('Valsalva/nomHR_residuals/',pt_id(1:end-7),'_nomHR.mat');
        
        load(strcat('../Valsalva/nomHR_residuals/',pt_id(1:end-7),'_nomHR.mat'));
-       
-%     h = figure;
-figure(1)
+   
+h = figure;
 hold on
 
     set(gcf,'units','normalized','outerposition',[0.2 0.2 .5 .5])
@@ -85,14 +85,14 @@ hold on
 %     plot(ones(2,1)*Tdata(i_t4),Hlims,'k--')
 %     plot(Tdata,Hdata,'b','linewidth',2)
 %     plot(Tdata,HR_LM,'r','linewidth',2)
-    
-
-    set(gca,'FontSize',15)
-    xlim(Tlims)
-    ylim(Hlims)
-    xlabel('Time (s)')
-    ylabel('HR (bpm)')
-    title('Optimized')
+%     
+% 
+%     set(gca,'FontSize',15)
+%     xlim(Tlims)
+%     ylim(Hlims)
+%     xlabel('Time (s)')
+%     ylabel('HR (bpm)')
+%     title('Optimized')
 
     % Neural tones
     subplot(3,2,5)
@@ -127,9 +127,8 @@ hold on
     xlabel('Time (s)')
     ylabel('Outflow')
     
-%     fig_name = strcat('4FIG5_',u{j});
-   % print(h,fig_name,'-dpng','-r400');
-    
+    saveas(h,[pwd '/Figures/',pt_id,'.fig'])
+    saveas(h,[pwd '/Figures/',pt_id,'.png']) 
     %pause
     end
 end
