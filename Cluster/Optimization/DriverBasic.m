@@ -1,10 +1,10 @@
 % clear all
 % close all
 
-T = readtable('../PatientInfo_063021.csv','Headerlines',2);
+T = readtable('../PatientInfo07132021.csv','Headerlines',2);
 INDMAP = [1 6 7 8 9 10 20 21]; %INDMAP subject to change
 
-for pt=5
+for pt=37%[37 48 59 60 65 66 67]
     pt
     pt_id = T{pt,1}{1}
     
@@ -17,7 +17,7 @@ for pt=5
        
        %% plots
        
-       figure(1)
+h = figure;
 hold on
 
     set(gcf,'units','normalized','outerposition',[0.2 0.2 .5 .5])
@@ -125,6 +125,9 @@ hold on
     ylim([0 2])
     xlabel('Time (s)')
     ylabel('Outflow')
+    
+    saveas(h,[pwd '/Figures/',pt_id,'.fig'])
+    saveas(h,[pwd '/Figures/',pt_id,'.png']) 
        
     end
 end

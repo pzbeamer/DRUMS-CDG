@@ -73,7 +73,7 @@ Hpb = (1 - Hbar/HI + Hpr*Tpr_ss + Hs*Ts_ss)/Tpb_ss;
 
 %% Outputs
 
-pars = [A; B;              
+parsO = [A; B;              
     Kpb; Kpr; Ks;               %Gains
     taupb; taupr; taus; tauH; %Time Constants
     qw; qpb; qpr; qs;               %Sigmoid Steepnesses
@@ -81,11 +81,14 @@ pars = [A; B;
     HI; Hpb; Hpr; Hs;               %Heart Rate Parameters 
     Ds];                            %Delay
 
+scaled = .2 * rand(size(parsO))-.1;
+pars = parsO .* (1 + scaled);
+
 %% Parameter bounds
 
 %Vary nominal parameters by +/- 50%
-lb  = pars*.5; 
-ub  = pars*1.5;
+lb  = parsO*.5; 
+ub  = parsO*1.5;
 
 %B - Convex combination
 lb(2)  = .01;                       
