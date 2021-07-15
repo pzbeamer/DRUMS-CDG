@@ -1,4 +1,4 @@
-function Func_DriverBasic_p(pt_file_name,restTime)
+function Func_DriverBasic_p(pt_file_name,restTime,INDMAP)
     %pass in a file name to read and a vector of rest times needed
     %restTime = [start end]
     %Call "Driver basic" in an automated way
@@ -183,7 +183,7 @@ function Func_DriverBasic_p(pt_file_name,restTime)
 
     %% Get nominal parameter values
 
-    pars = load_global(data); 
+    [pars, lb, ub] = load_global(data,INDMAP); 
     
     %% Solve model with nominal parameters 
 

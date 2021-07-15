@@ -1,7 +1,7 @@
-%% READ TABLE (SOPHIE CAN IGNORE)
+%% READ TABLE 
 
 clear all  
-T = readtable('../Summary_Data_800_Gals/PatientInfo_063021.csv','Headerlines',2);
+T = readtable('PatientInfo_063021.csv','Headerlines',2);
 % Td = readtable('../HPV_demographic_info_2_9_21.csv'); %THIS WILL PRODUCE WARNINGS BUT IT'S FINE d = demographics
 % HPV_numbers = Td.HPV_nummer;
 % Ages = Td.Alder;
@@ -12,7 +12,7 @@ T = readtable('../Summary_Data_800_Gals/PatientInfo_063021.csv','Headerlines',2)
 %     end
 % end
 
-%% Column Numbers (SOPHIE CAN IGNORE)
+%% Column Numbers 
 pts = 1;
 ages = 3;
 heights = 4;
@@ -42,7 +42,7 @@ DBnotes = 27;
 Vals = [28:32;33:37;38:42;43:47]; %Each row a new val, cols rest, start, end,rest end, notes
 
 
-%% Other Variables (SOPHIE CAN IGNORE)
+%% Other Variables 
 max_HPV_num = 872; % will change for all values
 rtas = 180; %desired rest time for AS
 rthut = 270; %desired rest time for HUT
@@ -52,23 +52,18 @@ make_HUT = 0;
 make_DB = 0;
 make_VAL = 1;
 
-%% Load In Matlab Files (SOPHIE CAN IGNORE)
+%% Load In Matlab Files 
 %index 50 does not have blood pressure
 %index 784 has issue, not with spread, calibration occurs during it which 
 %might explain it, the issue comes with getting the systolic bp measure
-
-
-
-
 
 %% WHICH PATIENT ARE WE LOOKING AT? CHANGE THIS TO MOVE ON TO NEW PATIENT 
 %Patient numbers range from 3-872, we've got to go through all of them
 %Many patients will not have any data, and if this is the case no figures
 %will show up. If that happens just move on to the next one.
 
-for pt=9
-
-    %% PREPROCESS DATA AND STUFF (SOPHIE CAN IGNORE)
+for pt=[3:12]
+    %% PREPROCESS DATA AND STUFF 
     pt
     pt_id = T{pt,1}{1}
     if isfile(strcat('/Volumes/GoogleDrive/.shortcut-targets-by-id/1Vnypyb_cIdCMJ49vzcg8V7cWblpVCeYZ/HPV_Data/MATLAB_Files/',pt_id,'.mat'))
