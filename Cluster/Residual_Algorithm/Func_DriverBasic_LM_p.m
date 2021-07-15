@@ -1,9 +1,8 @@
 %DriverBasic_LM
-function [pars optpars Init xhist error HR_LM] = Func_DriverBasic_LM_p(data,INDMAP,restTime)
+function [pars optpars Init xhist error HR_LM] = Func_DriverBasic_LM_p(data,INDMAP)
 %     clear all
     %close all
-    global echoon
-    global senson
+
     
 
     %% Get nominal parameter values
@@ -20,8 +19,7 @@ function [pars optpars Init xhist error HR_LM] = Func_DriverBasic_LM_p(data,INDM
     gpars.ALLPARS  = ALLPARS;
     gpars.ODE_TOL  = ODE_TOL;
     gpars.DIFF_INC = DIFF_INC;
-    gpars.echoon   = echoon;
-    gpars.senson   = senson; 
+ 
 
     data.gpars = gpars;
 
