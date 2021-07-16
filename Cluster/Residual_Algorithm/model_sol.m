@@ -116,8 +116,7 @@ HRmodelM   = max(HR(startm:slutm));
 HRdataM    = max(Hdata(startd:slutd));
 HRdatamean = mean(Hdata(startd:slutd));
 HRmovmean = movmean(Hdata,40);
-size(HR)
-size(Hdata)
+
 rout     = [(HR' - Hdata')/HRdatamean/sqrt(length(Hdata)) ... 
             (HRmodelM - HRdataM)/HRdataM]';
 
