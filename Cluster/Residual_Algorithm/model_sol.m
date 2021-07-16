@@ -1,6 +1,6 @@
 function [HR,rout,J,Outputs,Init] = model_sol(pars,data)
 
-global pars0
+global pars0 echoon
 pars = exp(pars); 
 
 %% Unpack structure 
@@ -11,11 +11,11 @@ Pthdata = data.Pthdata;
 Rdata   = data.Rdata; 
 Hdata   = data.Hdata; 
 dt      = data.dt; 
-echoon  = data.gpars.echoon; 
+
 
 %% Get initial conditions 
 
-Init = initialconditions(pars0,data); 
+Init = initialconditions(pars0,data);
 
 %% Write data files up to event
 
@@ -116,6 +116,8 @@ HRmodelM   = max(HR(startm:slutm));
 HRdataM    = max(Hdata(startd:slutd));
 HRdatamean = mean(Hdata(startd:slutd));
 HRmovmean = movmean(Hdata,40);
+size(HR)
+size(Hdata)
 rout     = [(HR' - Hdata')/HRdatamean/sqrt(length(Hdata)) ... 
             (HRmodelM - HRdataM)/HRdataM]';
 

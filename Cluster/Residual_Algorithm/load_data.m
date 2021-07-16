@@ -1,57 +1,20 @@
-function Func_DriverBasic(pt_file_name,restTime,INDMAP)
+function [data] = load_data(pt_WS)
     %pass in a file name to read and a vector of rest times needed
     %restTime = [start end]
     %Call "Driver basic" in an automated way
     %DriverBasic 
 
     %close all
-    tic; 
 
-    %% Inputs
+    load(strcat('MatFiles/',pt_WS));
 
-    echoon  = 0; 
-    printon = 0; 
 
-    %% Load data and preprocess data 
-    load(strcat('MatFiles/',pt_file_name)); %Load workspace
+    
     
     dt = mean(diff(Tdata));
     
     
-    %Calculate length of time before valsalva
-    
-    timeAvailableS = val_start - Tdata(1);
-    timeAvailableE = Tdata(end) - val_end;
-    restTimeS = restTime(1);
-    restTimeE = restTime(2);
-    %Test if the rest time asked for exceeds available time
-    if timeAvailableS < restTimeS
-        restTimeS = timeAvailableS;
-    end
-    if timeAvailableE < restTimeE
-        restTimeE = timeAvailableE;
-    end
-    
-    
-    %how much time are we cutting out
-    timeCutS = timeAvailableS - restTimeS;
-    timeCutE = timeAvailableE - restTimeE;
-    
-    %Cut all the data out
-    startTime = find(Tdata > Tdata(1) + timeCutS);
-    endTime = find(Tdata >= Tdata(end) - timeCutE);
-    startTimeV = find(val_dat(:,1) > val_dat(1,1) + timeCutS);
-    endTimeV = find(val_dat(:,1) >= val_dat(end,1) - timeCutE);
-    
-    Tdata = Tdata(startTime:endTime);
-    Hdata = Hdata(startTime:endTime);
-    Pdata = Pdata(startTime:endTime);
-    Rdata = Rdata(startTime:endTime);
-    SPdata = SPdata(startTime:endTime);
-    val_dat = val_dat(startTimeV:endTimeV,:);
-    
-    
-     % Rescale times to start at 0
+    % Rescale times to start at 0
     val_start = val_start - Tdata(1); 
     val_end   = val_end - Tdata(1); 
     Tdata     = Tdata - Tdata(1);
@@ -174,41 +137,8 @@ function Func_DriverBasic(pt_file_name,restTime,INDMAP)
     data.i_t4      = i_t4;  
     data.age       = Age; 
     data.dt        = dt; 
+    data.val_dat   = val_dat;
 
-    %Global parameters substructure
-    gpars.echoon = echoon; 
-
-    data.gpars   = gpars; 
-
-    %% Get nominal parameter values
-
-    [pars, lb, ub] = load_global(data,INDMAP); 
-    
-    %% Solve model with nominal parameters 
-
-    [HR,~,~,Outputs,Init] = model_sol(pars,data);
-
-    time = Outputs(:,1);
-    T_s   = Outputs(:,3);
-    T_pr  = Outputs(:,4); 
-
-    %% Set limits for the axes of each plot 
-
-    Tlims   = [t_start, t_end]; 
-    Plims   = [min(Pdata)-10, max(Pdata)+10];
-    Pthlims = [-1 41]; 
-    Hlims   = [min(Hdata)-5,  max(Hdata)+5]; 
-    efflims = [-.1 1.25]; 
-
-    %% Save results in a .mat file
-    
-    pt = pt_file_name;
-    clear i
-    clear pt_file_name
-    save(strcat('Valsalva/nomHR_residuals/nomHR_',num2str(restTime(1)),'.mat'))
-    
-    elapsed_time = toc;
-    
 
     
 end
