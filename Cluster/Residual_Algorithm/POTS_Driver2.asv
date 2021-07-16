@@ -123,7 +123,6 @@ function POTS_Driver2(index)
                 [pars optpars Init xhist error2 HR_LM]  = Func_DriverBasic_LM_p(data,INDMAP);
                 
                 %% save necessary stats
-                figure(pt)
                 hold on
                 plot(data.Tdata,data.Hdata)
                 plot(data.Tdata,HR_LM)

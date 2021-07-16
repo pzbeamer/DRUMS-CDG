@@ -13,7 +13,7 @@ function Func_DriverBasic(pt_file_name,restTime,INDMAP)
     printon = 0; 
 
     %% Load data and preprocess data 
-    load(strcat('../MatFiles/',pt_file_name)); %Load workspace
+    load(strcat('../Cluster/Residual_Algorithm/MatFiles/',pt_file_name)); %Load workspace
     
     dt = mean(diff(Tdata));
     
@@ -205,7 +205,7 @@ function Func_DriverBasic(pt_file_name,restTime,INDMAP)
     pt = pt_file_name;
     clear i
     clear pt_file_name
-    save(strcat('../Valsalva/nomHR_residuals/',pt(1:(end-7)),'_',num2str(restTimeS),'_nomHR.mat'))
+    save(strcat('Valsalva/nomHR_residuals/',pt(1:(end-7)),'_',num2str(restTimeS),'_nomHR.mat'))
     
     elapsed_time = toc;
     

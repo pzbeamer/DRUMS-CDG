@@ -69,9 +69,7 @@
                             saveDat.optpars(k,:) = optpars(INDMAP);
                             saveDat.xhist(k,1:length(xhist)) = xhist;
                             hold on
-                             plot(Tdata,HR_LM)                       
-                            plot(Tdata,Hdata)
-                            pause
+                           
                             break
 
                         elseif i == 3
