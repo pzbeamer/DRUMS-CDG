@@ -6,6 +6,10 @@ ct=0;
 %'HPV592_20150825_optimized.mat','HPV592_20151211_optimized.mat','HPV593_20160419_optimized.mat'
 %pt = 654,655,656
 %have no saveDat, suggesting major workspace issue/ spreadsheet
+<<<<<<< HEAD
+=======
+
+>>>>>>> 298860d7f7ef11d44196bdd46065ea386f9427a7
 for pt=3:872
     pt_id=T{pt,1}{1};
     if isfile(strcat('../Optimized/',pt_id,'_optimized.mat'))
@@ -23,7 +27,10 @@ end
     
 %% Maximum Time Cutoff and Divergence
 T=readtable('../Cluster/Residual_Algorithm/PatientInfo07132021.csv');
+<<<<<<< HEAD
 
+=======
+>>>>>>> 298860d7f7ef11d44196bdd46065ea386f9427a7
 
 ct1=0;
 ct2=0;
@@ -33,7 +40,13 @@ ctfile=0;
 %35 reach maximum time cutoff
 %38 have divergence in optimal fits
 
+<<<<<<< HEAD
 for pt=3:872
+=======
+
+
+for pt=[3:872]
+>>>>>>> 298860d7f7ef11d44196bdd46065ea386f9427a7
     pt_id=T{pt,1}{1}
     if isfile(strcat('../Optimized/',pt_id,'_optimized.mat'))
         ctfile=ctfile+1;

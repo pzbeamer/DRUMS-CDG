@@ -1,5 +1,5 @@
 clear all
-T=readtable('../Summary_Data_800_Gals/PatientInfo062221.csv');
+T=readtable('../Summary_Data_800_Gals/PatientInfo07132021.csv');
 load('../Summary_Data_800_Gals/summary.mat','uniqueTimes');
 pots_pats=cell(872,1);
 oldcount=1;
@@ -13,7 +13,7 @@ for pt=3:872
     if any(uniqueTimes(2,pt-2))
         c=c+1;
         p = 1;
-        if isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'))
+        if isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'));
             disp("isfile");
             
             load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'));
@@ -33,7 +33,7 @@ for pt=3:872
 
             if (maxHR_a>=avg_HR_before_a+30 && T{pt,3}>19) || (maxHR_a>=avg_HR_before_a+40)
                 disp(strcat(T{pt,1}," Meets Qualifications"));
-                pots_pats(oldcount)=T{pt,1};
+                pots_pats(pt-2)=T{pt,1};
                 newcount=newcount+1;
 
             end
@@ -62,7 +62,7 @@ for pt=3:872
 
             if (maxHR_h>=avg_HR_before_h+30 && T{pt,3}>19) || (maxHR_h>=avg_HR_before_h+40)
                 disp(strcat(T{pt,1}," Meets Qualifications"));
-                pots_pats(oldcount)=T{pt,1};
+                pots_pats(pt-2)=T{pt,1};
                 newcount=newcount+1;
             end
         end
@@ -71,4 +71,8 @@ for pt=3:872
         oldcount=newcount;
     end
     
+    
+    
 end
+
+save('potspats.mat','pots_pats');

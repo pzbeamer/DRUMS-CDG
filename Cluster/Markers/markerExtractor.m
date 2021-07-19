@@ -4,7 +4,7 @@ T = readtable('../PatientInfo_063021.csv','Headerlines',2);
 
 markers = zeros(869,11); %alpha, beta, gamma, HRbeforeVal, HRafterVal, SBPbeforeVal, SBPafterVal, maxHR2, maxBP2, maxHR3, maxBP3
 
-for pt = [37 48 59 60 65 66 67]
+for pt = 3:869
     pt
     pt_id = T{pt,1}{1}
         pt_file_name = strcat(pt_id,'_val1_nomHR.mat');
