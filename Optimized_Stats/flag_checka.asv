@@ -6,10 +6,10 @@ ct=0;
 %'HPV592_20150825_optimized.mat','HPV592_20151211_optimized.mat','HPV593_20160419_optimized.mat'
 %pt = 654,655,656
 %have no saveDat, suggesting major workspace issue/ spreadsheet
-for pt=3:872
+for pt=250:500
     pt_id=T{pt,1}{1};
-    if isfile(strcat('../Optimized/',pt_id,'_optimized.mat'))
-        load(strcat('../Optimized/',pt_id,'_optimized.mat'))
+    if isfile(strcat('../../Optimized/',pt_id,'_optimized.mat'))
+        load(strcat('../../Optimized/',pt_id,'_optimized.mat'))
         try
             saveDat;
             clear saveDat;
@@ -33,11 +33,12 @@ ctfile=0;
 %35 reach maximum time cutoff
 %38 have divergence in optimal fits
 
-for pt=3:872
+<<<<<<< HEAD
+for pt=250:500
     pt_id=T{pt,1}{1}
-    if isfile(strcat('../Optimized/',pt_id,'_optimized.mat'))
+    if isfile(strcat('../../Optimized/',pt_id,'_optimized.mat'))
         ctfile=ctfile+1;
-        load(strcat('../Optimized/',pt_id,'_optimized.mat'))
+        load(strcat('../../Optimized/',pt_id,'_optimized.mat'))
         if saveDat.flag(1)==1
             flagBadErr{1,ct1+1}=pt_id;
             ct1=ct1+1;
