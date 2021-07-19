@@ -1,58 +1,33 @@
-function check_Driver(index)
-    
+%remove 1
+%for 2 best error is best fit
+%for 3 best fit is any but second, best error disproven
+%remove 4, calibration during
+%5 fit wack but data seems fine ahhhh
+%6 data is rough doesnt look like a valsalva, fits consistent though
+%7 min error seems like best fit
+%8 min error works
+%9 min error 
+function check_Driver
+close all
+    index=9;
     format shortg;
 
-    load('flagDiverge.mat')
-    load(strcat(flagDiverge{index},'_optimized.mat'))
+    load('../../Optimized_Stats/flagDiverge.mat');
+    pt_id=flagDiverge{index};
+    load(strcat('../../Optimized/',pt_id,'_optimized.mat'));
     
     %Parameters to estimate (taupb, taus, spb, spr, Hpr)
     INDMAP = saveDat.INDMAP;
     %Construct file to read
-               pt_WS = strcat(pt_id,'_val1_WS.mat')
-               %Load needed patient data
-               data = load_data(pt_WS);
+    pt_WS = strcat(pt_id,'_val1_WS.mat');
+    %Load needed patient data
+    data = load_data(pt_WS);
     data = TimeCut(data,[saveDat.restTime,30]);
-               %Run 7 additional optimizations with random nominal parameter values
-                for k = 1:8
-                    %% Optimization
-                    [pars optpars Init xhist error2 HR_LM]  = Func_DriverBasic_LM_p(data,INDMAP);
-
-                    %% save necessary stats
-                    figure(pt)
-                    hold on
-                    plot(data.Tdata,data.Hdata)
-                    plot(data.Tdata,HR_LM)
-                    saveDat.error(k) = error2(1);
-                    saveDat.pars(k,:) = exp(pars(INDMAP'));
-                    saveDat.Init(k,:) = Init;
-                    saveDat.optpars(k,:) = optpars(INDMAP);
-                    saveDat.xhist(k,1:length(xhist)) = xhist;
-
-                end
-
-                for i = 1:length(saveDat.optpars(1,:))-1
-                    
-                    if abs((mean(saveDat.optpars(:,i)) - median(saveDat.optpars(:,i)))/median(saveDat.optpars(:,i))) > .15
-
-                        saveDat.flag(2,1) = 1;
-
-                    end
-
-                end
-
-                    %% Save to file
-                    save(strcat('Optimized/',pt_id,'_optimized.mat'),'saveDat');
-
-            end
-            
-       
-
-            
-            flag = 1;
-            save(strcat('Optimized/',pt_id,'_optimized.mat'),'flag');
-        
-        end
+    %Run 7 additional optimizations with random nominal parameter values
+    for k = 1:8
+        DriverBasicME(data,INDMAP,saveDat.optpars,k);
     end
+    pt_WS
 end
 
 
