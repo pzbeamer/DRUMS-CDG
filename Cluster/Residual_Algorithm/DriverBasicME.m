@@ -1,4 +1,4 @@
-function DriverBasicME(data,INDMAP,Opt_pars,k)
+function DriverBasicME(data,INDMAP,Opt_pars,k,pt)
 
 %% Get nominal parameter values
 
@@ -49,7 +49,7 @@ Tlims   = [t_start, t_end];
 Plims   = [min(SPdata)-10, max(SPdata)+10];
 Pthlims = [-1 41]; 
 Hlims   = [min(Hdata)-5,  max(Hdata)+5]; 
-efflims = [-.1 1.25]; 
+efflims = [-.1 .2]; 
 
 %% Save results in a .mat file 
 %save nomHR.mat 
@@ -59,12 +59,12 @@ efflims = [-.1 1.25];
 
 %% 4 panel figure 
 
-figure(1)
+figure(pt)
 %clf
 set(gcf,'units','normalized','outerposition',[0.2 0.2 .5 .5])
 
 % BP
-subplot(2,2,1)
+subplot(3,2,1)
 hold on 
 plot(ones(2,1)*val_start,Plims,'k--')
 plot(ones(2,1)*Tdata(i_t1),Plims,'k--')
@@ -73,15 +73,16 @@ plot(ones(2,1)*val_end,Plims,'k--')
 plot(ones(2,1)*Tdata(i_t3),Plims,'k--')
 plot(ones(2,1)*Tdata(i_t4),Plims,'k--')
 %plot(Tdata,Pdata,'b')
-plot(Tdata,SPdata,'b','linewidth',2)
+plot(Tdata,SPdata,'b','linewidth',4)
 
 set(gca,'FontSize',15)
 xlim(Tlims)
 ylim(Plims)
+yticks(90:30:150)
 ylabel('BP (bpm)')
 
 % Pth
-subplot(2,2,2)
+subplot(3,2,2)
 hold on 
 
 plot(ones(2,1)*val_start,Pthlims,'k--')
@@ -90,15 +91,16 @@ plot(ones(2,1)*Tdata(i_t2),Pthlims,'k:')
 plot(ones(2,1)*val_end,Pthlims,'k--')
 plot(ones(2,1)*Tdata(i_t3),Pthlims,'k--')
 plot(ones(2,1)*Tdata(i_t4),Pthlims,'k--')
-plot(Tdata,Pth,'b')
+plot(Tdata,Pth,'b','linewidth',3)
 
 set(gca,'FontSize',15)
 xlim(Tlims)
 ylim(Pthlims)
+yticks(0:15:40)
 ylabel('P_{th} (bpm)')
 
 % HR 
-subplot(2,2,3)
+subplot(3,2,3)
 hold on 
 plot(ones(2,1)*val_start,Hlims,'k--')
 plot(ones(2,1)*Tdata(i_t1),Hlims,'k--')
@@ -106,17 +108,18 @@ plot(ones(2,1)*Tdata(i_t2),Hlims,'k:')
 plot(ones(2,1)*val_end,Hlims,'k--')
 plot(ones(2,1)*Tdata(i_t3),Hlims,'k--')
 plot(ones(2,1)*Tdata(i_t4),Hlims,'k--')
-plot(Tdata,Hdata,'b')
-plot(Tdata,HR,'r')
+plot(Tdata,Hdata,'r','linewidth',3)
+plot(Tdata,HR,'b','linewidth',3)
 
 set(gca,'FontSize',15)
 xlim(Tlims)
 ylim(Hlims)
+yticks(60:30:140)
 xlabel('Time (s)')
 ylabel('HR (bpm)')
 
 % Neural tones
-subplot(2,2,4)
+subplot(3,2,4)
 hold on 
 plot(ones(2,1)*val_start,efflims,'k--')
 plot(ones(2,1)*Tdata(i_t1),efflims,'k--')
@@ -124,12 +127,30 @@ plot(ones(2,1)*Tdata(i_t2),efflims,'k:')
 plot(ones(2,1)*val_end,efflims,'k--')
 plot(ones(2,1)*Tdata(i_t3),efflims,'k--')
 plot(ones(2,1)*Tdata(i_t4),efflims,'k--')
-plot(Tdata,T_pr,'color',[.5 0 .5]) % purple 
-plot(Tdata,T_s,'color',[0 0.75 .75])  % slightly darker green than the 'g' command
+plot(Tdata,T_pr * exp(pars(20)),'color',[.5 0 .5],'linewidth',3) % purple 
+plot(Tdata,T_s * exp(pars(21)),'color',[0 0.75 .75],'linewidth',3)  % slightly darker green than the 'g' command
 
 set(gca,'FontSize',15)
 xlim(Tlims)
 ylim(efflims)
+% yticks(0:20:140)
+xlabel('Time (s)')
+ylabel('Outflow')
+
+
+subplot(3,2,5)
+hold on 
+plot(ones(2,1)*val_start,[0 0.4],'k--')
+plot(ones(2,1)*Tdata(i_t1),[0 0.4],'k--')
+plot(ones(2,1)*Tdata(i_t2),[0 0.4],'k:')
+plot(ones(2,1)*val_end,[0 0.4],'k--')
+plot(ones(2,1)*Tdata(i_t3),[0 0.4],'k--')
+plot(ones(2,1)*Tdata(i_t4),[0 0.4],'k--')
+plot(Tdata,T_pb * exp(pars(19)),'m','linewidth',3)
+
+set(gca,'FontSize',15)
+xlim(Tlims)
+ylim([0 0.4])
 xlabel('Time (s)')
 ylabel('Outflow')
 % print('dpng','Plots_HPV3_20151209_Val1_WS.png')
