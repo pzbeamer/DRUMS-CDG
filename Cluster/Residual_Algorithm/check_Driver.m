@@ -15,11 +15,11 @@
 %above refer to errors with falgDiverge
 function check_Driver
 close all
-    index=78;
+    index=1;
     format shortg;
 
-    load('../../Optimized_Stats/flagBadErr.mat');
-    pt_id=flagBadErr{index};
+    load('../../Optimized_Stats/flagDiverge.mat');
+    pt_id=flagDiverge{index};
     load(strcat('../../Optimized/',pt_id,'_optimized.mat'));
     
     %Parameters to estimate (taupb, taus, spb, spr, Hpr)

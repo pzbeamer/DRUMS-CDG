@@ -10,9 +10,9 @@ for pt = 3:872
     if isfile(strcat('../Optimized/',pt_id,'_optimized.mat'))
         load(strcat('../Optimized/',pt_id,'_optimized.mat'))
 
-        if saveDat.flag(2) == 0 && saveDat.flag(1) == 0
-            
-            opt_pars(guy,1:5) = saveDat.optpars(1,1:5);
+        if ~any(saveDat.flag)
+            ind=find(saveDat.error==min(saveDat.error));
+            opt_pars(guy,1:5) = norm(saveDat.optpars(ind,1:5));
             guy = guy +1;
             if ~isempty(pots_pats(pt-2))
             
@@ -21,6 +21,7 @@ for pt = 3:872
             else 
                 ppl(guy) = 0;
             end
+            
             
         else
             
@@ -37,8 +38,10 @@ for pt = 3:872
 end
 
 %% Cluster
-stuff = (opt_pars,2);
-silhouette(opt_pars,stuff)
+%stuff = kmeans(opt_pars,3);
+stuff = dbscan(opt_pars,9,20);
+figure(1);
+silhouette(opt_pars,stuff);
 
 
 

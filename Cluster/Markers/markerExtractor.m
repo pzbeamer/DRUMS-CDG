@@ -1,6 +1,6 @@
 clear all
 
-T = readtable('../PatientInfo_063021.csv','Headerlines',2);
+T = readtable('../PatientInfo07132021.csv','Headerlines',2);
 
 markers = zeros(869,11); %alpha, beta, gamma, HRbeforeVal, HRafterVal, SBPbeforeVal, SBPafterVal, maxHR2, maxBP2, maxHR3, maxBP3
 

@@ -11,8 +11,8 @@ for pt = 3:872
         load(strcat('../Optimized/',pt_id,'_optimized.mat'))
 
         if ~any(saveDat.flag)
-            
-            opt_pars(guy,1:5) = saveDat.optpars(1,1:5);
+            ind=find(saveDat.error==min(saveDat.error));
+            opt_pars(guy,1:5) = saveDat.optpars(ind,1:5);
             guy = guy +1;
             if ~isempty(pots_pats(pt-2))
             
@@ -39,7 +39,11 @@ end
 
 %% Cluster
 stuff = kmeans(opt_pars,2);
-silhouette(opt_pars,stuff)
+%stuff = dbscan(opt_pars,9,20);
+figure(1);
+silhouette(opt_pars,stuff);
+%figure(2);
+%plot(opt_pars(:,1),opt_pars(:,2),'o')
 
 
 
