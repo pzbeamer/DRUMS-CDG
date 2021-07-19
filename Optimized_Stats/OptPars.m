@@ -1,7 +1,8 @@
 
 clear all
-T=readtable('../Summary_Data_800_Gals/PatientInfo07132021.csv');
+T=readtable('../Summary_Data_800_Gals/PatientInfo07192021.csv');
 load('../AStract/potspats.mat')
+load('../Cluster/Markers/markers.mat')
 guy = 1;
 for pt = 3:872 
     
@@ -11,9 +12,16 @@ for pt = 3:872
         load(strcat('../Optimized/',pt_id,'_optimized.mat'))
 
         if ~any(saveDat.flag)
+<<<<<<< HEAD
             ind=find(saveDat.error==min(saveDat.error));
             opt_pars(guy,1:5) = saveDat.optpars(ind,1:5);
+=======
+            
+            opt_pars(guy,1:5) = saveDat.optpars(1,1:5);
+            opt_pars(guy,6:7) = barkers(pt-3,:);
+>>>>>>> a1fba088ef8350aad17af251458b51c7bc539c55
             guy = guy +1;
+            
             if ~isempty(pots_pats(pt-2))
             
                 ppl(guy) = 1;

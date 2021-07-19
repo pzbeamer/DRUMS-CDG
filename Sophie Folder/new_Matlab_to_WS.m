@@ -2,7 +2,7 @@
 
 clear all
 close all
-T = readtable('PatientInfo07082021.csv','Headerlines',2);
+T = readtable('PatientInfo07192021.csv','Headerlines',2);
 
 % Td = readtable('../HPV_demographic_info_2_9_21.csv'); %THIS WILL PRODUCE WARNINGS BUT IT'S FINE d = demographics
 % HPV_numbers = Td.HPV_nummer;
@@ -42,6 +42,7 @@ DBstarts = 25;
 DBends = 26;
 DBnotes = 27;
 Vals = [28:32;33:37;38:42;43:47]; %Each row a new val, cols rest, start, end,rest end, notes
+peaks = 89;
 
 
 %% Other Variables (SOPHIE CAN IGNORE)
@@ -71,7 +72,7 @@ make_VAL = 1;
 
 %[15 25 220 623 645]
 
-for pt= 15
+for pt= 748
 
     %% PREPROCESS DATA AND STUFF (SOPHIE CAN IGNORE)
     pt
@@ -368,25 +369,11 @@ for pt= 15
 %within like .1-.5 as values. If no values in there work just pick the least bad one you can find.
 
                         
-<<<<<<< HEAD
 
-                        minPeakDistance = .35;
 
-=======
-<<<<<<< HEAD
-                        minPeakDistance = .70;
-=======
-<<<<<<< HEAD
-                        
-=======
-<<<<<<< HEAD
-                        minPeakDistance = .45;
-=======
-                        minPeakDistance = .35;
->>>>>>> 0f833338ec306b76d013d7b7601374a6ff664425
->>>>>>> 67c8fe1781266b1425f7647b6d2ef79d18d9b596
->>>>>>> e4458e8d2b7f6e1bf5bbf869bbd353cb7c8a303e
->>>>>>> e8cccbf028e02f396fff2c2580fc72284004cd4d
+                        minPeakDistance = T{pt,peaks};
+
+
                         [SPdata S] = SBPcalc_ben(val_dat(:,1),val_dat(:,4),minPeakDistance,1);
                         
                         %% Valsalva continued (SOPHIE CAN IGNORE)
