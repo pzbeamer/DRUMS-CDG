@@ -1,4 +1,5 @@
-
+close all
+clear all
 
 function POTS_Driver2(index)
     
@@ -97,7 +98,7 @@ function POTS_Driver2(index)
                         restCut = find(error(:,1) == min(error(:,1)))-1;
                         %Cut data to the appropriate length for future random
                         %starts
-                        data = TimeCut(data,[30 - 5 * restCut, 3]);
+                        data = TimeCut(data,[30 - 5 * restCut, 30]);
                         [pars optpars Init xhist error2 HR_LM] = Func_DriverBasic_LM_p(data,INDMAP);
 
                         %flag dataset as poor with residual error
@@ -113,11 +114,11 @@ function POTS_Driver2(index)
                     end
 
                end
-
+               %data = TimeCut(data,[saveDat.restTime,30]);
                %Run 7 additional optimizations with random nominal parameter values
                 for k = 2:8
                     %% Optimization
-                    data = TimeCut(data,[30,30]);
+                    %data = TimeCut(data,[30,30]);
                     [pars optpars Init xhist error2 HR_LM]  = Func_DriverBasic_LM_p(data,INDMAP);
 
                     %% save necessary stats
