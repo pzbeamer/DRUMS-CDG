@@ -71,7 +71,7 @@ plot(ones(2,1)*Tdata(i_t1),Plims,'k--')
 plot(ones(2,1)*Tdata(i_t2),Plims,'k:')
 plot(ones(2,1)*val_end,Plims,'k--')
 plot(ones(2,1)*Tdata(i_t3),Plims,'k--')
-plot(ones(2,1)*Tdata(i_t4),Plims,'k--')
+%plot(ones(2,1)*Tdata(i_t4),Plims,'k--')
 %plot(Tdata,Pdata,'b')
 plot(Tdata,SPdata,'b','linewidth',4)
 
@@ -90,8 +90,13 @@ plot(ones(2,1)*Tdata(i_t1),Pthlims,'k--')
 plot(ones(2,1)*Tdata(i_t2),Pthlims,'k:')
 plot(ones(2,1)*val_end,Pthlims,'k--')
 plot(ones(2,1)*Tdata(i_t3),Pthlims,'k--')
+<<<<<<< HEAD
 plot(ones(2,1)*Tdata(i_t4),Pthlims,'k--')
 plot(Tdata,Pth,'b','linewidth',3)
+=======
+%plot(ones(2,1)*Tdata(i_t4),Pthlims,'k--')
+plot(Tdata,Pth,'b')
+>>>>>>> 7e9db5e512b725559a6424cdeed931341c162307
 
 set(gca,'FontSize',15)
 xlim(Tlims)
@@ -107,9 +112,15 @@ plot(ones(2,1)*Tdata(i_t1),Hlims,'k--')
 plot(ones(2,1)*Tdata(i_t2),Hlims,'k:')
 plot(ones(2,1)*val_end,Hlims,'k--')
 plot(ones(2,1)*Tdata(i_t3),Hlims,'k--')
+<<<<<<< HEAD
 plot(ones(2,1)*Tdata(i_t4),Hlims,'k--')
 plot(Tdata,Hdata,'r','linewidth',3)
 plot(Tdata,HR,'b','linewidth',3)
+=======
+%plot(ones(2,1)*Tdata(i_t4),Hlims,'k--')
+plot(Tdata,Hdata,'b')
+plot(Tdata,HR,'r')
+>>>>>>> 7e9db5e512b725559a6424cdeed931341c162307
 
 set(gca,'FontSize',15)
 xlim(Tlims)
@@ -126,9 +137,15 @@ plot(ones(2,1)*Tdata(i_t1),efflims,'k--')
 plot(ones(2,1)*Tdata(i_t2),efflims,'k:')
 plot(ones(2,1)*val_end,efflims,'k--')
 plot(ones(2,1)*Tdata(i_t3),efflims,'k--')
+<<<<<<< HEAD
 plot(ones(2,1)*Tdata(i_t4),efflims,'k--')
 plot(Tdata,T_pr * exp(pars(20)),'color',[.5 0 .5],'linewidth',3) % purple 
 plot(Tdata,T_s * exp(pars(21)),'color',[0 0.75 .75],'linewidth',3)  % slightly darker green than the 'g' command
+=======
+%plot(ones(2,1)*Tdata(i_t4),efflims,'k--')
+plot(Tdata,T_pr,'color',[.5 0 .5]) % purple 
+plot(Tdata,T_s,'color',[0 0.75 .75])  % slightly darker green than the 'g' command
+>>>>>>> 7e9db5e512b725559a6424cdeed931341c162307
 
 set(gca,'FontSize',15)
 xlim(Tlims)

@@ -4,7 +4,7 @@ load('flagDiverge.mat')
 can_take_med=zeros(5,length(flagDiverge));
 
 for index=1:length(flagDiverge)
-    load(strcat(flagDiverge{index},'_optimized.mat'))
+    load(strcat('../Optimized/',flagDiverge{index},'_optimized.mat'))
     flagDiverge{index}
     for ps=1:5
         ct=0;
@@ -20,7 +20,7 @@ end
 
 ctt=1;
 for index=1:length(flagDiverge)
-    load(strcat(flagDiverge{index},'_optimized.mat'))
+    load(strcat('../Optimized/',flagDiverge{index},'_optimized.mat'))
     flagDiverge{index}
     bad=find(can_take_med(:,index)>3);
     if ~isempty(bad)

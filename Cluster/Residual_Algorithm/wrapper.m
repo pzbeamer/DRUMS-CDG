@@ -1,9 +1,9 @@
 
+
 <<<<<<< HEAD
-index = 1:30;
+index = [1:2 30:33];
 =======
-index = [60];
->>>>>>> 04e645314f1684ae62b4d9659b2aae0412c7933f
+>>>>>>> 298860d7f7ef11d44196bdd46065ea386f9427a7
 tic
 POTS_Driver2(index);
 toc
