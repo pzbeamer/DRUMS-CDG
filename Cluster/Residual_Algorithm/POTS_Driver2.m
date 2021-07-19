@@ -1,5 +1,4 @@
-close all
-clear all
+
 
 function POTS_Driver2(index)
     
