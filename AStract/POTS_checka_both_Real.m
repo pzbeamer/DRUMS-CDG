@@ -1,8 +1,5 @@
 clear all
-<<<<<<< HEAD
 format shortg
-=======
->>>>>>> 187d7faf8c9ad1da07b33d2da6c1ad0b602e678f
 T=readtable('../Summary_Data_800_Gals/PatientInfo07192021.csv');
 load('../Summary_Data_800_Gals/summary.mat','uniqueTimes');
 pots_pats=cell(872,1);
@@ -11,21 +8,14 @@ newcount=1;
 c=0;
 p = 0;
 
-<<<<<<< HEAD
-for pt=7
-=======
-<<<<<<< HEAD
+
 for pt=3:30
-=======
-for pt=8
->>>>>>> fdadc5415012ce558404f2951d4e89fcad5e514e
->>>>>>> 187d7faf8c9ad1da07b33d2da6c1ad0b602e678f
     p = 0;
     T{pt,1}{1}
     if any(uniqueTimes(2,pt-2))
         c=c+1;
         p = 1;
-         if 0 == 1 %isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'));
+         if isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'));
             disp("isfile");
             
             load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'));
@@ -35,16 +25,12 @@ for pt=8
             start_ind_a=find(abs(Tdata-AS_start)==min(abs(Tdata-AS_start)));
             end_avg_ind_a=find(abs(Tdata-(AS_start-5))==min(abs(Tdata-(AS_start-5))));
             
-<<<<<<< HEAD
             
             begin_avg_ind_a=find(abs(Tdata-(AS_start-AS_rest))==min(abs(Tdata-(AS_start-AS_rest))));
             
 
-=======
-            begin_avg_ind_a=find(abs(Tdata-(AS_start-AS_rest))==min(abs(Tdata-(AS_start-AS_rest))));
-          
->>>>>>> 187d7faf8c9ad1da07b33d2da6c1ad0b602e678f
-            avg_HR_before_a=median(Hdata(begin_avg_ind_a:end_avg_ind_a))
+
+            avg_HR_before_a=median(Hdata(begin_avg_ind_a:end_avg_ind_a));
             maxHR_a=max(movmean(Hdata(start_ind_a:end), 50));
 
             if (maxHR_a>=avg_HR_before_a+30 && T{pt,3}>19) || (maxHR_a>=avg_HR_before_a+40)
@@ -59,7 +45,7 @@ for pt=8
         if p == 0
             c = c+1;
         end
-        if isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/HUT/',T{pt,1}{1},'_HUT_WS.mat')) && oldcount==newcount 
+        if 1 == 0%isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/HUT/',T{pt,1}{1},'_HUT_WS.mat')) && oldcount==newcount 
             disp("isfile");
             load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/HUT/',T{pt,1}{1},'_HUT_WS.mat'));
 
