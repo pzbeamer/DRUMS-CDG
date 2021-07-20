@@ -7,7 +7,7 @@ newcount=1;
 c=0;
 p = 0;
 
-for pt=3:872
+for pt=8
     p = 0;
     T{pt,1}{1}
     if any(uniqueTimes(2,pt-2))
