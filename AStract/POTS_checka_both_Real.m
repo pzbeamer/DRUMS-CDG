@@ -7,7 +7,11 @@ newcount=1;
 c=0;
 p = 0;
 
+<<<<<<< HEAD
 for pt=3:30
+=======
+for pt=8
+>>>>>>> fdadc5415012ce558404f2951d4e89fcad5e514e
     p = 0;
     T{pt,1}{1}
     if any(uniqueTimes(2,pt-2))

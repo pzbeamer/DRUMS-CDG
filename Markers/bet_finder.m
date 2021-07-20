@@ -1,7 +1,7 @@
 clear all
 close all
 
-T = readtable('../Summary_Data_800_Gals/PatientInfo_063021.csv','Headerlines',2);
+T = readtable('../Summary_Data_800_Gals/PatientInfo07132021.csv','Headerlines',2);
 beta=cell(2,872);
 ct=1;
 for pt = 6:40
@@ -19,8 +19,8 @@ for pt = 6:40
             Tall=val_dat(:,1);
             inds=makeR(Tall,EKG);
             Rpeaks=Tall(inds); %for not is is over the whole time even rest
-            %figure;
-            %plot(Rpeaks,EKG(inds),'o',Tall,EKG,'m');
+            figure;
+            plot(Rpeaks,EKG(inds),'o',Tall,EKG,'m');
             diffs=diff(Rpeaks);
             maxRint=max(diffs)*10^3;
             minRint=min(diffs)*10^3;
