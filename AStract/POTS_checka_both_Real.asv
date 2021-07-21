@@ -1,4 +1,5 @@
 clear all
+close all
 format shortg
 T=readtable('../Summary_Data_800_Gals/PatientInfo07192021.csv');
 load('../Summary_Data_800_Gals/summary.mat','uniqueTimes');
@@ -9,7 +10,9 @@ c=0;
 p = 0;
 
 
-for pt=800:872
+for pt=700:799
+
+
     p = 0;
     T{pt,1}{1}
     if any(uniqueTimes(2,pt-2))
@@ -27,15 +30,22 @@ for pt=800:872
             
             
             begin_avg_ind_a=find(abs(Tdata-(AS_start-AS_rest))==min(abs(Tdata-(AS_start-AS_rest))));
-            
+
             avg_HR_before_a=median(Hdata(begin_avg_ind_a:end_avg_ind_a));
             maxHR_a=max(movmean(Hdata(start_ind_a:end), 50));
-            
-            figure(pt-2)
+            figure(pt+2)
+            subplot(2,1,2)
             hold on
             plot(Tdata,Hdata,'linewidth',3)
-            yline(avg_HR_before_a+30,'r','linewidth',3)
+            if T{pt,3}>19
+                yline(avg_HR_before_a+30,'r','linewidth',3)
+            else
+                yline(avg_HR_before_a+40,'r','linewidth',3)
+
+            end
             xline(AS_start,'b')
+            title('AS')
+
 
 
             
@@ -68,10 +78,20 @@ for pt=800:872
             maxHR_h=max(movmean(Hdata(start_ind_h:end), 100));
             
             
+            
+            figure(pt+2)
+            subplot(2,1,1)
+
             hold on
             plot(Tdata,Hdata,'linewidth',3)
-            yline(avg_HR_before_h+30,'r','linewidth',3)
+            if T{pt,3}>19
+                yline(avg_HR_before_h+30,'r','linewidth',3)
+            else
+                yline(avg_HR_before_h+40,'r','linewidth',3)
+            end
             xline(HUT_start,'b')
+
+            title('HUT')
 
 %             if (maxHR_h>=avg_HR_before_h+30 && T{pt,3}>19) || (maxHR_h>=avg_HR_before_h+40)
 %                 disp(strcat(T{pt,1}," Meets Qualifications"));
@@ -84,8 +104,6 @@ for pt=800:872
 %     if oldcount~=newcount
 %         oldcount=newcount;
 %     end
-    
-    
     
 end
 

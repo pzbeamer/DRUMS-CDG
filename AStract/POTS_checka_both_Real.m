@@ -37,7 +37,12 @@ for pt=700:799
             subplot(2,1,2)
             hold on
             plot(Tdata,Hdata,'linewidth',3)
-            yline(avg_HR_before_a+30,'r','linewidth',3)
+            if T{pt,3}>19
+                yline(avg_HR_before_a+30,'r','linewidth',3)
+            else
+                yline(avg_HR_before_a+40,'r','linewidth',3)
+
+            end
             xline(AS_start,'b')
             title('AS')
 
@@ -79,7 +84,11 @@ for pt=700:799
 
             hold on
             plot(Tdata,Hdata,'linewidth',3)
-            yline(avg_HR_before_h+30,'r','linewidth',3)
+            if T{pt,3}>19
+                yline(avg_HR_before_h+30,'r','linewidth',3)
+            else
+                yline(avg_HR_before_h+40,'r','linewidth',3)
+            end
             xline(HUT_start,'b')
 
             title('HUT')
