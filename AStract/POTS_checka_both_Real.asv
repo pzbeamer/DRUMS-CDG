@@ -1,5 +1,4 @@
 clear all
-close all
 format shortg
 T=readtable('../Summary_Data_800_Gals/PatientInfo07192021.csv');
 load('../Summary_Data_800_Gals/summary.mat','uniqueTimes');
@@ -33,7 +32,6 @@ for pt=800:872
             maxHR_a=max(movmean(Hdata(start_ind_a:end), 50));
             
             figure(pt-2)
-            
             hold on
             plot(Tdata,Hdata,'linewidth',3)
             yline(avg_HR_before_a+30,'r','linewidth',3)
