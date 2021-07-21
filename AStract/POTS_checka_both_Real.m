@@ -7,17 +7,13 @@ newcount=1;
 c=0;
 p = 0;
 
-<<<<<<< HEAD
 for pt=3:30
-=======
-for pt=8
->>>>>>> fdadc5415012ce558404f2951d4e89fcad5e514e
     p = 0;
     T{pt,1}{1}
     if any(uniqueTimes(2,pt-2))
         c=c+1;
         p = 1;
-         if 0 == 1 %isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'));
+         if isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'));
             disp("isfile");
             
             load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/AS/',T{pt,1}{1},'_AS_WS.mat'));
@@ -29,8 +25,9 @@ for pt=8
             
             begin_avg_ind_a=find(abs(Tdata-(AS_start-AS_rest))==min(abs(Tdata-(AS_start-AS_rest))));
           
-            avg_HR_before_a=median(Hdata(begin_avg_ind_a:end_avg_ind_a))
+            avg_HR_before_a=median(Hdata(begin_avg_ind_a:end_avg_ind_a));
             maxHR_a=max(movmean(Hdata(start_ind_a:end), 50));
+            
 
             if (maxHR_a>=avg_HR_before_a+30 && T{pt,3}>19) || (maxHR_a>=avg_HR_before_a+40)
                 disp(strcat(T{pt,1}," Meets Qualifications"));
@@ -59,11 +56,21 @@ for pt=8
             avg_HR_before_h=median(Hdata(begin_avg_ind_h:end_avg_ind_h));
             maxHR_h=max(movmean(Hdata(start_ind_h:end), 100));
             
-                figure(pt-2)
-                hold on
-                plot(Tdata,Hdata,'linewidth',3)
-                yline(avg_HR_before_h+30,'r','linewidth',3)
-                xline(HUT_start,'b')
+            
+            figure(pt)
+            subplot(2,1,1)
+            hold on
+            plot(Tdata,Hdata,'linewidth',3)
+            yline(avg_HR_before_a+30,'r','linewidth',3)
+            xline(AS_start,'b')
+            title('AS')
+   
+            subplot(2,1,2)
+            hold on
+            plot(Tdata,Hdata,'linewidth',3)
+            yline(avg_HR_before_h+30,'r','linewidth',3)
+            xline(HUT_start,'b')
+            title('HUT')
 
             if (maxHR_h>=avg_HR_before_h+30 && T{pt,3}>19) || (maxHR_h>=avg_HR_before_h+40)
                 disp(strcat(T{pt,1}," Meets Qualifications"));
@@ -76,8 +83,6 @@ for pt=8
     if oldcount~=newcount
         oldcount=newcount;
     end
-    
-    
     
 end
 
