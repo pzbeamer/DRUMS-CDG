@@ -13,11 +13,19 @@ for pt = 3:872
 
         if ~any(saveDat.flag)
             ind=find(saveDat.error==min(saveDat.error));
+<<<<<<< HEAD
             opt_pars(guy,1:5) = saveDat.optpars(ind,1:5);
             %opt_pars(guy,1:5) = saveDat.optpars(1,1:5);
             opt_pars(guy,1:10) = markers(pt-3,2:11);
             opt_pars(guy,1:5) = saveDat.optpars(1,1:5);
             %opt_pars(guy,6:7) = barkers(pt-3,:);
+=======
+
+            opt_pars(guy,1:5) = saveDat.optpars(1,1:5);
+            %opt_pars(guy,1:10) = markers(pt-3,2:11);
+            
+
+>>>>>>> 4cc2055a06344306e82ce67a082f16b56edbffa0
             guy = guy +1;
             
             if ~isempty(pots_pats(pt-2))
@@ -37,13 +45,24 @@ for pt = 3:872
 end
 
 %% Cluster
+<<<<<<< HEAD
 stuff = kmeans(opt_pars,2);
 %stuff = dbscan(opt_pars,9,20);
 figure(1);
 silhouette(opt_pars,stuff);
 figure(2);
 plot(opt_pars(:,1),opt_pars(:,2),'o')
+=======
+% stuff = kmeans(opt_pars,2);
+% %stuff = dbscan(opt_pars,9,20);
+% figure(1);
+% silhouette(opt_pars,stuff);
+%figure(2);
+%plot(opt_pars(:,1),opt_pars(:,2),'o')
+for i = 1:5
+    
+    figure(i+5)
+    boxplot(opt_pars(:,i),'Whisker',20)
+>>>>>>> 4cc2055a06344306e82ce67a082f16b56edbffa0
 
-
-
-
+end

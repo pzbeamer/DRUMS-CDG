@@ -1,4 +1,5 @@
 clear all
+format shortg
 T=readtable('../Summary_Data_800_Gals/PatientInfo07192021.csv');
 load('../Summary_Data_800_Gals/summary.mat','uniqueTimes');
 pots_pats=cell(872,1);
@@ -7,6 +8,10 @@ newcount=1;
 c=0;
 p = 0;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4cc2055a06344306e82ce67a082f16b56edbffa0
 for pt=3:30
     p = 0;
     T{pt,1}{1}
@@ -23,8 +28,15 @@ for pt=3:30
             start_ind_a=find(abs(Tdata-AS_start)==min(abs(Tdata-AS_start)));
             end_avg_ind_a=find(abs(Tdata-(AS_start-5))==min(abs(Tdata-(AS_start-5))));
             
+            
             begin_avg_ind_a=find(abs(Tdata-(AS_start-AS_rest))==min(abs(Tdata-(AS_start-AS_rest))));
+<<<<<<< HEAD
           
+=======
+            
+
+
+>>>>>>> 4cc2055a06344306e82ce67a082f16b56edbffa0
             avg_HR_before_a=median(Hdata(begin_avg_ind_a:end_avg_ind_a));
             maxHR_a=max(movmean(Hdata(start_ind_a:end), 50));
             
@@ -41,7 +53,7 @@ for pt=3:30
         if p == 0
             c = c+1;
         end
-        if isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/HUT/',T{pt,1}{1},'_HUT_WS.mat')) && oldcount==newcount 
+        if 1 == 0%isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/HUT/',T{pt,1}{1},'_HUT_WS.mat')) && oldcount==newcount 
             disp("isfile");
             load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/HUT/',T{pt,1}{1},'_HUT_WS.mat'));
 
@@ -53,7 +65,7 @@ for pt=3:30
             begin_avg_ind_h=find(abs(Tdata-(HUT_start-HUT_rest))==min(abs(Tdata-(HUT_start-HUT_rest))));
             
 
-            avg_HR_before_h=median(Hdata(begin_avg_ind_h:end_avg_ind_h));
+            avg_HR_before_h=median(Hdata(begin_avg_ind_h:end_avg_ind_h))
             maxHR_h=max(movmean(Hdata(start_ind_h:end), 100));
             
             
