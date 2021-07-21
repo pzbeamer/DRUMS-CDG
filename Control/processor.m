@@ -9,20 +9,29 @@ Val2s=7;%val1 start
 Val2e=8;%val1 end
 Val2re=9;%val1 rest end
 ValInds=[2:5;6:9];
+N=18;
+sex_ind=19;
+Age_ind=20;
+Height=21;
+Weight=22;
+
 
 for pt = [1:4 6:12]
-    pt_id=Tall{pt,1}
+    pt_id=Tall{pt,1};
     %load all data
     Twave=readtable(strcat('control',num2str(pt_id),'wave.Txt'));
-    Tbeats=readtable(strcat('control',num2str(pt_id),'beats.Txt'));
+    %Tbeats=readtable(strcat('control',num2str(pt_id),'beats.Txt'));
  
+    
     %Assign known channels
-    ECG=Twave{:,5};
-    timeW=Twave{:,1};
-    timeB=Tbeats{:,1};
-    SPdata=Tbeats{:,2};
-    Hdata=Tbeats{:,5};
-    Pdata=Twave{:,2};
+    ECG_all=Twave{:,5};
+    Tdata_all=Twave{:,1};
+    %timeB=Tbeats{:,1};
+    %SPdata=Tbeats{:,2};
+    %Hdata=Tbeats{:,5};
+    Pdata_all=Twave{:,2};
+    
+   
 
     %create time vector
     diff=Twave{end,1}-Twave{1,1};
@@ -30,10 +39,24 @@ for pt = [1:4 6:12]
     endtime=m*60+s;
     tvectW=linspace(0,endtime,length(Twave{:,1}));
     
+    %change Tdata from a duration vector to by seconds
+    [~,ms,ss]=hms(Twave{1,1});
+    starttime=ms*60+ss;
+    Tdata_all=tvectW';
+    
+    %make Hdata
+    Hdata_all=ECG_to_HR(tvectW',ECG_all,0);
+    
+    %assign values
+    notes=Tall{pt,N};
+    Sex=Tall{pt,sex_ind};
+    Age=Tall{pt,Age_ind};
+    height=Tall{pt,Height};
+    weight=Tall{pt,Weight};
+    
     for i=1:2
         %find val start and end times
         %val_rest_start = celltime_to_seconds(Tall{pt,ValInds(i,1)});
-        ValInds(i,2)
         val_start = celltime_to_seconds(Tall{pt,ValInds(i,2)});
         val_end = celltime_to_seconds(Tall{pt,ValInds(i,3)});
         %val_rest_end = celltime_to_seconds(Tall{pt,ValInds(i,4)});
@@ -49,19 +72,40 @@ for pt = [1:4 6:12]
         ind_vals_r=find(abs(tvectW-val_rest_start)==min(abs(tvectW-val_rest_start))); %index for when val rest starts
         ind_vale_r=find(abs(tvectW-val_rest_end)==min(abs(tvectW-val_rest_end))); %index for when val rest ends
 
-        %Resize everything to just capture val data
-        ECGval=ECG(ind_vals_r:ind_vale_r);
-        timeWval=timeW(ind_vals_r:ind_vale_r);
-        Pdataval=Pdata(ind_vals_r:ind_vale_r);
+        %Resize everything to just capture unsampled val data
+        ECG=ECG_all(ind_vals_r:ind_vale_r);
+        Tdata=Tdata_all(ind_vals_r:ind_vale_r);
+        Pdata=Pdata_all(ind_vals_r:ind_vale_r);
         tvectWval=tvectW(ind_vals_r:ind_vale_r);
+        Hdata=Hdata_all(ind_vals_r:ind_vale_r);
+        Rdata=makeresp(tvectWval',ECG,0);
+        minPeakDistance = .3;
+        [SPdata_not_sampled S] = SBPcalc_ben(tvectWval',Pdata,minPeakDistance,0);
+        val_dat=[Tdata ECG Hdata Pdata];
         
-        Rdata=makeresp(tvectWval',ECGval,0);
+        %get sampled val data
+        s=1:20:length(Hdata); %sampling vector for 10 Hz
+        ECG=ECG(s);
+        Tdata=Tdata(s);
+        Pdata=Pdata(s);
+        Hdata=Hdata(s);
+        Rdata=Rdata(s);
+        SPdata = SPdata_not_sampled(s);
+        
+        %we know that no flags are tripped
+        flag=[0;0;0];
+        
+        save(strcat('control',num2str(pt_id),'_val',num2str(i),'_WS.mat'),... %Name of file
+                    'Age','height','weight','ECG','Hdata','Pdata','Rdata','Sex','SPdata','Tdata','flag',...
+                    'val_rest_start','val_start','val_end','val_rest_end','notes','val_dat','tvectWval')
+
         %figure;
         %plot(timeWval,Pdataval)
         %figure;
         %plot(timeWval,Rdata)
-        figure;
-        plot(timeWval,ECGval)
+        %figure;
+        %plot(timeWval,Hdata)
+        
     end
     
 
@@ -82,7 +126,7 @@ for pt = [1:4 6:12]
     %plot(timeW,FPresh)
     %plot(timeB,SPdata)
     %figure(4);
-    %plot(timeW,Rdata)
+    %plot(timeW,Pdata)
     %figure(5);
     %plot(timeB,Hdata)
 end
