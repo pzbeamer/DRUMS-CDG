@@ -1,4 +1,5 @@
 clear all
+close all
 format shortg
 T=readtable('../Summary_Data_800_Gals/PatientInfo07192021.csv');
 load('../Summary_Data_800_Gals/summary.mat','uniqueTimes');
@@ -8,11 +9,10 @@ newcount=1;
 c=0;
 p = 0;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 4cc2055a06344306e82ce67a082f16b56edbffa0
-for pt=3:30
+for pt=232
+
+
     p = 0;
     T{pt,1}{1}
     if any(uniqueTimes(2,pt-2))
@@ -30,30 +30,39 @@ for pt=3:30
             
             
             begin_avg_ind_a=find(abs(Tdata-(AS_start-AS_rest))==min(abs(Tdata-(AS_start-AS_rest))));
-<<<<<<< HEAD
-          
-=======
-            
 
-
->>>>>>> 4cc2055a06344306e82ce67a082f16b56edbffa0
             avg_HR_before_a=median(Hdata(begin_avg_ind_a:end_avg_ind_a));
             maxHR_a=max(movmean(Hdata(start_ind_a:end), 50));
-            
-
-            if (maxHR_a>=avg_HR_before_a+30 && T{pt,3}>19) || (maxHR_a>=avg_HR_before_a+40)
-                disp(strcat(T{pt,1}," Meets Qualifications"));
-                pots_pats(pt-2)=T{pt,1};
-                newcount=newcount+1;
+            figure(pt+2)
+            subplot(2,1,2)
+            hold on
+            plot(Tdata,Hdata,'linewidth',3)
+            if T{pt,3}>19
+                yline(avg_HR_before_a+30,'r','linewidth',3)
+            else
+                yline(avg_HR_before_a+40,'r','linewidth',3)
 
             end
+            xline(AS_start,'b')
+            title('AS')
+
+
+
+            
+
+%             if (maxHR_a>=avg_HR_before_a+30 && T{pt,3}>19) || (maxHR_a>=avg_HR_before_a+40)
+%                 disp(strcat(T{pt,1}," Meets Qualifications"));
+%                 pots_pats(pt-2)=T{pt,1};
+%                 newcount=newcount+1;
+% 
+%             end
         end
     end
     if any(uniqueTimes(1,pt-2))
         if p == 0
             c = c+1;
         end
-        if 1 == 0%isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/HUT/',T{pt,1}{1},'_HUT_WS.mat')) && oldcount==newcount 
+        if isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/HUT/',T{pt,1}{1},'_HUT_WS.mat')) && oldcount==newcount 
             disp("isfile");
             load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/HUT/',T{pt,1}{1},'_HUT_WS.mat'));
 
@@ -65,36 +74,36 @@ for pt=3:30
             begin_avg_ind_h=find(abs(Tdata-(HUT_start-HUT_rest))==min(abs(Tdata-(HUT_start-HUT_rest))));
             
 
-            avg_HR_before_h=median(Hdata(begin_avg_ind_h:end_avg_ind_h))
+            avg_HR_before_h=median(Hdata(begin_avg_ind_h:end_avg_ind_h));
             maxHR_h=max(movmean(Hdata(start_ind_h:end), 100));
             
             
-            figure(pt)
+            
+            figure(pt+2)
             subplot(2,1,1)
+
             hold on
             plot(Tdata,Hdata,'linewidth',3)
-            yline(avg_HR_before_a+30,'r','linewidth',3)
-            xline(AS_start,'b')
-            title('AS')
-   
-            subplot(2,1,2)
-            hold on
-            plot(Tdata,Hdata,'linewidth',3)
-            yline(avg_HR_before_h+30,'r','linewidth',3)
+            if T{pt,3}>19
+                yline(avg_HR_before_h+30,'r','linewidth',3)
+            else
+                yline(avg_HR_before_h+40,'r','linewidth',3)
+            end
             xline(HUT_start,'b')
+
             title('HUT')
 
-            if (maxHR_h>=avg_HR_before_h+30 && T{pt,3}>19) || (maxHR_h>=avg_HR_before_h+40)
-                disp(strcat(T{pt,1}," Meets Qualifications"));
-              
-                pots_pats(pt-2)=T{pt,1};
-                newcount=newcount+1;
-            end
+%             if (maxHR_h>=avg_HR_before_h+30 && T{pt,3}>19) || (maxHR_h>=avg_HR_before_h+40)
+%                 disp(strcat(T{pt,1}," Meets Qualifications"));
+%               
+%                 pots_pats(pt-2)=T{pt,1};
+%                 newcount=newcount+1;
+%             end
         end
     end
-    if oldcount~=newcount
-        oldcount=newcount;
-    end
+%     if oldcount~=newcount
+%         oldcount=newcount;
+%     end
     
 end
 
