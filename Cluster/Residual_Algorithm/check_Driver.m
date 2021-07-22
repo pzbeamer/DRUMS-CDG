@@ -2,11 +2,11 @@
 %index 30: fits are not too different, only one wayward optimization,
 %median fine
 format shortg;
-
+close all
 T = readtable('../PatientInfo07192021.csv','Headerlines',2);
 
     
-        for pt= 23 %[37 48 59 60 65 66 67]
+        for pt= [1:4 6:12] %[37 48 59 60 65 66 67]
 
 %remove 1
 %for 2 best error is best fit %in bad for med
@@ -22,8 +22,7 @@ T = readtable('../PatientInfo07192021.csv','Headerlines',2);
 %14 is awful throw out was in bad for med
 %15 awful was in bad for med throw out
 %17 great data terrible fit????
-%above refer to errors with falgDiverge
-close all
+
 %     index=4;
 %     format shortg;
 % 
@@ -48,19 +47,20 @@ close all
             
 %             load('../../../Optimized/flagDiverge.mat')
 %             pt_id=flagDiverge{index};
-            if isfile(strcat('../../Optimized/',pt_id,'_optimized.mat'))
-            load(strcat('../../Optimized/',pt_id,'_optimized.mat'))
+            if isfile(strcat('../../../Optimized/control',num2str(pt),'_optimized.mat'))
+            load(strcat('../../../Optimized/control',num2str(pt),'_optimized.mat'))
             
             %Parameters to estimate (taupb, taus, spb, spr, Hpr)
             INDMAP = saveDat.INDMAP;
             %Construct file to read
-            pt_WS = strcat(pt_id,'_val1_WS.mat');
+            pt_WS = strcat('control',num2str(pt),'_val1_WS.mat');
             %Load needed patient data
             data = load_data(pt_WS);
             data = TimeCut(data,[saveDat.restTime,30]);
             %Run 7 additional optimizations with random nominal parameter values
-        for k = 1%1:8
-        DriverBasicME(data,INDMAP,saveDat.optpars,k,pt);
+        for k = 1:8
+            
+            DriverBasicME(data,INDMAP,saveDat.optpars,k,pt);
         
         end
             end
