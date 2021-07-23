@@ -4,18 +4,55 @@ clear all
 T = readtable('../PatientInfo07192021.csv','Headerlines',2);
 
 
-markers = zeros(869,11); %alpha, beta, gamma, HRbeforeVal, HRafterVal, SBPbeforeVal, SBPafterVal, maxHR2, maxBP2, maxHR3, maxBP3
+markers = zeros(869,16); %alpha, beta, gamma, HRbeforeVal, HRafterVal, SBPbeforeVal, SBPafterVal, maxHR2, maxBP2, maxHR3, maxBP3
 barkers = zeros(869,2);
-
-for pt = [3:17 19:818 820:872]
+pts=strings(869,1);
+for pt = [6:872]
     pt
     pt_id = T{pt,1}{1}
-        pt_file_name = strcat(pt_id,'_val1_nomHR.mat');
-        
-        if isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/ForwardEvaluation/nomHRs/',pt_file_name))
-              load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/ForwardEvaluation/nomHRs/',pt_file_name),'data');
-              load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_file_name(1:end-9),'WS.mat'),'val_dat');
+    pt_file_name = strcat(pt_id,'_val1_nomHR.mat');
+    if isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/ForwardEvaluation/nomHRs/',pt_file_name))
+        try  
+            load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/ForwardEvaluation/nomHRs/',pt_file_name),'data');
+            load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_file_name(1:end-9),'WS.mat'),'val_dat');
             
+
+            val_start = data.val_start;
+            val_end = data.val_end;
+            Hdata = data.Hdata;
+            Pdata = data.Pdata;
+
+            [values,indices,ratios,alphaplot] = clinicalratios(data);
+            markers(pt-3,1)=ratios(1); %alpha
+            markers(pt-3,2)=ratios(2); %beta
+            markers(pt-3,3)=ratios(3); %gamma
+            markers(pt-3,4) = mean(Hdata(1:round(val_start))); %HRbeforeVal
+            markers(pt-3,5) = mean(Hdata(round(val_end):end)); %HRafterVal
+            
+            markers(pt-3,7) = mean(Pdata(round(val_end):end)); %SBPafterVal
+            markers(pt-3,8)=values(1); %SP max phase 1
+            markers(pt-3,9)=values(2); %SP at end on phase 1
+            markers(pt-3,10)=values(3); %SP min phase 2
+            markers(pt-3,11)=values(4); %SP max phase 2
+            markers(pt-3,12) = max(Hdata(data.i_t1:data.i_te)); %maxHR2
+            markers(pt-3,13) = max(Pdata(data.i_te:data.i_t3)); %maxBP3
+            markers(pt-3,14)=values(5); %SP min phase 4
+            markers(pt-3,15)=values(6); %H max phase 3
+            markers(pt-3,16)=values(7); %H min phase 4
+            
+            pts(pt-3)=pt_id;
+        catch
+            markers(pt-3,:)=0;
+        end
+    end 
+end
+
+markerdat.markers=markers;
+markerdat.pts=pts;
+
+%% Save    
+save('markers.mat','markerdat')
+
 %% Alpha
 
 %               pressure = data.Pdata(data.i_t1:data.i_te);
@@ -49,37 +86,10 @@ for pt = [3:17 19:818 820:872]
 % 
 %     %% Baselines
 % 
-        val_start = data.val_start;
-                 val_end = data.val_end;
-                 Hdata = data.Hdata;
-                 Pdata = data.Pdata;
- 
-                 markers(pt-3,13) = mean(Hdata(1:round(val_start))); %HRbeforeVal
-                 markers(pt-3,14) = mean(Hdata(round(val_end):end)); %HRafterVal
-                 markers(pt-3,15) = mean(Pdata(1:round(val_start))); %SBPbeforeVal
-                 markers(pt-3,16) = mean(Pdata(round(val_end):end)); %SBPafterVal
-% 
-%         %% Max HR and BP
+% %         %% Max HR and BP
 % 
 %         %Phase 2
-                 markers(pt-3,12) = max(Hdata(data.i_t1:data.i_te)); %maxHR2
 %                 markers(pt-3,9) = max(Pdata(data.i_t1:data.i_te)); %maxBP2
 % 
 %         %Phase 3
 %                 markers(pt-3,10) = max(Hdata(data.i_te:data.i_t3)); %maxHR3
-                 markers(pt-3,11) = max(Pdata(data.i_te:data.i_t3)); %maxBP3
-            [values,indices,ratios,alphaplot] = clinicalratios(data);
-            markers(pt-3,1)=ratios(1); %alpha
-            markers(pt-3,2)=ratios(2); %beta
-            markers(pt-3,3)=ratios(3); %gamma
-            markers(pt-3,4)=values(1); %SP max phase 1
-            markers(pt-3,5)=values(2); %SP at end on phase 1
-            markers(pt-3,6)=values(3); %SP min phase 2
-            markers(pt-3,7)=values(4); %SP max phase 2
-            markers(pt-3,8)=values(5); %SP min phase 4
-            markers(pt-3,9)=values(6); %H max phase 3
-            markers(pt-3,10)=values(7); %H min phase 4
-    end 
-end
-%% Save    
-save('markers.mat','markers')
