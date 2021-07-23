@@ -1,4 +1,5 @@
-
+clear all
+close all
 load('4plots.mat')
 
 %% Cluster plots
@@ -6,18 +7,17 @@ load('4plots.mat')
 % % %stuff = dbscan(opt_pars,9,20);
 % % figure(1);
 % % silhouette(opt_pars,stuff);
-% %figure(2);
-% %plot(opt_pars(:,1),opt_pars(:,2),'o')
+
 
 %% Boxplots
 
-% for i = 1:5
-%     
-%     plot_pars(:,i) = opt_pars(:,i)/median(opt_pars(:,i));
-% %     x(i) = x(i)/median(opt_pars(:,i));
-% %     y(i) = y(i)/median(opt_pars(:,i));
-%     
-% end
+for i = 1:5
+    
+    plot_pars(:,i) = opt_pars(:,i)/median(opt_pars(:,i));
+%     x(i) = x(i)/median(opt_pars(:,i));
+%     y(i) = y(i)/median(opt_pars(:,i));
+    
+end
 % figure(1)
 % hold on
 % h = boxplot(plot_pars,'Whisker',20,'Color','k','Widths',.35,'Positions',[.5 1 1.5 2 2.5]);
@@ -32,7 +32,6 @@ load('4plots.mat')
 
 %% Scatter
 
-plot = [];
 hiPOTs = [];
 midPOTs = [];
 noPOTs = [];
@@ -42,31 +41,32 @@ hold on
 
 for i = 1: length(POTS)
     if POTS(i) == 2
-        hiPOTs = [hiPOTs ; opt_pars(i,1:5)];
+        hiPOTs = [hiPOTs ; plot_pars(i,1:5)];
     
     elseif POTS(i) == 1
-        midPOTs = [midPOTs ; opt_pars(i,1:5)];
+        midPOTs = [midPOTs ; plot_pars(i,1:5)];
     else
-        noPOTs = [noPOTs ; opt_pars(i,1:5)];
+        noPOTs = [noPOTs ; plot_pars(i,1:5)];
     end
 end
 
 for i = 1:5
     
-    plot(hiPots(:,i),i*.5*ones(length(hiPots(:,i),1)))
-    plot(midPots(:,i),i*.5*ones(length(midPots(:,i),1)))
-    plot(noPots(:,i),i*.5*ones(length(noPots(:,i),1)))
+    plot(i*.5*ones(length(hiPOTs(:,i)),1)+.1*ones(length(hiPOTs(:,i)),1),hiPOTs(:,i),'o','Color','b')
+    plot(i*.5*ones(length(midPOTs(:,i)),1)+.1*ones(length(midPOTs(:,i)),1),midPOTs(:,i),'o','Color','b')
+    plot(i*.5*ones(length(noPOTs(:,i)),1),noPOTs(:,i),'o','Color','r')
 
-    
 end
-
+xlim([0,3])
+print('scatterboiss','-dpng')
+print('scatterboiss','-depsc2')
 
 %% SVD plotting
 
 
 [U, S, V] = svd(opt_pars);
-Se = S(1:3,1:3);
-Ue = U(:,1:3);
+Se = S(1:2,1:2);
+Ue = U(:,1:2);
 PCA = Ue * Se;
 % cluster1 = [];
 % cluster2 = [];
@@ -77,7 +77,7 @@ PCA = Ue * Se;
 %     
 %     else
 %         
-%         cluster2 = [cluster2; PCA(i,1:3)];
+%         cluster2 = [cluster2; PCA(i,1:2)];
 %     end
 %     
 % end
@@ -85,12 +85,12 @@ PCA = Ue * Se;
 % figure(10)
 % clf
 % hold on
-% %  plot(cluster1(:,2),cluster1(:,3),'o', 'Color','b')
-% %  plot(cluster2(:,2),cluster2(:,3),'o','Color','r')
+% %  plot(cluster1(:,1),cluster1(:,2),'o', 'Color','b')
+% %  plot(cluster2(:,1),cluster2(:,2),'o','Color','r')
 % scatter3(cluster1(:,1),cluster1(:,2),cluster1(:,3),'','b')
 % scatter3(cluster2(:,1),cluster2(:,2),cluster2(:,3),'','r')
 
-% plot = [];
+
 % hiPOTs = [];
 % midPOTs = [];
 % noPOTs = [];
