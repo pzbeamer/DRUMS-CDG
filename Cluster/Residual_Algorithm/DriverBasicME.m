@@ -58,148 +58,6 @@ efflims = [-.1 .2];
 
 %elapsed_time = toc
 
-%% 4 panel figure 
-
-% figure(pt)
-% %clf
-% set(gcf,'units','normalized','outerposition',[0.2 0.2 .5 .5])
-% 
-% % BP
-% subplot(3,2,1)
-% hold on 
-% plot(ones(2,1)*val_start,Plims,'k--')
-% plot(ones(2,1)*Tdata(i_t1),Plims,'k--')
-% plot(ones(2,1)*Tdata(i_t2),Plims,'k:')
-% plot(ones(2,1)*val_end,Plims,'k--')
-% plot(ones(2,1)*Tdata(i_t3),Plims,'k--')
-% plot(ones(2,1)*Tdata(i_t4),Plims,'k--')
-% %plot(Tdata,Pdata,'b')
-% plot(Tdata,SPdata,'b','linewidth',4)
-% 
-% set(gca,'FontSize',15)
-% xlim(Tlims)
-% ylim(Plims)
-% yticks(90:30:150)
-% ylabel('BP (bpm)')
-% 
-% % Pth
-% subplot(3,2,2)
-% hold on 
-% 
-% plot(ones(2,1)*val_start,Pthlims,'k--')
-% plot(ones(2,1)*Tdata(i_t1),Pthlims,'k--')
-% plot(ones(2,1)*Tdata(i_t2),Pthlims,'k:')
-% plot(ones(2,1)*val_end,Pthlims,'k--')
-% plot(ones(2,1)*Tdata(i_t3),Pthlims,'k--')
-% <<<<<<< HEAD
-% plot(ones(2,1)*Tdata(i_t4),Pthlims,'k--')
-% plot(Tdata,Pth,'b','linewidth',3)
-% =======
-% %plot(ones(2,1)*Tdata(i_t4),Pthlims,'k--')
-% plot(Tdata,Pth,'b')
-% >>>>>>> 7e9db5e512b725559a6424cdeed931341c162307
-% 
-% set(gca,'FontSize',15)
-% xlim(Tlims)
-% ylim(Pthlims)
-% yticks(0:15:40)
-% ylabel('P_{th} (bpm)')
-% 
-% % HR 
-% subplot(3,2,3)
-% hold on 
-% plot(ones(2,1)*val_start,Hlims,'k--')
-% plot(ones(2,1)*Tdata(i_t1),Hlims,'k--')
-% plot(ones(2,1)*Tdata(i_t2),Hlims,'k:')
-% plot(ones(2,1)*val_end,Hlims,'k--')
-% plot(ones(2,1)*Tdata(i_t3),Hlims,'k--')
-% <<<<<<< HEAD
-% plot(ones(2,1)*Tdata(i_t4),Hlims,'k--')
-% plot(Tdata,Hdata,'r','linewidth',3)
-% plot(Tdata,HR,'b','linewidth',3)
-% =======
-% %plot(ones(2,1)*Tdata(i_t4),Hlims,'k--')
-% plot(Tdata,Hdata,'b')
-% plot(Tdata,HR,'r')
-% >>>>>>> 7e9db5e512b725559a6424cdeed931341c162307
-% 
-% set(gca,'FontSize',15)
-% xlim(Tlims)
-% ylim(Hlims)
-% yticks(60:30:140)
-% xlabel('Time (s)')
-% ylabel('HR (bpm)')
-% 
-% % Neural tones
-% subplot(3,2,4)
-% hold on 
-% plot(ones(2,1)*val_start,efflims,'k--')
-% plot(ones(2,1)*Tdata(i_t1),efflims,'k--')
-% plot(ones(2,1)*Tdata(i_t2),efflims,'k:')
-% plot(ones(2,1)*val_end,efflims,'k--')
-% plot(ones(2,1)*Tdata(i_t3),efflims,'k--')
-% <<<<<<< HEAD
-% plot(ones(2,1)*Tdata(i_t4),efflims,'k--')
-% plot(Tdata,T_pr * exp(pars(20)),'color',[.5 0 .5],'linewidth',3) % purple 
-% plot(Tdata,T_s * exp(pars(21)),'color',[0 0.75 .75],'linewidth',3)  % slightly darker green than the 'g' command
-% =======
-% %plot(ones(2,1)*Tdata(i_t4),efflims,'k--')
-% plot(Tdata,T_pr,'color',[.5 0 .5]) % purple 
-% plot(Tdata,T_s,'color',[0 0.75 .75])  % slightly darker green than the 'g' command
-% >>>>>>> 7e9db5e512b725559a6424cdeed931341c162307
-% 
-% set(gca,'FontSize',15)
-% xlim(Tlims)
-% ylim(efflims)
-% % yticks(0:20:140)
-% xlabel('Time (s)')
-% ylabel('Outflow')
-% 
-% 
-% subplot(3,2,5)
-% hold on 
-% plot(ones(2,1)*val_start,[0 0.4],'k--')
-% plot(ones(2,1)*Tdata(i_t1),[0 0.4],'k--')
-% plot(ones(2,1)*Tdata(i_t2),[0 0.4],'k:')
-% plot(ones(2,1)*val_end,[0 0.4],'k--')
-% plot(ones(2,1)*Tdata(i_t3),[0 0.4],'k--')
-% plot(ones(2,1)*Tdata(i_t4),[0 0.4],'k--')
-% plot(Tdata,T_pb * exp(pars(19)),'m','linewidth',3)
-% 
-% set(gca,'FontSize',15)
-% xlim(Tlims)
-% ylim([0 0.4])
-% xlabel('Time (s)')
-% ylabel('Outflow')
-% % print('dpng','Plots_HPV3_20151209_Val1_WS.png')
-
-%% This section has the code if you want to do the gray boxes behind each phase 
-
-
-% %Times for VM phases tsVM = Tnew(t_start); t1 = Tnew(k_SPendI); t2 =
-% Tnew(k_SPminII); teVM = Tnew(te); trVM = Tnew(tr); t4VM = Tnew(t4);
-% 
-% %Identity I = ones(2,1);
-% 
-% %X values for shaded regions for each VM phase x1   = [tsVM t1 t1 tsVM];
-% x2   = [t1 teVM teVM t1]; x3   = [teVM trVM trVM teVM]; x4   = [trVM t4VM
-% t4VM trVM];
-% 
-% % %Y values for shaded regions for each VM phase
-% 
-% 
-% yH   = [Hlims(1) Hlims(1) Hlims(2) Hlims(2)]; 
-% yP   = [Plims(1) Plims(1) Plims(2) Plims(2)];
-% ySP  = [SPlims(1) SPlims(1) SPlims(2) SPlims(2)]; 
-% yPth = [Pthlims(1) Pthlims(1) Pthlims(2) Pthlims(2)]; 
-% yeff = [efflims(1) efflims(1) efflims(2) efflims(2)]; 
-% yTpr = [Tprlims(1) Tprlims(1) Tprlims(2) Tprlims(2)]; 
-% yE   = [Elims(1) Elims(1) Elims(2) Elims(2)]; 
-% 
-% %Colors 
-% gray  = [.875 .875 .875]; 
-% lgray = [.95 .95 .95];
-
 
 % figure(1)
 % plot(Tdata,Hdata,'LineWidth',2.5)
@@ -210,17 +68,32 @@ efflims = [-.1 .2];
 % figure(3)
 % plot(val_dat(:,1),val_dat(:,4),'LineWidth',2.5)
 
+<<<<<<< HEAD
+figure(pt)
+=======
+>>>>>>> 717ea759a37bc6364753bc36f355b049ba56bcd6
+
 figure(pt)
 
-subplot(2,2,1)
+
+
+figure()
 
 hold on
    set(gca,'Fontsize',20)
+<<<<<<< HEAD
 %      xline(Tdata(i_t2),'k--')
 %      rectangle('Position',[val_start -10 Tdata(i_t1)-val_start 200],'FaceColor',[.8 .8 .8])
 %      rectangle('Position',[Tdata(i_t1) -10 val_end-Tdata(i_t1) 200],'FaceColor',[.9 .9 .9])
 %      rectangle('Position',[val_end -10 Tdata(i_t3)-val_end 200],'FaceColor',[.8 .8 .8])
 %      rectangle('Position',[Tdata(i_t3) -10 Tdata(i_t4)-Tdata(i_t3) 200],'FaceColor',[.9 .9 .9])
+=======
+     xline(Tdata(i_t2)-15,'k--')
+     rectangle('Position',[val_start-15 -10 Tdata(i_t1)-val_start 300],'FaceColor',[.85 .85 .85])
+     rectangle('Position',[Tdata(i_t1)-15 -10 val_end-Tdata(i_t1) 300],'FaceColor',[.95 .95 .95])
+     rectangle('Position',[val_end-15 -10 Tdata(i_t3)-val_end 300],'FaceColor',[.85 .85 .85])
+     rectangle('Position',[Tdata(i_t3)-15 -10 Tdata(i_t4)-Tdata(i_t3) 300],'FaceColor',[.95 .95 .95])
+>>>>>>> 717ea759a37bc6364753bc36f355b049ba56bcd6
 %      plot(ones(2,1)*val_start,Plims,'k--')
 %      plot(ones(2,1)*Tdata(i_t1),Plims,'k--')
 %     plot(ones(2,1)*Tdata(i_t2),Plims,'k--')
@@ -229,50 +102,92 @@ hold on
 %      plot(ones(2,1)*Tdata(i_t4),Plims,'k--')
 
    hold on
-   plot(val_dat(:,1),val_dat(:,4),'Color',[0 .7 1],'LineWidth',1)
-   plot(Tdata-Tdata(1),SPdata,'b','LineWidth',3)
-%    yticks([])
-%    xticks([])
+   plot(val_dat(:,1)-15,val_dat(:,4),'Color',[0 .7 1],'LineWidth',1)
+   plot(Tdata-Tdata(1)-15,SPdata,'b','LineWidth',3)
+   yticks([ 60  120  180])
+   xticks([0 15 30 45])
    ylabel('BP (mmHg)')
-   xlim([0 60])
-   ylim([0 170])
+   xlim([0 50])
+   ylim([45 200])
    
-   subplot(2,2,2)
+   figure()
    
    set(gca,'Fontsize',20)
+<<<<<<< HEAD
 %      xline(Tdata(i_t2),'k--')
 %      rectangle('Position',[val_start -10 Tdata(i_t1)-val_start 200],'FaceColor',[.8 .8 .8])
 %      rectangle('Position',[Tdata(i_t1) -10 val_end-Tdata(i_t1) 200],'FaceColor',[.9 .9 .9])
 %      rectangle('Position',[val_end -10 Tdata(i_t3)-val_end 200],'FaceColor',[.8 .8 .8])
 %      rectangle('Position',[Tdata(i_t3) -10 Tdata(i_t4)-Tdata(i_t3) 200],'FaceColor',[.9 .9 .9])
+=======
+     xline(Tdata(i_t2)-15,'k--')
+     rectangle('Position',[val_start-15 -10 Tdata(i_t1)-val_start 200],'FaceColor',[.85 .85 .85])
+     rectangle('Position',[Tdata(i_t1)-15 -10 val_end-Tdata(i_t1) 200],'FaceColor',[.95 .95 .95])
+     rectangle('Position',[val_end-15 -10 Tdata(i_t3)-val_end 200],'FaceColor',[.85 .85 .85])
+     rectangle('Position',[Tdata(i_t3)-15 -10 Tdata(i_t4)-Tdata(i_t3) 200],'FaceColor',[.95 .95 .95])
+>>>>>>> 717ea759a37bc6364753bc36f355b049ba56bcd6
    
    hold on
-   plot(Tdata-Tdata(1), Hdata,'b','LineWidth',3)
-   plot(Tdata,HR,'Color','r','LineWidth',3)
+   plot(Tdata-Tdata(1)-15, Hdata,'b','LineWidth',3)
+   plot(Tdata-15,HR,'Color','r','LineWidth',3)
 %    plot(Tdata-Tdata(1), HR_LM,'r','LineWidth',4)
    
 
    xlabel('Time (s)')
    ylabel('HR (bpm)')
-   xlim([0 60])
+   xlim([0 50])
    ylim([60 130])
-   yticks([60 80 100 120])
-%    xticks([])
+   yticks([80 100 120])
+   xticks([0 15 30 45])
    
    
-    subplot(2,2,3)  
+ figure() 
     
      hold on
+<<<<<<< HEAD
 %      xline(Tdata(i_t2),'k--')
 %      rectangle('Position',[val_start -10 Tdata(i_t1)-val_start 200],'FaceColor',[.8 .8 .8])
 %      rectangle('Position',[Tdata(i_t1) -10 val_end-Tdata(i_t1) 200],'FaceColor',[.9 .9 .9])
 %      rectangle('Position',[val_end -10 Tdata(i_t3)-val_end 200],'FaceColor',[.8 .8 .8])
 %      rectangle('Position',[Tdata(i_t3) -10 Tdata(i_t4)-Tdata(i_t3) 200],'FaceColor',[.9 .9 .9])
      plot(Tdata,Pth,'Color','b','LineWidth',3)
+=======
+     xline(Tdata(i_t2)-15,'k--')
+     rectangle('Position',[val_start-15 -10 Tdata(i_t1)-val_start 200],'FaceColor',[.85 .85 .85])
+     rectangle('Position',[Tdata(i_t1)-15 -10 val_end-Tdata(i_t1) 200],'FaceColor',[.95 .95 .95])
+     rectangle('Position',[val_end-15 -10 Tdata(i_t3)-val_end 200],'FaceColor',[.85 .85 .85])
+     rectangle('Position',[Tdata(i_t3)-15 -10 Tdata(i_t4)-Tdata(i_t3) 200],'FaceColor',[.95 .95 .95])
+     plot(Tdata-15,Pth,'Color','b','LineWidth',3)
+>>>>>>> 717ea759a37bc6364753bc36f355b049ba56bcd6
      set(gca,'Fontsize',20)
-     xlim([0,60])
-     ylim([0,50])
+     xlim([0 50])
+     ylim([0 45])
+     xticks([0 15 30 45])
+     yticks([20 40])
      xlabel('Time (s)')
      ylabel('Pth (mmHg)')
      
+<<<<<<< HEAD
 return
+=======
+     
+     figure()
+     set(gca,'Fontsize',20)
+     hold on
+     rectangle('Position',[val_start-15 -0.3 Tdata(i_t1)-val_start 2],'FaceColor',[.85 .85 .85])
+     rectangle('Position',[Tdata(i_t1)-15 -0.3 val_end-Tdata(i_t1) 2],'FaceColor',[.95 .95 .95])
+     rectangle('Position',[val_end-15 -0.3 Tdata(i_t3)-val_end 2],'FaceColor',[.85 .85 .85])
+     rectangle('Position',[Tdata(i_t3)-15 -0.3 Tdata(i_t4)-Tdata(i_t3) 2],'FaceColor',[.95 .95 .95])
+     plot(Tdata-Tdata(1)-15, T_pb * exp(pars(19)),'LineWidth',3)
+     plot(Tdata-15,T_pr,'LineWidth',3)  
+     plot(Tdata-15,T_s,'LineWidth',3)
+     
+     xlim([0 50])
+     ylim([-.2 1])
+     xticks([0 15 30 45])
+     yticks([0 .4 .8])
+     xlabel('Time (s)')
+     %legend('Parasympathetic','Resiratory','Sympathetic')
+     
+     return
+>>>>>>> 717ea759a37bc6364753bc36f355b049ba56bcd6

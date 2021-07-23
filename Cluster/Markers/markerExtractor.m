@@ -1,10 +1,8 @@
 clear all
 
-<<<<<<< HEAD
-T = readtable('../PatientInfo07132021.csv','Headerlines',2);
-=======
+
 T = readtable('../PatientInfo07192021.csv','Headerlines',2);
->>>>>>> a1fba088ef8350aad17af251458b51c7bc539c55
+
 
 markers = zeros(869,11); %alpha, beta, gamma, HRbeforeVal, HRafterVal, SBPbeforeVal, SBPafterVal, maxHR2, maxBP2, maxHR3, maxBP3
 barkers = zeros(869,2);
@@ -22,10 +20,8 @@ for pt = [3:17 19:818 820:872]
 
               pressure = data.Pdata(data.i_t1:data.i_te);
               time = data.Tdata(data.i_t1:data.i_te);
-
-              maximum = find(pressure == max(pressure));
-              minimum = find(pressure == min(pressure));
-              pt-3;
+              maximum = find(time == T{pt,93});
+              minimum = find(time == T{pt,92});
               markers(pt-3,1) = (pressure(maximum) - pressure(minimum))/(time(maximum)-time(minimum));%alpha
 %% Beta
                 EKG=val_dat(:,2);
