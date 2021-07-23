@@ -6,7 +6,11 @@ close all
 T = readtable('../PatientInfo07192021.csv','Headerlines',2);
 
     
+<<<<<<< HEAD
+for pt= 23 %[37 48 59 60 65 66 67]
+=======
         for pt= [1:4 6:12] %[37 48 59 60 65 66 67]
+>>>>>>> 717ea759a37bc6364753bc36f355b049ba56bcd6
 
 %remove 1
 %for 2 best error is best fit %in bad for med
@@ -43,10 +47,27 @@ T = readtable('../PatientInfo07192021.csv','Headerlines',2);
 %     end
 %     pt_WS
     pt_id = T{pt,1}{1}
-            pt
+    pt
             
 %             load('../../../Optimized/flagDiverge.mat')
 %             pt_id=flagDiverge{index};
+<<<<<<< HEAD
+    if isfile(strcat('../../Optimized/',pt_id,'_optimized.mat'))
+        load(strcat('../../Optimized/',pt_id,'_optimized.mat'))
+
+        %Parameters to estimate (taupb, taus, spb, spr, Hpr)
+        INDMAP = saveDat.INDMAP;
+        %Construct file to read
+        pt_WS = strcat(pt_id,'_val1_WS.mat');
+        %Load needed patient data
+        data = load_data(pt_WS);
+        data = TimeCut(data,[saveDat.restTime,30]);
+        %Run 7 additional optimizations with random nominal parameter values
+        for k = 1%1:8
+            
+            DriverBasicME(data,INDMAP,saveDat.optpars,k,pt);
+
+=======
             if isfile(strcat('../../../Optimized/control',num2str(pt),'_optimized.mat'))
             load(strcat('../../../Optimized/control',num2str(pt),'_optimized.mat'))
             
@@ -64,5 +85,8 @@ T = readtable('../PatientInfo07192021.csv','Headerlines',2);
         
         end
             end
+>>>>>>> 717ea759a37bc6364753bc36f355b049ba56bcd6
         end
+    end
+end
         

@@ -69,6 +69,7 @@ efflims = [-.1 .2];
 % plot(val_dat(:,1),val_dat(:,4),'LineWidth',2.5)
 
 
+
 figure(pt)
 
 
@@ -77,11 +78,19 @@ figure(pt)
 subplot(2,2,1);
 hold on
    set(gca,'Fontsize',20)
+
+%      xline(Tdata(i_t2),'k--')
+%      rectangle('Position',[val_start -10 Tdata(i_t1)-val_start 200],'FaceColor',[.8 .8 .8])
+%      rectangle('Position',[Tdata(i_t1) -10 val_end-Tdata(i_t1) 200],'FaceColor',[.9 .9 .9])
+%      rectangle('Position',[val_end -10 Tdata(i_t3)-val_end 200],'FaceColor',[.8 .8 .8])
+%      rectangle('Position',[Tdata(i_t3) -10 Tdata(i_t4)-Tdata(i_t3) 200],'FaceColor',[.9 .9 .9])
+
      xline(Tdata(i_t2)-15,'k--')
      rectangle('Position',[val_start-15 -10 Tdata(i_t1)-val_start 300],'FaceColor',[.85 .85 .85])
      rectangle('Position',[Tdata(i_t1)-15 -10 val_end-Tdata(i_t1) 300],'FaceColor',[.95 .95 .95])
      rectangle('Position',[val_end-15 -10 Tdata(i_t3)-val_end 300],'FaceColor',[.85 .85 .85])
      rectangle('Position',[Tdata(i_t3)-15 -10 Tdata(i_t4)-Tdata(i_t3) 300],'FaceColor',[.95 .95 .95])
+
 %      plot(ones(2,1)*val_start,Plims,'k--')
 %      plot(ones(2,1)*Tdata(i_t1),Plims,'k--')
 %     plot(ones(2,1)*Tdata(i_t2),Plims,'k--')
@@ -101,11 +110,19 @@ hold on
 %   figure()
  subplot(2,2,2);  
    set(gca,'Fontsize',20)
+
+%      xline(Tdata(i_t2),'k--')
+%      rectangle('Position',[val_start -10 Tdata(i_t1)-val_start 200],'FaceColor',[.8 .8 .8])
+%      rectangle('Position',[Tdata(i_t1) -10 val_end-Tdata(i_t1) 200],'FaceColor',[.9 .9 .9])
+%      rectangle('Position',[val_end -10 Tdata(i_t3)-val_end 200],'FaceColor',[.8 .8 .8])
+%      rectangle('Position',[Tdata(i_t3) -10 Tdata(i_t4)-Tdata(i_t3) 200],'FaceColor',[.9 .9 .9])
+
      xline(Tdata(i_t2)-15,'k--')
      rectangle('Position',[val_start-15 -10 Tdata(i_t1)-val_start 200],'FaceColor',[.85 .85 .85])
      rectangle('Position',[Tdata(i_t1)-15 -10 val_end-Tdata(i_t1) 200],'FaceColor',[.95 .95 .95])
      rectangle('Position',[val_end-15 -10 Tdata(i_t3)-val_end 200],'FaceColor',[.85 .85 .85])
      rectangle('Position',[Tdata(i_t3)-15 -10 Tdata(i_t4)-Tdata(i_t3) 200],'FaceColor',[.95 .95 .95])
+
    
    hold on
    plot(Tdata-Tdata(1)-15, Hdata,'b','LineWidth',3)
@@ -124,12 +141,21 @@ hold on
  %figure() 
 subplot(2,2,3);    
      hold on
+
+%      xline(Tdata(i_t2),'k--')
+%      rectangle('Position',[val_start -10 Tdata(i_t1)-val_start 200],'FaceColor',[.8 .8 .8])
+%      rectangle('Position',[Tdata(i_t1) -10 val_end-Tdata(i_t1) 200],'FaceColor',[.9 .9 .9])
+%      rectangle('Position',[val_end -10 Tdata(i_t3)-val_end 200],'FaceColor',[.8 .8 .8])
+%      rectangle('Position',[Tdata(i_t3) -10 Tdata(i_t4)-Tdata(i_t3) 200],'FaceColor',[.9 .9 .9])
+     plot(Tdata,Pth,'Color','b','LineWidth',3)
+
      xline(Tdata(i_t2)-15,'k--')
      rectangle('Position',[val_start-15 -10 Tdata(i_t1)-val_start 200],'FaceColor',[.85 .85 .85])
      rectangle('Position',[Tdata(i_t1)-15 -10 val_end-Tdata(i_t1) 200],'FaceColor',[.95 .95 .95])
      rectangle('Position',[val_end-15 -10 Tdata(i_t3)-val_end 200],'FaceColor',[.85 .85 .85])
      rectangle('Position',[Tdata(i_t3)-15 -10 Tdata(i_t4)-Tdata(i_t3) 200],'FaceColor',[.95 .95 .95])
      plot(Tdata-15,Pth,'Color','b','LineWidth',3)
+
      set(gca,'Fontsize',20)
      xlim([0 50])
      ylim([0 45])
@@ -138,8 +164,12 @@ subplot(2,2,3);
      xlabel('Time (s)')
      ylabel('Pth (mmHg)')
      
+
  subplot(2,2,4);    
  %    figure()
+
+     
+
      set(gca,'Fontsize',20)
      hold on
      rectangle('Position',[val_start-15 -0.3 Tdata(i_t1)-val_start 2],'FaceColor',[.85 .85 .85])
@@ -158,3 +188,4 @@ subplot(2,2,3);
      %legend('Parasympathetic','Resiratory','Sympathetic')
      
      return
+
