@@ -7,8 +7,8 @@ function [data] = load_data(pt_WS)
     %close all
 
     %load(strcat('MatFiles/',pt_WS));
-    %load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_WS));
-    load(strcat('../../Control/',pt_WS));
+    load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_WS));
+    %load(strcat('../../Control/',pt_WS));
 
     
     

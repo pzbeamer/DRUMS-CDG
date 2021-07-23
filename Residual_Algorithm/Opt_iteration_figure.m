@@ -6,9 +6,9 @@ srate = 24;
 
 for i =1:num_rand_starts
     %load(strcat('Valsalva/optHR_residuals/HPV20_20120919_val1_30_',num2str(i),'_optHR.mat')) %Load in whatever data you want
-    %load(strcat('Valsalva/optHR_residuals/HPV22_20130903_val1_30_',num2str(i),'_optHR.mat'))
+    load(strcat('Valsalva/optHR_residuals/HPV22_20130903_val1_30_',num2str(i),'_optHR.mat'))
     %load(strcat('Valsalva/optHR_residuals/HPV27_20140124_val1_30_',num2str(i),'_optHR.mat'))
-    load(strcat('Valsalva/optHR_residuals/HPV28_20140124_val1_15_',num2str(i),'_optHR.mat'))
+    %load(strcat('Valsalva/optHR_residuals/HPV28_20140124_val1_15_',num2str(i),'_optHR.mat'))
     %load(strcat('Valsalva/optHR_residuals/HPV32_20140217_val1_30_',num2str(i),'_optHR.mat'))
     %load(strcat('Valsalva/optHR_residuals/HPV33_20140217_val1_30_',num2str(i),'_optHR.mat'))
     %load(strcat('Valsalva/optHR_residuals/HPV34_20140217_val1_30_',num2str(i),'_optHR.mat'))
@@ -43,14 +43,15 @@ labs = cell(npars,1); %Make labels for plot
 for i = 1:npars
     labs{i} = num2str(INDMAP(i));
 end
-for i = 1:npars
-    figure(i)
+for i = 1:3
+    eight=figure(i);
     yticks([0,0.5,1])
     yticklabels({'Lower bound','0.5','Upper Bound'})
     xlabel('Iteration number')
     ylim([0,1])
     xlim([0,1])
     title(strcat('Ind = ',num2str(INDMAP(i))))
-    set(gca,'fontsize',16)
-    saveas(figure(i),strcat(num2str(i),'.jpeg'))
+    set(gca,'fontsize',30)
+    print('eight','-depsc2');
+    %saveas(figure(i),strcat(num2str(i),'.eps'))
 end

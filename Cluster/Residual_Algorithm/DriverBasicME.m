@@ -73,8 +73,8 @@ figure(pt)
 
 
 
-figure()
-
+%figure()
+subplot(2,2,1);
 hold on
    set(gca,'Fontsize',20)
      xline(Tdata(i_t2)-15,'k--')
@@ -98,8 +98,8 @@ hold on
    xlim([0 50])
    ylim([45 200])
    
-   figure()
-   
+%   figure()
+ subplot(2,2,2);  
    set(gca,'Fontsize',20)
      xline(Tdata(i_t2)-15,'k--')
      rectangle('Position',[val_start-15 -10 Tdata(i_t1)-val_start 200],'FaceColor',[.85 .85 .85])
@@ -121,8 +121,8 @@ hold on
    xticks([0 15 30 45])
    
    
- figure() 
-    
+ %figure() 
+subplot(2,2,3);    
      hold on
      xline(Tdata(i_t2)-15,'k--')
      rectangle('Position',[val_start-15 -10 Tdata(i_t1)-val_start 200],'FaceColor',[.85 .85 .85])
@@ -138,8 +138,8 @@ hold on
      xlabel('Time (s)')
      ylabel('Pth (mmHg)')
      
-     
-     figure()
+ subplot(2,2,4);    
+ %    figure()
      set(gca,'Fontsize',20)
      hold on
      rectangle('Position',[val_start-15 -0.3 Tdata(i_t1)-val_start 2],'FaceColor',[.85 .85 .85])
