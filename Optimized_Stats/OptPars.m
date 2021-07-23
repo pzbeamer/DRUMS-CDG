@@ -1,40 +1,69 @@
 
 clear all
-T=readtable('../Summary_Data_800_Gals/PatientInfo07192021.csv');
+close all
+%We need patient info, markers,and which patients have pots
+T=readtable('../Summary_Data_800_Gals/PatientInfo07212021.csv');
 load('../AStract/potspats.mat')
 load('../Cluster/Markers/markers.mat')
-guy = 1;
-for pt = 3:872 
+counter = 1;
+
+
+%Go through each row of PatientInfo
+for pt = 3:872
     
+    %patient id
     pt_id = T{pt,1}{1}
     
+        
+    % If they have an optimized file
     if isfile(strcat('../Optimized/',pt_id,'_optimized.mat'))
+        
         load(strcat('../Optimized/',pt_id,'_optimized.mat'))
-
+        
+        %Grab patients for plotting
+        if pt == 9
+            x = saveDat.optpars(1,:);
+        elseif pt == 23
+            y = saveDat.optpars(1,:);
+        end
+        
+        
+        %Discard flagged optimizations
         if ~any(saveDat.flag)
-            ind=find(saveDat.error==min(saveDat.error));
-<<<<<<< HEAD
-            opt_pars(guy,1:5) = saveDat.optpars(ind,1:5);
-            %opt_pars(guy,1:5) = saveDat.optpars(1,1:5);
-            opt_pars(guy,1:10) = markers(pt-3,2:11);
-            opt_pars(guy,1:5) = saveDat.optpars(1,1:5);
-            %opt_pars(guy,6:7) = barkers(pt-3,:);
-=======
-
-            opt_pars(guy,1:5) = saveDat.optpars(1,1:5);
-            %opt_pars(guy,1:10) = markers(pt-3,2:11);
             
-
->>>>>>> 4cc2055a06344306e82ce67a082f16b56edbffa0
-            guy = guy +1;
             
-            if ~isempty(pots_pats(pt-2))
-            
-                ppl(guy) = 1;
+            % Check if they have tachycardia marked in spreadsheet and
+            % record
+            if ~isnan(T{pt,90}) && ~isnan(T{pt,91})
                 
-            else 
-                ppl(guy) = 0;
-            end 
+                POTS(counter) = max(T{pt,90},T{pt,91});
+                
+            elseif ~isnan(T{pt,90})
+                
+                POTS(counter) = T{pt,90};
+               
+            elseif ~isnan(T{pt,91})
+                
+                POTS(counter) = T{pt,91};
+               
+            else
+                
+                POTS(counter) = 0;
+                
+            end
+            
+            %Record optimized data for clustering
+            %We can take the first random start since they converge (no
+            %flags)
+            opt_pars(counter,1:5) = saveDat.optpars(1,1:5);
+            
+            %opt_pars(counter,1:5) = saveDat.optpars(1,1:5);
+            %opt_pars(counter,6:7) = barkers(pt-3,:);
+            %opt_pars(counter,1:10) = markers(pt-3,2:11);
+            
+            %Increment
+            counter = counter +1;
+            
             
         else
     
@@ -43,61 +72,12 @@ for pt = 3:872
     end
 
 end
+%% Cluster (self explanatory)
 
-%% Cluster
-<<<<<<< HEAD
- stuff = kmeans(opt_pars,2);
-=======
-<<<<<<< HEAD
+
 stuff = kmeans(opt_pars,2);
-%stuff = dbscan(opt_pars,9,20);
-figure(1);
-silhouette(opt_pars,stuff);
-figure(2);
-plot(opt_pars(:,1),opt_pars(:,2),'o')
-=======
-% stuff = kmeans(opt_pars,2);
->>>>>>> f48d97be3c111a041bc35af0135749842cae9f7d
-% %stuff = dbscan(opt_pars,9,20);
-% figure(1);
-% silhouette(opt_pars,stuff);
-%figure(2);
-%plot(opt_pars(:,1),opt_pars(:,2),'o')
-<<<<<<< HEAD
-%% Boxplots
-
-% for i = 1:5
-%     
-%     figure(i+5)
-%     boxplot(opt_pars(:,i),'Whisker',20)
-% 
-% end
 
 
-%% SVD plotting
-=======
-for i = 1:5
-    
-    figure(i+5)
-    boxplot(opt_pars(:,i),'Whisker',20)
->>>>>>> 4cc2055a06344306e82ce67a082f16b56edbffa0
->>>>>>> f48d97be3c111a041bc35af0135749842cae9f7d
+save('4plots.mat','opt_pars','POTS','stuff')
 
-figure(10)
-hold on
-[U, S, V] = svd(opt_pars);
-Se = S(1:2,1:2);
-Ue = U(:,1:2);
-pp = Ue * Se;
 
-for i = 1: length(stuff)
-    if stuff(i) == 2
-        bb(i,1:2) = pp(i,1:2);
-        
-    else
-        rr(i,1:2) = pp(i,1:2);
-    end
-end
-
-plot(bb(:,1),bb(:,2),'o', 'Color','b')
-plot(rr(:,1),rr(:,2),'o','Color','r')
