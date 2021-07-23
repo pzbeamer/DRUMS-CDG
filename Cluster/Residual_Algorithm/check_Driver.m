@@ -6,7 +6,7 @@ format shortg;
 T = readtable('../PatientInfo07192021.csv','Headerlines',2);
 
     
-        for pt= 23 %[37 48 59 60 65 66 67]
+        for pt= 9%23 %[37 48 59 60 65 66 67]
 
 %remove 1
 %for 2 best error is best fit %in bad for med

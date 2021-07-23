@@ -74,7 +74,7 @@ efflims = [-.1 .2];
 figure()
 
 hold on
-   set(gca,'Fontsize',20)
+   set(gca,'Fontsize',28)
      xline(Tdata(i_t2)-15,'k--')
      rectangle('Position',[val_start-15 -10 Tdata(i_t1)-val_start 300],'FaceColor',[.85 .85 .85])
      rectangle('Position',[Tdata(i_t1)-15 -10 val_end-Tdata(i_t1) 300],'FaceColor',[.95 .95 .95])
@@ -96,9 +96,34 @@ hold on
    xlim([0 50])
    ylim([45 200])
    
+   print('BP4','-dpng')
+   print('BP4','-depsc2')
+   
    figure()
    
-   set(gca,'Fontsize',20)
+   set(gca,'Fontsize',28)
+     xline(Tdata(i_t2)-15,'k--')
+     rectangle('Position',[val_start-15 -10 Tdata(i_t1)-val_start 200],'FaceColor',[.85 .85 .85])
+     rectangle('Position',[Tdata(i_t1)-15 -10 val_end-Tdata(i_t1) 200],'FaceColor',[.95 .95 .95])
+     rectangle('Position',[val_end-15 -10 Tdata(i_t3)-val_end 200],'FaceColor',[.85 .85 .85])
+     rectangle('Position',[Tdata(i_t3)-15 -10 Tdata(i_t4)-Tdata(i_t3) 200],'FaceColor',[.95 .95 .95])
+   
+   hold on
+   plot(Tdata-Tdata(1)-15, Hdata,'b','LineWidth',3)
+   xlabel('Time (s)')
+   ylabel('H (bpm)')
+   xlim([0 50])
+   ylim([60 130])
+   yticks([80 100 120])
+   xticks([0 15 30 45])
+   
+   print('H4','-dpng')
+   print('H4','-depsc2')
+   
+
+figure()
+   
+   set(gca,'Fontsize',28)
      xline(Tdata(i_t2)-15,'k--')
      rectangle('Position',[val_start-15 -10 Tdata(i_t1)-val_start 200],'FaceColor',[.85 .85 .85])
      rectangle('Position',[Tdata(i_t1)-15 -10 val_end-Tdata(i_t1) 200],'FaceColor',[.95 .95 .95])
@@ -108,15 +133,17 @@ hold on
    hold on
    plot(Tdata-Tdata(1)-15, Hdata,'b','LineWidth',3)
    plot(Tdata-15,HR,'Color','r','LineWidth',3)
-%    plot(Tdata-Tdata(1), HR_LM,'r','LineWidth',4)
    
 
    xlabel('Time (s)')
-   ylabel('HR (bpm)')
+   ylabel('H (bpm)')
    xlim([0 50])
    ylim([60 130])
    yticks([80 100 120])
    xticks([0 15 30 45])
+   
+   print('HO4','-dpng')
+   print('HO4','-depsc2')
    
    
  figure() 
@@ -128,7 +155,7 @@ hold on
      rectangle('Position',[val_end-15 -10 Tdata(i_t3)-val_end 200],'FaceColor',[.85 .85 .85])
      rectangle('Position',[Tdata(i_t3)-15 -10 Tdata(i_t4)-Tdata(i_t3) 200],'FaceColor',[.95 .95 .95])
      plot(Tdata-15,Pth,'Color','b','LineWidth',3)
-     set(gca,'Fontsize',20)
+     set(gca,'Fontsize',28)
      xlim([0 50])
      ylim([0 45])
      xticks([0 15 30 45])
@@ -136,9 +163,12 @@ hold on
      xlabel('Time (s)')
      ylabel('Pth (mmHg)')
      
+     print('pth4','-dpng')
+     print('pth4','-depsc2')
+     
      
      figure()
-     set(gca,'Fontsize',20)
+     set(gca,'Fontsize',28)
      hold on
      rectangle('Position',[val_start-15 -0.3 Tdata(i_t1)-val_start 2],'FaceColor',[.85 .85 .85])
      rectangle('Position',[Tdata(i_t1)-15 -0.3 val_end-Tdata(i_t1) 2],'FaceColor',[.95 .95 .95])
@@ -152,7 +182,12 @@ hold on
      ylim([-.2 1])
      xticks([0 15 30 45])
      yticks([0 .4 .8])
+     %ylabel('Neural Outflow')
      xlabel('Time (s)')
-     %legend('Parasympathetic','Resiratory','Sympathetic')
+     %legend('Parasympathetic','Respiratory','Sympathetic')
+     
+     print('tones4','-dpng')
+     print('tones4','-depsc2')
+     
      
      return
