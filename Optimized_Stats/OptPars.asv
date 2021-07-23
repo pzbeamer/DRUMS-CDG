@@ -55,7 +55,7 @@ for pt = 3:872
             %Record optimized data for clustering
             %We can take the first random start since they converge (no
             %flags)
-            opt_pars(counter,1:5) = saveDat.optpars(1,1:5);
+            opt_pars(counter,1:5) = saveDat.optpars(ind,1:5);
             
             %opt_pars(counter,1:5) = saveDat.optpars(1,1:5);
             %opt_pars(counter,6:7) = barkers(pt-3,:);
@@ -72,9 +72,10 @@ for pt = 3:872
     end
 
 end
-%Save for Justen
-save('4plots.mat','opt_pars','POTS')
-%% Cluster (self explanatory)
+%Save for J
+save('Justen.mat','opt_pars','POTS')
+%% Cluster
+
 
 
  stuff = kmeans(opt_pars,2);
