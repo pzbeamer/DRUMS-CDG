@@ -1,4 +1,3 @@
-
 %DriverBasic_sens creates sens files in loop
 
 clear all
@@ -6,7 +5,7 @@ close all
 
 tic 
 
-T = readtable('../PatientInfo07132021.csv','Headerlines',2);
+T = readtable('../PatientInfo07192021.csv','Headerlines',2);
 
 for pt=[37 48 59 60 65 66 67]
     pt

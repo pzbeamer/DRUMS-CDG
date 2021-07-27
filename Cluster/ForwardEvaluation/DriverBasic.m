@@ -2,22 +2,20 @@ clear all
 close all
 %patient to read
 
-
 T = readtable('../PatientInfo07192021.csv','Headerlines',2);
 
 for pt=37%[37 48 59 60 65 66 67]
     pt
     pt_id = T{pt,1}{1}
     
-    if isfile(strcat('../Residual_Algorithm/MatFiles/',pt_id,'_val2_WS.mat'))
-       load(strcat('../Residual_Algorithm/MatFiles/',pt_id,'_val2_WS.mat'))
+    if isfile(strcat('../MatFiles/',pt_id,'_val1_WS.mat'))
+       load(strcat('../MatFiles/',pt_id,'_val1_WS.mat'))
 
-       pt_id = strcat(pt_id,'_val2_WS.mat')
+       pt_id = strcat(pt_id,'_val1_WS.mat')
        Func_DriverBasic(pt_id,[30 30]);
        
-       nomHRfile =strcat('/Valsalva/nomHR_residuals/',pt_id(1:end-7),'_nomHR.mat');
-       
-       load(strcat('/Valsalva/nomHR_residuals/',pt_id(1:end-7),'_nomHR.mat'));
+       nomHRfile =strcat('nomHR/',pt_id(1:end-7),'_nomHR.mat');
+       load(strcat('nomHR/',pt_id(1:end-7),'_nomHR.mat'));
 
        
        %% Figure
