@@ -1,5 +1,4 @@
 # DRUMS-CDG
-Based storage for our project
 The folder Residual_Algorithm contains a way to optimize parameters for the valsalva maneuver. Run the program residual_comparer to get the nominal parameters and 
 the optimized parameters for different rest times. The end rest time is held at 30, while the beginning starts at 30 and then decreases by increments of 5.
 The program breaks once the fit is deemed acceptable and the image of the best optimization is stored in the directory Figures.
