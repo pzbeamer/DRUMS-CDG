@@ -78,8 +78,8 @@ pars0 = [A; B;                       %1-2
     Kpb; Kpr; Ks;                   %Gains 3-5
     taupb; taupr; taus; tauH;       %Time Constants 6-9
     qw; qpb; qpr; qs;               %Sigmoid Steepnesses 9-12
-    sw; spb; spr; ss;               %Sigmoid Shifts 13-16
-    HI; Hpb; Hpr; Hs;               %Heart Rate Parameters 17-21
+    sw; spb; spr; ss;               %Sigmoid Shifts 14-17
+    HI; Hpb; Hpr; Hs;               %Heart Rate Parameters 18-21
     Ds];                            %Delay 22
 
 

@@ -1,16 +1,9 @@
 %DriverBasic_LM
-function [HR_LM] = Func_DriverBasic_LM(pt_file_name,INDMAP,k)
+function [pars optpars Init xhist error HR_LM] = Func_DriverBasic_LM(data,INDMAP)
 %     clear all
     %close all
-    tic
 
-    %% Inputs
-
-%     load ../ForwardEvaluation/nomHR.mat
-    load(strcat('Valsalva/nomHR_residuals/',pt_file_name));
-
-    echoon = 0; 
-    senson = 0; 
+    
 
     %% Get nominal parameter values
 
@@ -26,8 +19,7 @@ function [HR_LM] = Func_DriverBasic_LM(pt_file_name,INDMAP,k)
     gpars.ALLPARS  = ALLPARS;
     gpars.ODE_TOL  = ODE_TOL;
     gpars.DIFF_INC = DIFF_INC;
-    gpars.echoon   = echoon;
-    gpars.senson   = senson; 
+ 
 
     data.gpars = gpars;
 
@@ -40,7 +32,7 @@ function [HR_LM] = Func_DriverBasic_LM(pt_file_name,INDMAP,k)
     maxiter = 30; 
     mode    = 2; 
     nu0     = 2.d-1; 
-
+    
     [xopt, histout, costdata, jachist, xhist, rout, sc] = ...
          newlsq_v2(optx,'opt_wrap',1.d-3,maxiter,...
          mode,nu0,opthi,optlow,data); 
@@ -48,7 +40,7 @@ function [HR_LM] = Func_DriverBasic_LM(pt_file_name,INDMAP,k)
     pars_LM = pars;
     pars_LM(INDMAP) = xopt; 
 
-    [HR_LM,rout,J,Outputs] = model_sol(pars_LM,data);
+    [HR_LM,rout,J,Outputs,Init] = model_sol(pars_LM,data);
 
     optpars = exp(pars_LM);
     disp('optimized parameters')
@@ -58,10 +50,12 @@ function [HR_LM] = Func_DriverBasic_LM(pt_file_name,INDMAP,k)
     Tpb_LM  = Outputs(:,2);
     Ts_LM   = Outputs(:,3);
     Tpr_LM  = Outputs(:,4); 
+    
+    start = min(find(data.Tdata >= data.val_start));
+    slut = min(find(data.Tdata >= data.val_end));
+    scaler = sqrt(length(data.Hdata(start:slut)));
+    error(1) = norm((data.Hdata(start:slut)-HR_LM(start:slut))./data.Hdata(start:slut)/scaler);
+    error(2) = (max(data.Hdata(start:slut)) - max(HR_LM(start:slut)))/max(data.Hdata(start:slut));
+    
 
-%     save optHR.mat 
-    save(strcat('Valsalva/optHR_residuals/',pt_file_name(25:end-10),'_',num2str(k),'_optHR.mat'))
-
-    elapsed_time = toc;
-    elapsed_time = elapsed_time/60;
 end

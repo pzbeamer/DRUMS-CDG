@@ -13,7 +13,8 @@ function Func_DriverBasic(pt_file_name,restTime)
     printon = 0; 
 
     %% Load data and preprocess data 
-    load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_file_name)); %Load workspace
+    %load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_file_name)); %Load workspace
+    load(strcat('../MatFiles/',pt_file_name))
     %  load ../HPV6_20131029_Val1_WS.mat 
     
     dt = mean(diff(Tdata));
@@ -215,7 +216,7 @@ function Func_DriverBasic(pt_file_name,restTime)
     pt = pt_file_name;
     clear i
     clear pt_file_name
-    save(strcat('../Valsalva/nomHR_residuals/',pt(1:(end-7)),'_nomHR.mat'))
+    save(strcat('nomHR/',pt(1:(end-7)),'_nomHR.mat'))
     
     elapsed_time = toc;
     

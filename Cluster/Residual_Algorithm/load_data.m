@@ -1,17 +1,24 @@
+
+%Feed a patient workspace, and it returns data necessary for optimization
 function [data] = load_data(pt_WS)
-    %pass in a file name to read and a vector of rest times needed
-    %restTime = [start end]
-    %Call "Driver basic" in an automated way
-    %DriverBasic 
+   
 
-    %close all
-
+<<<<<<< HEAD
+    %Load workspace
+    load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_WS));
+=======
+<<<<<<< HEAD
+    load(strcat('MatFiles/',pt_WS));
+    %load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_WS));
+=======
     %load(strcat('MatFiles/',pt_WS));
     load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_WS));
+>>>>>>> 5e74a3f7f8d12ab5408f3e5516e59ea31b839121
     %load(strcat('../../Control/',pt_WS));
+>>>>>>> 53c399412c9a417ccf2f74fa8741743a06c91298
 
-    
-    
+    %% Time Indices
+    % Calculate mean distance between timepoints
     dt = mean(diff(Tdata));
     
     
