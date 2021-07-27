@@ -11,10 +11,14 @@ for pt = [6:872]
     pt
     pt_id = T{pt,1}{1}
     pt_file_name = strcat(pt_id,'_val1_nomHR.mat');
-    if isfile(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/ForwardEvaluation/nomHRs/',pt_file_name))
+    if isfile(strcat('../ForwardEvaluation/nomHR/',pt_file_name))
         try  
-            load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/ForwardEvaluation/nomHRs/',pt_file_name),'data');
-            load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_file_name(1:end-9),'WS.mat'),'val_dat');
+            %from Google Drive
+            %load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/ForwardEvaluation/nomHRs/',pt_file_name),'data');
+            %load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_file_name(1:end-9),'WS.mat'),'val_dat');
+            %from GitHub
+            load(strcat('../ForwardEvaluation/nomHR/',pt_file_name),'data');
+            load(strcat('../MatFiles/',pt_file_name(1:end-9),'WS.mat'),'val_dat');
             
 
             val_start = data.val_start;

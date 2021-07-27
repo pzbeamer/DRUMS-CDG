@@ -6,9 +6,21 @@ close all
 T = readtable('../PatientInfo07192021.csv','Headerlines',2);
 
     
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+        for pt= 9%23 %[37 48 59 60 65 66 67]
+=======
+for pt= 23 %[37 48 59 60 65 66 67]
+>>>>>>> 139884c57d083fd281e4f19388114ce513885504
+=======
+        for pt= [1:4 6:12] %[37 48 59 60 65 66 67]
+>>>>>>> 717ea759a37bc6364753bc36f355b049ba56bcd6
+=======
 
 for pt= 6:872 %[37 48 59 60 65 66 67]
 
+>>>>>>> 5e74a3f7f8d12ab5408f3e5516e59ea31b839121
 
 %remove 1
 %for 2 best error is best fit %in bad for med

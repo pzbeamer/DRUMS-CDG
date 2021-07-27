@@ -1,18 +1,18 @@
 % clear all
 % close all
 
-T = readtable('../PatientInfo07132021.csv','Headerlines',2);
+T = readtable('../PatientInfo07192021.csv','Headerlines',2);
 INDMAP = [6 8 14 15 20]; %INDMAP subject to change
 
-for pt=[37 48 59 60 65 66 67]
+for pt= 37 %[37 48 59 60 65 66 67]
     pt
     pt_id = T{pt,1}{1}
     
     if isfile(strcat('../MatFiles/',pt_id,'_val1_WS.mat'))
        load(strcat('../MatFiles/',pt_id,'_val1_WS.mat'))
-       nomHR = strcat('../Valsalva/nomHR_residuals/',pt_id,'_val1_nomHR.mat'); %nomHR
+       nomHR = strcat('../ForwardEvaluation/nomHR/',pt_id,'_val1_nomHR.mat'); %nomHR
        HR_LM = Func_DriverBasic_LM(nomHR,INDMAP);
-       load(strcat('../Valsalva/optHR_residuals/',pt_id,'_val1_optHR.mat'));
+       load(strcat('Opt/',pt_id,'_val1_optHR.mat'));
        
        
        %% plots
@@ -129,22 +129,22 @@ for pt=[37 48 59 60 65 66 67]
 %     saveas(h,[pwd '/Figures/',pt_id,'.fig'])
 %     saveas(h,[pwd '/Figures/',pt_id,'.png']) 
 
-hold on 
-    plot(ones(2,1)*val_start,Hlims,'k--')
-    plot(ones(2,1)*Tdata(i_t1),Hlims,'k--')
-    plot(ones(2,1)*Tdata(i_t2),Hlims,'k:')
-    plot(ones(2,1)*val_end,Hlims,'k--')
-    plot(ones(2,1)*Tdata(i_t3),Hlims,'k--')
-    plot(ones(2,1)*Tdata(i_t4),Hlims,'k--')
-    plot(Tdata,Hdata,'b','linewidth',4)
-    plot(Tdata,HR_LM,'r','linewidth',4)
-    
-
-    set(gca,'FontSize',15)
-    xlim(Tlims)
-    ylim(Hlims)
-    xlabel('Time (s)')
-    ylabel('HR (bpm)')
+% hold on 
+%     plot(ones(2,1)*val_start,Hlims,'k--')
+%     plot(ones(2,1)*Tdata(i_t1),Hlims,'k--')
+%     plot(ones(2,1)*Tdata(i_t2),Hlims,'k:')
+%     plot(ones(2,1)*val_end,Hlims,'k--')
+%     plot(ones(2,1)*Tdata(i_t3),Hlims,'k--')
+%     plot(ones(2,1)*Tdata(i_t4),Hlims,'k--')
+%     plot(Tdata,Hdata,'b','linewidth',4)
+%     plot(Tdata,HR_LM,'r','linewidth',4)
+%     
+% 
+%     set(gca,'FontSize',15)
+%     xlim(Tlims)
+%     ylim(Hlims)
+%     xlabel('Time (s)')
+%     ylabel('HR (bpm)')
        
     end
 end
