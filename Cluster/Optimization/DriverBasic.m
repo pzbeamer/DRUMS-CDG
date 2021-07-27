@@ -129,22 +129,22 @@ for pt=[37 48 59 60 65 66 67]
 %     saveas(h,[pwd '/Figures/',pt_id,'.fig'])
 %     saveas(h,[pwd '/Figures/',pt_id,'.png']) 
 
-hold on 
-    plot(ones(2,1)*val_start,Hlims,'k--')
-    plot(ones(2,1)*Tdata(i_t1),Hlims,'k--')
-    plot(ones(2,1)*Tdata(i_t2),Hlims,'k:')
-    plot(ones(2,1)*val_end,Hlims,'k--')
-    plot(ones(2,1)*Tdata(i_t3),Hlims,'k--')
-    plot(ones(2,1)*Tdata(i_t4),Hlims,'k--')
-    plot(Tdata,Hdata,'b','linewidth',4)
-    plot(Tdata,HR_LM,'r','linewidth',4)
-    
-
-    set(gca,'FontSize',15)
-    xlim(Tlims)
-    ylim(Hlims)
-    xlabel('Time (s)')
-    ylabel('HR (bpm)')
+% hold on 
+%     plot(ones(2,1)*val_start,Hlims,'k--')
+%     plot(ones(2,1)*Tdata(i_t1),Hlims,'k--')
+%     plot(ones(2,1)*Tdata(i_t2),Hlims,'k:')
+%     plot(ones(2,1)*val_end,Hlims,'k--')
+%     plot(ones(2,1)*Tdata(i_t3),Hlims,'k--')
+%     plot(ones(2,1)*Tdata(i_t4),Hlims,'k--')
+%     plot(Tdata,Hdata,'b','linewidth',4)
+%     plot(Tdata,HR_LM,'r','linewidth',4)
+%     
+% 
+%     set(gca,'FontSize',15)
+%     xlim(Tlims)
+%     ylim(Hlims)
+%     xlabel('Time (s)')
+%     ylabel('HR (bpm)')
        
     end
 end

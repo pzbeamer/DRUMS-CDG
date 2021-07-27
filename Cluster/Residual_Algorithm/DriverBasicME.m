@@ -68,36 +68,23 @@ efflims = [-.1 .2];
 % figure(3)
 % plot(val_dat(:,1),val_dat(:,4),'LineWidth',2.5)
 
-<<<<<<< HEAD
-figure(pt)
-=======
->>>>>>> 717ea759a37bc6364753bc36f355b049ba56bcd6
-
-figure(pt)
-
-
 
 figure()
 
 hold on
-<<<<<<< HEAD
    set(gca,'Fontsize',28)
-=======
-   set(gca,'Fontsize',20)
-<<<<<<< HEAD
+
 %      xline(Tdata(i_t2),'k--')
 %      rectangle('Position',[val_start -10 Tdata(i_t1)-val_start 200],'FaceColor',[.8 .8 .8])
 %      rectangle('Position',[Tdata(i_t1) -10 val_end-Tdata(i_t1) 200],'FaceColor',[.9 .9 .9])
 %      rectangle('Position',[val_end -10 Tdata(i_t3)-val_end 200],'FaceColor',[.8 .8 .8])
 %      rectangle('Position',[Tdata(i_t3) -10 Tdata(i_t4)-Tdata(i_t3) 200],'FaceColor',[.9 .9 .9])
-=======
->>>>>>> 139884c57d083fd281e4f19388114ce513885504
+
      xline(Tdata(i_t2)-15,'k--')
      rectangle('Position',[val_start-15 -10 Tdata(i_t1)-val_start 300],'FaceColor',[.85 .85 .85])
      rectangle('Position',[Tdata(i_t1)-15 -10 val_end-Tdata(i_t1) 300],'FaceColor',[.95 .95 .95])
      rectangle('Position',[val_end-15 -10 Tdata(i_t3)-val_end 300],'FaceColor',[.85 .85 .85])
      rectangle('Position',[Tdata(i_t3)-15 -10 Tdata(i_t4)-Tdata(i_t3) 300],'FaceColor',[.95 .95 .95])
->>>>>>> 717ea759a37bc6364753bc36f355b049ba56bcd6
 %      plot(ones(2,1)*val_start,Plims,'k--')
 %      plot(ones(2,1)*Tdata(i_t1),Plims,'k--')
 %     plot(ones(2,1)*Tdata(i_t2),Plims,'k--')
@@ -119,7 +106,6 @@ hold on
    
    figure()
    
-<<<<<<< HEAD
    set(gca,'Fontsize',28)
      xline(Tdata(i_t2)-15,'k--')
      rectangle('Position',[val_start-15 -10 Tdata(i_t1)-val_start 200],'FaceColor',[.85 .85 .85])
@@ -143,22 +129,11 @@ hold on
 figure()
    
    set(gca,'Fontsize',28)
-=======
-   set(gca,'Fontsize',20)
-<<<<<<< HEAD
-%      xline(Tdata(i_t2),'k--')
-%      rectangle('Position',[val_start -10 Tdata(i_t1)-val_start 200],'FaceColor',[.8 .8 .8])
-%      rectangle('Position',[Tdata(i_t1) -10 val_end-Tdata(i_t1) 200],'FaceColor',[.9 .9 .9])
-%      rectangle('Position',[val_end -10 Tdata(i_t3)-val_end 200],'FaceColor',[.8 .8 .8])
-%      rectangle('Position',[Tdata(i_t3) -10 Tdata(i_t4)-Tdata(i_t3) 200],'FaceColor',[.9 .9 .9])
-=======
->>>>>>> 139884c57d083fd281e4f19388114ce513885504
      xline(Tdata(i_t2)-15,'k--')
      rectangle('Position',[val_start-15 -10 Tdata(i_t1)-val_start 200],'FaceColor',[.85 .85 .85])
      rectangle('Position',[Tdata(i_t1)-15 -10 val_end-Tdata(i_t1) 200],'FaceColor',[.95 .95 .95])
      rectangle('Position',[val_end-15 -10 Tdata(i_t3)-val_end 200],'FaceColor',[.85 .85 .85])
      rectangle('Position',[Tdata(i_t3)-15 -10 Tdata(i_t4)-Tdata(i_t3) 200],'FaceColor',[.95 .95 .95])
->>>>>>> 717ea759a37bc6364753bc36f355b049ba56bcd6
    
    hold on
    plot(Tdata-Tdata(1)-15, Hdata,'b','LineWidth',3)
@@ -179,26 +154,15 @@ figure()
  figure() 
     
      hold on
-<<<<<<< HEAD
-%      xline(Tdata(i_t2),'k--')
-%      rectangle('Position',[val_start -10 Tdata(i_t1)-val_start 200],'FaceColor',[.8 .8 .8])
-%      rectangle('Position',[Tdata(i_t1) -10 val_end-Tdata(i_t1) 200],'FaceColor',[.9 .9 .9])
-%      rectangle('Position',[val_end -10 Tdata(i_t3)-val_end 200],'FaceColor',[.8 .8 .8])
-%      rectangle('Position',[Tdata(i_t3) -10 Tdata(i_t4)-Tdata(i_t3) 200],'FaceColor',[.9 .9 .9])
      plot(Tdata,Pth,'Color','b','LineWidth',3)
-=======
      xline(Tdata(i_t2)-15,'k--')
      rectangle('Position',[val_start-15 -10 Tdata(i_t1)-val_start 200],'FaceColor',[.85 .85 .85])
      rectangle('Position',[Tdata(i_t1)-15 -10 val_end-Tdata(i_t1) 200],'FaceColor',[.95 .95 .95])
      rectangle('Position',[val_end-15 -10 Tdata(i_t3)-val_end 200],'FaceColor',[.85 .85 .85])
      rectangle('Position',[Tdata(i_t3)-15 -10 Tdata(i_t4)-Tdata(i_t3) 200],'FaceColor',[.95 .95 .95])
      plot(Tdata-15,Pth,'Color','b','LineWidth',3)
-<<<<<<< HEAD
      set(gca,'Fontsize',28)
-=======
->>>>>>> 717ea759a37bc6364753bc36f355b049ba56bcd6
-     set(gca,'Fontsize',20)
->>>>>>> 139884c57d083fd281e4f19388114ce513885504
+
      xlim([0 50])
      ylim([0 45])
      xticks([0 15 30 45])
@@ -206,15 +170,9 @@ figure()
      xlabel('Time (s)')
      ylabel('Pth (mmHg)')
      
-<<<<<<< HEAD
      print('pth4','-dpng')
      print('pth4','-depsc2')
      
-=======
-<<<<<<< HEAD
-return
-=======
->>>>>>> 139884c57d083fd281e4f19388114ce513885504
      
      figure()
      set(gca,'Fontsize',28)
@@ -240,4 +198,4 @@ return
      
      
      return
->>>>>>> 717ea759a37bc6364753bc36f355b049ba56bcd6
+

@@ -1,5 +1,3 @@
-
-
 function POTS_Driver2(index)
     
     format shortg;
@@ -36,12 +34,12 @@ function POTS_Driver2(index)
             saveDat.flag = zeros(2,1);
 
             % if there's a file, execute optimization
-            if isfile(strcat('MatFiles/',pt_id,'_val1_WS.mat'))
+            if isfile(strcat('MatFiles/',pt_id,'_val2_WS.mat'))
 
                %preallocate error matrix
                error = zeros(4,2);
                %Construct file to read
-               pt_WS = strcat(pt_id,'_val1_WS.mat')
+               pt_WS = strcat(pt_id,'_val2_WS.mat')
                %Load needed patient data
                data = load_data(pt_WS);
 
@@ -144,7 +142,7 @@ function POTS_Driver2(index)
                 end
 
                     %% Save to file
-                    save(strcat('Optimized/',pt_id,'_optimized.mat'),'saveDat');
+                    save(strcat('Optimized/',pt_id,'_val2_optimized.mat'),'saveDat');
 
             end
             
@@ -152,7 +150,7 @@ function POTS_Driver2(index)
         catch
             
             flag = 1;
-            save(strcat('Optimized/',pt_id,'_optimized.mat'),'flag');
+            save(strcat('Optimized/',pt_id,'_val2_optimized.mat'),'flag');
         
         end
     end

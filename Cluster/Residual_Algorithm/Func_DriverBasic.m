@@ -205,11 +205,9 @@ function Func_DriverBasic(pt_file_name,restTime,INDMAP)
     pt = pt_file_name;
     clear i
     clear pt_file_name
-    save(strcat('Valsalva/nomHR_residuals/nomHR_',num2str(restTime(1)),'.mat'))
+    save(strcat('Valsalva/nomHR_residuals/nomHR2_',num2str(restTime(1)),'.mat'))
     
     elapsed_time = toc;
-    
-
-    
+ 
 end
 
