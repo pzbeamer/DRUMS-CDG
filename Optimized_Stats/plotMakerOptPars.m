@@ -6,7 +6,7 @@ load('4plots.mat')
     
 % % %clustering = dbscan(opt_pars,9,20);
 % % figure(1);
-% % silhouette(opt_pars,clustering);
+silhouette(log(p),clustering);
 
 
 %% Boxplots
@@ -100,7 +100,7 @@ load('4plots.mat')
 %% SVD plotting
 dim = 3;
 
-[U, S, V] = svd(log([opt_pars,nom_pars]));
+[U, S, V] = svd(log(p));
 Se = S(1:dim,1:dim);
 Ue = U(:,1:dim);
 PCA = Ue * Se;
@@ -162,12 +162,12 @@ scatter3(noPOTs(:,1),noPOTs(:,2),noPOTs(:,3),'','b')
 
 %% Coefficient biplot
 
-[coeff,score,latent] = pca(log([opt_pars,nom_pars]));
+[coeff,score,latent] = pca(log(p));
 
 figure(4)
 hold on
 biplot(coeff(:,1:dim),'scores',score(:,1:dim),'varlabels',{'tau_pb','tau_s','s_w','s_pb',...
-    'H_pr','s_pr','s_s','H_I','H_pb','H_s'});
+    'H_pr','s_pr','s_s','H_I','H_pb','H_s','T_s','T_p'});
 set(0, 'defaultTextFontSize',18)
 print('biplot','-dpng')
 print('biplot','-depsc2')
