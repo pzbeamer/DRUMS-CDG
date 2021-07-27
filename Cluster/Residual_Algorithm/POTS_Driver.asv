@@ -1,7 +1,6 @@
 
-% Feed it rows in the table of patient info, and it optimizes these
-% patients
-function POTS_Driver(index)
+
+function POTS_Driver2(index)
     
     format shortg;
 
@@ -15,8 +14,6 @@ function POTS_Driver(index)
     for pt = index
         %patiend id is the first column in table
         pt_id = T{pt,1}{1};
-        % Wrap each patient in try catch so that we can run tons of datasets
-        % on cluster without worrying about errors crashing program
         try
             %How much rest time are we cutting out?
             restCut = 0;
@@ -139,9 +136,7 @@ function POTS_Driver(index)
                 %% Flag divergent patients
                 for i = 1:length(saveDat.optpars(1,:))-1
                     
-                    % If the average of optimized parameters deviate
-                    % significantly from median, we flag patient as
-                    % divergent
+                    % If the optimized parameters deviate significantly 
                     if abs((mean(saveDat.optpars(:,i)) - median(saveDat.optpars(:,i)))/median(saveDat.optpars(:,i))) > .15
 
                         saveDat.flag(2,1) = 1;
@@ -155,7 +150,7 @@ function POTS_Driver(index)
 
             end
             
-        % If patient data causes a fatal error for whatever reason, save only a flag.
+       
         catch
             
             flag = 1;
