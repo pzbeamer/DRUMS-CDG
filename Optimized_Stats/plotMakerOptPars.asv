@@ -9,7 +9,7 @@ load('4plots.mat')
 % % silhouette(opt_pars,clustering);
 
 
-%% Boxplots
+%% Bodimplots
 
 % for i = 1:5
 %     

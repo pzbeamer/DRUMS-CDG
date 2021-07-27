@@ -56,9 +56,7 @@ for pt = 3:872
             %We can take the first random start since they converge (no
             %flags)
             opt_pars(counter,1:5) = saveDat.optpars(1,1:5);
-            nom_pars(counter,1:5) = saveDat.parsfull(1,[16 17 18 19 21]);
-            tones(counter,1)      = max(saveDat.sym(1,:));
-            tones(counter,2)      = max(saveDat.(1,:));
+            nom_pars(counter,1:5) = saveDat.parsfull(1,[16 17 18 19 20]);
             
             %opt_pars(counter,1:5) = saveDat.optpars(1,1:5);
             %opt_pars(counter,6:7) = barkers(pt-3,:);
@@ -77,10 +75,10 @@ for pt = 3:872
 end
 %% Cluster (self explanatory)
 
-p = [opt_pars([1:80 82:113 115:190 192:399 401:end],:),nom_pars([1:80 82:113 115:190 192:399 401:end],:)];
-clustering = kmeans(log(p),2);
+p = [opt_pars,nom_pars];
+stuff = kmeans(log(p),3);
 
 
-save('4plots.mat','opt_pars','POTS','clustering','nom_pars')
+save('4plots.mat','opt_pars','POTS','stuff','nom_pars')
 
 
