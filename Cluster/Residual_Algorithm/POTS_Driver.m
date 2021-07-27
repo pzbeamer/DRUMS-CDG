@@ -6,7 +6,7 @@ function POTS_Driver(index)
     format shortg;
 
     %Table with patient records, patient ids are the first column
-    T = readtable('PatientInfo07132021.csv','Headerlines',2);
+    T = readtable('PatientInfo07212021.csv','Headerlines',2);
     
     %Parameters to estimate (taupb, taus, spb, spr, Hpr)
     INDMAP = [6 8 14 15 20];
