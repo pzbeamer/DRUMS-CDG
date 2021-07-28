@@ -14,7 +14,6 @@ for pt= 37 %[37 48 59 60 65 66 67]
        HR_LM = Func_DriverBasic_LM(nomHR,INDMAP);
        load(strcat('Opt/',pt_id,'_val1_optHR.mat'));
        
-       
        %% plots
        
 % h = figure;

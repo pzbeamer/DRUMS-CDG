@@ -6,14 +6,15 @@ function [data] = load_data(pt_WS)
 
     %close all
 
-<<<<<<< HEAD
-    load(strcat('MatFiles/',pt_WS));
-    %load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_WS));
-=======
     %load(strcat('MatFiles/',pt_WS));
-    load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_WS));
->>>>>>> 5e74a3f7f8d12ab5408f3e5516e59ea31b839121
+    %load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_WS));
+
+    %load(strcat('MatFiles/',pt_WS));
+    %load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_WS));
+
     %load(strcat('../../Control/',pt_WS));
+    
+    load(strcat('../../Control/',pt_WS));
 
     
     
