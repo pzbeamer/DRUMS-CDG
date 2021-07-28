@@ -1,11 +1,12 @@
 
-
-function POTS_Driver2(index)
+% Feed it rows in the table of patient info, and it optimizes these
+% patients
+function POTS_Driver(index)
     
     format shortg;
 
     %Table with patient records, patient ids are the first column
-    T = readtable('PatientInfo07132021.csv','Headerlines',2);
+    T = readtable('PatientInfo07212021.csv','Headerlines',2);
     
     %Parameters to estimate (taupb, taus, spb, spr, Hpr)
     INDMAP = [6 8 14 15 20];
@@ -14,6 +15,8 @@ function POTS_Driver2(index)
     for pt = index
         %patiend id is the first column in table
         pt_id = T{pt,1}{1};
+        % Wrap each patient in try catch so that we can run tons of datasets
+        % on cluster without worrying about errors crashing program
         try
             %How much rest time are we cutting out?
             restCut = 0;
@@ -133,8 +136,12 @@ function POTS_Driver2(index)
 
                 end
 
+                %% Flag divergent patients
                 for i = 1:length(saveDat.optpars(1,:))-1
                     
+                    % If the average of optimized parameters deviate
+                    % significantly from median, we flag patient as
+                    % divergent
                     if abs((mean(saveDat.optpars(:,i)) - median(saveDat.optpars(:,i)))/median(saveDat.optpars(:,i))) > .15
 
                         saveDat.flag(2,1) = 1;
@@ -148,7 +155,7 @@ function POTS_Driver2(index)
 
             end
             
-       
+        % If patient data causes a fatal error for whatever reason, save only a flag.
         catch
             
             flag = 1;

@@ -1,5 +1,5 @@
 %DriverBasic_LM
-function [pars optpars Init xhist error HR_LM] = Func_DriverBasic_LM_p(data,INDMAP)
+function [pars optpars Init xhist error HR_LM] = Func_DriverBasic_LM(data,INDMAP)
 %     clear all
     %close all
 

@@ -1,4 +1,4 @@
-Tall=readtable('Control Patient Info - Times.csv');
+Tall=readtable('Control Patient Info.csv');
 
 Val1rs=2;%val1 rest start
 Val1s=3;%val1 start
@@ -9,35 +9,31 @@ Val2s=7;%val1 start
 Val2e=8;%val1 end
 Val2re=9;%val1 rest end
 ValInds=[2:5;6:9];
-DB_s=10;
-DB_e=11;
-AS_s=12;
-AS_e=13;
+DB_s=10; %deep breathing start
+DB_e=11; %deep breathing end
+AS_s=12; %active stand start
+AS_e=13; %active stand end
 N=18; %notes index
-sex_ind=19;
-Age_ind=20;
-Height=21;
-Weight=22;
+sex_ind=19; %sex
+Age_ind=20; %age
+Height=21; %height
+Weight=22; %weight
 
-
-make_val=0;
+%whether or not workspaces should be made
+make_val=1;
 make_AS=1;
 make_DB=1;
 
 
-for pt = [2:4 6:12]
+for pt = [4:5 13:16]
     pt_id=Tall{pt,1};
     %load all data
     Twave=readtable(strcat('control',num2str(pt_id),'wave.Txt'));
-    %Tbeats=readtable(strcat('control',num2str(pt_id),'beats.Txt'));
  
     
     %Assign known channels
     ECG_all=Twave{:,5};
     Tdata_all=Twave{:,1};
-    %timeB=Tbeats{:,1};
-    %SPdata=Tbeats{:,2};
-    %Hdata=Tbeats{:,5};
     Pdata_all=Twave{:,2};
     
    
@@ -94,7 +90,7 @@ for pt = [2:4 6:12]
             val_dat=[Tdata ECG Hdata Pdata];
 
             %get sampled val data
-            s=1:20:length(Hdata); %sampling vector for 10 Hz
+            s=1:20:length(Hdata); %sampling vector for 10 Hz since there are 200 time points a second
             ECG=ECG(s);
             Tdata=Tdata(s);
             Pdata=Pdata(s);
@@ -105,26 +101,19 @@ for pt = [2:4 6:12]
             %we know that no flags are tripped
             flag=[0;0;0];
 
+            %save the workspace
             save(strcat('control',num2str(pt_id),'_val',num2str(i),'_WS.mat'),... %Name of file
                         'Age','height','weight','ECG','Hdata','Pdata','Rdata','Sex','SPdata','Tdata','flag',...
                         'val_rest_start','val_start','val_end','val_rest_end','notes','val_dat','tvectWval')
-
-            %figure;
-            %plot(timeWval,Pdataval)
-            %figure;
-            %plot(timeWval,Rdata)
-            %figure;
-            %plot(timeWval,Hdata)
 
         end
     end
     
     if make_AS==1
-        %find val start and end times
+        %find AS start and end times
             %val_rest_start = celltime_to_seconds(Tall{pt,ValInds(i,1)});
             AS_start = celltime_to_seconds(Tall{pt,AS_s});
             AS_end = celltime_to_seconds(Tall{pt,AS_e});
-            %val_rest_end = celltime_to_seconds(Tall{pt,ValInds(i,4)});
 
             %for the moment, just say rest before and after is 30 because based on 
             %protocal it is at least that long
@@ -164,7 +153,6 @@ for pt = [2:4 6:12]
                         'Age','height','weight','ECG','Hdata','Pdata','Rdata','Sex','SPdata','Tdata','flag',...
                         'AS_rest_start','AS_start','AS_end','AS_rest_end','notes','AS_dat')
 
-            %figure;
     end
     
     if make_DB==1
@@ -179,13 +167,13 @@ for pt = [2:4 6:12]
             DB_rest_start = DB_start-30;
             DB_rest_end = DB_end+30;
 
-            %find indices for val start, end, and rest times in time vector
+            %find indices for DB start, end, and rest times in time vector
             ind_DB_s=find(abs(tvectW-DB_start)==min(abs(tvectW-DB_start))); %index for when val starts
             ind_DBe=find(abs(tvectW-DB_end)==min(abs(tvectW-DB_end))); %index for when val ends
             ind_DB_s_r=find(abs(tvectW-DB_rest_start)==min(abs(tvectW-DB_rest_start))); %index for when val rest starts
             ind_DBe_r=find(abs(tvectW-DB_rest_end)==min(abs(tvectW-DB_rest_end))); %index for when val rest ends
 
-            %Resize everything to just capture unsampled val data
+            %Resize everything to just capture unsampled DB data
             ECG=ECG_all(ind_DB_s_r:ind_DBe_r);
             Tdata=Tdata_all(ind_DB_s_r:ind_DBe_r);
             Pdata=Pdata_all(ind_DB_s_r:ind_DBe_r);
@@ -212,15 +200,7 @@ for pt = [2:4 6:12]
                         'Age','height','weight','ECG','Hdata','Pdata','Rdata','Sex','SPdata','Tdata','flag',...
                         'DB_rest_start','DB_start','DB_end','DB_rest_end','notes','DB_dat')
 
-            %figure;
     end
-
-    %tvectshort=linspace(0,endtime,length(Tbeats{:,1}));
-    %valsshort=find(abs(tvectshort-v1s)==min(abs(tvectshort-v1s)));
-    %valeshort=find(abs(tvectshort-v1e)==min(abs(tvectshort-v1e)));
-
-
-
     %figure(1);
     %plot(timeW(vals:vale),FPresh(vals:vale))
     %plot(timeW(vals:vale),FPresh(vals:vale))
