@@ -1,7 +1,7 @@
 clear all
 close all
 format shortg
-T=readtable('../Summary_Data_800_Gals/PatientInfo07192021.csv');
+T=readtable('../Summary_Data_800_Gals/PatientInfo07212021.csv');
 load('../Summary_Data_800_Gals/summary.mat','uniqueTimes');
 pots_pats=cell(872,1);
 oldcount=1;
@@ -10,7 +10,7 @@ c=0;
 p = 0;
 
 
-for pt=232
+for pt=27
 
 
 
