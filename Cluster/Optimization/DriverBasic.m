@@ -1,7 +1,7 @@
 % clear all
 % close all
 
-T = readtable('../PatientInfo07192021.csv','Headerlines',2);
+T = readtable('../PatientInfo07212021.csv','Headerlines',2);
 INDMAP = [6 8 14 15 20]; %INDMAP subject to change
 
 for pt= 37 %[37 48 59 60 65 66 67]
@@ -12,9 +12,9 @@ for pt= 37 %[37 48 59 60 65 66 67]
        load(strcat('../MatFiles/',pt_id,'_val1_WS.mat'))
        nomHR = strcat('../ForwardEvaluation/nomHR/',pt_id,'_val1_nomHR.mat'); %nomHR
        HR_LM = Func_DriverBasic_LM(nomHR,INDMAP);
-       load(strcat('Opt/',pt_id,'_val1_optHR.mat'));
+       %load(strcat('Opt/',pt_id,'_val1_optHR.mat'));
        
-       %% plots
+%% plots
        
 % h = figure;
 % hold on

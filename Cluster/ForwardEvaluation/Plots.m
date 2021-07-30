@@ -3,19 +3,20 @@
 %median fine
 format shortg;
 close all
-%T = readtable('../Residual_Algorithm/PatientInfo07212021.csv','Headerlines',2);
+T = readtable('../Residual_Algorithm/PatientInfo07212021.csv','Headerlines',2);
 
 %for i = 1:4, 6:12;
     
 %load(strcat('../../Control/Control_Optimized/control',num2str(i),'_optimized.mat'));
 
 for pt = 3:872;
-    pt_id = 
+    pt_id = T{pt,1}{1}
 
-     if isfile(strcat('../../Optimized/',pt_id,'_optimized.mat'))
-            
+     if isfile(strcat('../../Optimized/',pt_id,'_optimized.mat')) 
+         clear flag
+         clear saveDat.flag
             load(strcat('../../Optimized/',pt_id,'_optimized.mat'))
-
+        if ~any(saveDat.flag) 
             %Parameters to estimate (taupb, taus, spb, spr, Hpr)
             INDMAP = saveDat.INDMAP;
             %Load needed patient data
@@ -25,7 +26,11 @@ for pt = 3:872;
             data = load_data(WS);
             data = TimeCut(data,[saveDat.restTime,30]);
             
-            Sigs = DriverBasicME(data,INDMAP,saveDat.optpars,1,i);
+            Sigs = DriverBasicME(data,INDMAP,saveDat.optpars,1,pt);
+            
+            pause
+            
+        end
      end
 end
 %end

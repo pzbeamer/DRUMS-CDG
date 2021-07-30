@@ -18,7 +18,7 @@ for pt=37%[37 48 59 60 65 66 67]
        load(strcat('nomHR/',pt_id(1:end-7),'_nomHR.mat'));
 
        
-       %% Figure
+%% Nominal Figure
         h = figure;
         hold on
 
