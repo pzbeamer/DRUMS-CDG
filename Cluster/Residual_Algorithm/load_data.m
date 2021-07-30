@@ -3,28 +3,17 @@
 function [data] = load_data(pt_WS)
    
 
-<<<<<<< HEAD
     %load(strcat('MatFiles/',pt_WS));
-=======
-<<<<<<< HEAD
-    %Load workspace
-    load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_WS));
-=======
-<<<<<<< HEAD
-    load(strcat('MatFiles/',pt_WS));
->>>>>>> 78bf9febaf87873a5a9747c64a2d1a5311c92a6b
+
     %load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_WS));
 
     %load(strcat('MatFiles/',pt_WS));
     %load(strcat('/Volumes/GoogleDrive/Shared drives/REU shared/LSA/Vals_New/',pt_WS));
 
     %load(strcat('../../Control/',pt_WS));
-<<<<<<< HEAD
+
     
     load(strcat('../../Control/',pt_WS));
-=======
->>>>>>> 53c399412c9a417ccf2f74fa8741743a06c91298
->>>>>>> 78bf9febaf87873a5a9747c64a2d1a5311c92a6b
 
     %% Time Indices
     % Calculate mean distance between timepoints

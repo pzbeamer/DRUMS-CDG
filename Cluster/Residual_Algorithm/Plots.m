@@ -3,7 +3,7 @@
 %median fine
 format shortg;
 close all
-T = readtable('../PatientInfo07192021.csv','Headerlines',2);
+%T = readtable('../Residual_Algorithm/PatientInfo07212021.csv','Headerlines',2);
 
 for i = 1:4, 6:12;
     
@@ -22,9 +22,7 @@ load(strcat('../../Control/Control_Optimized/control',num2str(i),'_optimized.mat
             data = load_data(WS);
             data = TimeCut(data,[saveDat.restTime,30]);
             
-            Sigs = DriverBasicME(data,INDMAP,saveDat.optpars,1,i);
-            
-        
+            Sigs = DriverBasicME(data,INDMAP,saveDat.optpars,1,i);   
 end
 %end
         
